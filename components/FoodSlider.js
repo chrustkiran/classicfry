@@ -81,7 +81,7 @@ const FoodSlider = () => {
                     />
                   </div>
                   <h3>
-                    <Link href="/shop-single">pro pizza</Link>
+                    <Link href="/shop-single">Wings</Link>
                   </h3>
                   <p>5 products</p>
                 </div>
@@ -127,7 +127,7 @@ const FoodSlider = () => {
                     />
                   </div>
                   <h3>
-                    <Link href="/shop-single">pro pizza</Link>
+                    <Link href="/shop-single">Boneless</Link>
                   </h3>
                   <p>5 products</p>
                 </div>
@@ -173,7 +173,7 @@ const FoodSlider = () => {
                     />
                   </div>
                   <h3>
-                    <Link href="/shop-single">pro pizza</Link>
+                    <Link href="/shop-single">Tenders</Link>
                   </h3>
                   <p>5 products</p>
                 </div>
@@ -222,13 +222,13 @@ const FoodSlider = () => {
                     />
                   </div>
                   <h3>
-                    <Link href="/shop-single">pro pizza</Link>
+                    <Link href="/shop-single">Platters</Link>
                   </h3>
                   <p>5 products</p>
                 </div>
               </div>
             </SwiperSlide>
-            <SwiperSlide className="swiper-slide">
+            {/* <SwiperSlide className="swiper-slide">
               <div
                 className="catagory-product-card bg-cover"
                 style={{
@@ -414,7 +414,7 @@ const FoodSlider = () => {
                   <p>5 products</p>
                 </div>
               </div>
-            </SwiperSlide>
+            </SwiperSlide> */}
           </div>
         </Swiper>
       </div>

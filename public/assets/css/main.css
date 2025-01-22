@@ -2556,7 +2556,11 @@ input.main-search-input::placeholder {
 
 @media (max-width: 767px) {
   .hero-1 .chilii-shape-2 {
-    display: none;
+    position: absolute;
+    right: 1%;
+    top: 25%;
+    scale: 50%;
+    z-index: -1;
   }
 }
 .hero-1 .chilii-shape-3 {

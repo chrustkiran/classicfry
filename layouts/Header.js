@@ -77,7 +77,7 @@ const Menus = () => {
       </li>
       <li className="has-dropdown">
         <Link href="shop">
-          Shop
+          Menu
           <i className="fas fa-angle-down" />
         </Link>
         <ul className="submenu">
@@ -106,19 +106,10 @@ const Menus = () => {
       </li>
       <li>
         <Link href="news">
-          Blog
-          <i className="fas fa-angle-down" />
+          Login
         </Link>
-        <ul className="submenu">
-          <li>
-            <Link href="news">Blog</Link>
-          </li>
-          <li>
-            <Link href="news-details">Blog Details</Link>
-          </li>
-        </ul>
       </li>
-      <li className="has-dropdown">
+      {/* <li className="has-dropdown">
         <Link href="news">
           Pages
           <i className="fas fa-angle-down" />
@@ -171,10 +162,10 @@ const Menus = () => {
             <Link href="404">404 Page</Link>
           </li>
         </ul>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <Link href="contact">Contact</Link>
-      </li>
+      </li> */}
     </ul>
   );
 };
@@ -228,7 +219,8 @@ const Header1 = () => {
               <div className="header-main">
                 <div className="logo">
                   <Link href="/" className="header-logo">
-                    <img src="assets/img/logo/logo.svg" alt="logo-img" />
+                    {/* <img src="assets/img/logo/logo.svg" alt="logo-img" /> */}
+                    <h3>ClassicFry</h3>
                   </Link>
                 </div>
                 <div className="header-left">

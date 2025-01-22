@@ -60,14 +60,14 @@ const HomeSlider = () => {
               >
                 <img src="assets/img/hero/fire-shape.png" alt="shape-img" />
               </div> */}
-              <div
+              {/* <div
                 className="chilii-shape-2"
                 data-animation="fadeInUp"
                 data-duration={duration}
                 data-delay="2.7s"
               >
                 <img width="500" src="assets/img/hero/chilli.png" alt="shape-img" />
-              </div>
+              </div> */}
               <div
                 className="chilii-shape-3"
                 data-animation="fadeInUp"
@@ -102,9 +102,9 @@ const HomeSlider = () => {
                         data-duration={duration}
                         data-delay="0.5s"
                       >
-                        delicious
-                        <span>fried</span>
-                        chiken
+                        Ever tasted
+                        <span>Real </span>
+                        Crispy
                       </h1>
                       <div className="hero-button">
                         <Link
@@ -133,6 +133,15 @@ const HomeSlider = () => {
                       data-delay="1.4s"
                     >
                       <img src="assets/img/hero/chiken.png" alt="chiken-img" />
+                    </div>
+                    <div
+                      style = {{zIndex: -1, position: 'absolute', top: 0 }}
+                      className="chiken-image"
+                      data-animation="fadeInUp"
+                      data-duration={duration}
+                      data-delay="2.7s"
+                    >
+                      <img width="500" src="assets/img/hero/chilli.png" alt="shape-img" />
                     </div>
                   </div>
                 </div>
