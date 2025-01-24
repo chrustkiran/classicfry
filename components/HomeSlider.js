@@ -135,8 +135,7 @@ const HomeSlider = () => {
                       <img src="assets/img/hero/chiken.png" alt="chiken-img" />
                     </div>
                     <div
-                      style = {{zIndex: -1, position: 'absolute', top: 0 }}
-                      className="chiken-image"
+                      className="main-top-img"
                       data-animation="fadeInUp"
                       data-duration={duration}
                       data-delay="2.7s"

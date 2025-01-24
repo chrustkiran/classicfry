@@ -22,8 +22,8 @@ const page = () => {
         <div className="fry-shape">
           <img src="assets/img/shape/fry-shape.png" alt="shape-img" />
         </div>
-        <div className="container">
-          {/* <div className="row">
+        {/* <div className="container">
+          <div className="row">
             <div className="col-xl-5 wow fadeInUp" data-wow-delay=".3s">
               <div
                 className="single-offer-items bg-cover"
@@ -76,8 +76,8 @@ const page = () => {
                 </div>
               </div>
             </div>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </section>
       {/* Brand Section Start */}
       {/* <section className="brand-shape section-padding fix section-bg pt-0">
@@ -890,7 +890,7 @@ const page = () => {
         </div>
       </section>
       {/* Food Banner Section Start */}
-      <section className="food-banner-section fix section-padding section-bg pt-0">
+      {/* <section className="food-banner-section fix section-padding section-bg pt-0">
         <div className="container">
           <div className="row justify-content-center">
             <div
@@ -976,7 +976,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* KFC Banner Section Start */}
       <section
         className="kfc-banner fix bg-cover section-padding"
@@ -1058,9 +1058,9 @@ const page = () => {
         </div>
       </section>
       {/* Testimonial Section Start */}
-      <TestimonialSlider />
+      {/* <TestimonialSlider /> */}
       {/* Main Cta Banner Section Start */}
-      <section className="main-cta-banner section-padding pt-0">
+      {/* <section className="main-cta-banner section-padding pt-0">
         <div className="container">
           <div
             className="main-cta-banner-wrapper bg-cover mt-10"
@@ -1100,9 +1100,9 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Booking Section Start */}
-      <section
+      {/* <section
         className="booking-section fix section-padding bg-cover"
         style={{ backgroundImage: 'url("assets/img/banner/main-bg.jpg")' }}
       >
@@ -1148,7 +1148,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </FoodKingLayout>
   );
 };

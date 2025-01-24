@@ -18,69 +18,12 @@ export default Header;
 const Menus = () => {
   return (
     <ul>
-      <li className="has-dropdown active">
-        <Link href="/">
-          Home Page
-          <i className="fas fa-angle-down" />
-        </Link>
-        <ul className="submenu has-homemenu">
-          <li className="border-none">
-            <div className="row g-4">
-              <div className="col-lg-4 homemenu">
-                <div className="homemenu-thumb">
-                  <img src="assets/img/header/home-1.jpg" alt="img" />
-                  <div className="demo-button">
-                    <Link href="/" className="theme-btn">
-                      View Demo
-                    </Link>
-                  </div>
-                </div>
-                <div className="homemenu-content text-center">
-                  <h4 className="homemenu-title">
-                    <Link href="/">Home 01</Link>
-                  </h4>
-                </div>
-              </div>
-              <div className="col-lg-4  homemenu">
-                <div className="homemenu-thumb mb-15">
-                  <img src="assets/img/header/home-2.jpg" alt="img" />
-                  <div className="demo-button">
-                    <Link href="index-2" className="theme-btn">
-                      View Demo
-                    </Link>
-                  </div>
-                </div>
-                <div className="homemenu-content text-center">
-                  <h4 className="homemenu-title">
-                    <Link href="index-2">Home 02</Link>
-                  </h4>
-                </div>
-              </div>
-              <div className="col-lg-4 homemenu">
-                <div className="homemenu-thumb mb-15">
-                  <img src="assets/img/header/home-3.jpg" alt="img" />
-                  <div className="demo-button">
-                    <Link href="index-3" className="theme-btn">
-                      View Demo
-                    </Link>
-                  </div>
-                </div>
-                <div className="homemenu-content text-center">
-                  <h4 className="homemenu-title">
-                    <Link href="index-3">Home 03</Link>
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </li>
       <li className="has-dropdown">
         <Link href="shop">
           Menu
-          <i className="fas fa-angle-down" />
+          {/* <i className="fas fa-angle-down" /> */}
         </Link>
-        <ul className="submenu">
+        {/* <ul className="submenu">
           <li>
             <Link href="shop">Shop Grid</Link>
           </li>
@@ -102,13 +45,16 @@ const Menus = () => {
           <li>
             <Link href="checkout">checkout</Link>
           </li>
-        </ul>
+        </ul> */}
       </li>
-      <li>
+      <li className="has-dropdown active">
+        <Link href="/">Orders</Link>
+      </li>
+      {/* <li>
         <Link href="news">
           Login
         </Link>
-      </li>
+      </li> */}
       {/* <li className="has-dropdown">
         <Link href="news">
           Pages
@@ -223,17 +169,23 @@ const Header1 = () => {
                     <h3>ClassicFry</h3>
                   </Link>
                 </div>
-                <div className="header-left">
+                <div className="heder-left">
                   <div className="mean__menu-wrapper d-none d-lg-block">
                     <div className="main-menu">
-                      <nav id="mobile-menu">
+                      {/* <nav id="mobile-menu">
                         <Menus />
-                      </nav>
+                      </nav> */}
                       {/* for wp */}
                     </div>
                   </div>
                 </div>
                 <div className="header-right d-flex justify-content-end align-items-center">
+                  <div className="main-menu mean__menu-wrapper d-none d-lg-block">
+                    <nav id="mobile-menu">
+                      <Menus />
+                    </nav>
+                    {/* for wp */}
+                  </div>
                   <div className="menu-cart">
                     <div className="cart-box">
                       <ul>
@@ -241,11 +193,11 @@ const Header1 = () => {
                           <img src="assets/img/shop-food/s2.png" alt="image" />
                           <div className="cart-product">
                             <a href="#0">grilled chiken</a>
-                            <span>168$</span>
+                            <span>2 - 168$</span>
                           </div>
                         </li>
                       </ul>
-                      <ul>
+                      {/* <ul>
                         <li className="border-none">
                           <img src="assets/img/shop-food/s3.png" alt="image" />
                           <div className="cart-product">
@@ -253,7 +205,7 @@ const Header1 = () => {
                             <span>168$</span>
                           </div>
                         </li>
-                      </ul>
+                      </ul> */}
                       <div className="shopping-items d-flex align-items-center justify-content-between">
                         <span>Shopping : $20.00</span>
                         <span>Total : $168.00</span>
@@ -358,7 +310,7 @@ const Header2 = () => {
                           </div>
                         </li>
                       </ul>
-                      <ul>
+                      {/* <ul>
                         <li className="border-none">
                           <img src="assets/img/shop-food/s3.png" alt="image" />
                           <div className="cart-product">
@@ -366,7 +318,7 @@ const Header2 = () => {
                             <span>168$</span>
                           </div>
                         </li>
-                      </ul>
+                      </ul> */}
                       <div className="shopping-items d-flex align-items-center justify-content-between">
                         <span>Shopping : $20.00</span>
                         <span>Total : $168.00</span>

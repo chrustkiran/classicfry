@@ -20,27 +20,28 @@ const Footer1 = () => {
       <div className="fry-shape">
         <img src="assets/img/shape/fry-shape-2.png" alt="burger-shape" />
       </div>
-      <div className="container">
-        <div className="footer-widgets-wrapper">
-          <div className="row">
+      <div className="container ">
+        <div className="footer-widgets-wrapper ">
+          <div className="flex-row d-flex justify-content-between">
             <div
-              className="col-xl-3 col-sm-6 col-md-6 col-lg-3 wow fadeInUp"
+              className="wow fadeInUp"
               data-wow-delay=".2s"
             >
               <div className="single-footer-widget">
                 <div className="widget-head">
                   <Link href="/">
-                    <img src="assets/img/logo/logo.svg" alt="logo-img" />
+                    {/* <img src="assets/img/logo/logo.svg" alt="logo-img" /> */}
+                    <h3>classicfry</h3>
                   </Link>
                 </div>
                 <div className="footer-content">
                   <p>
-                    We believe it has the power to do <br />
-                    amazing things.
+                    We believe you would enjoy tasting <br />
+                    our crispy chickens
                   </p>
-                  <span>Interested in working with us?</span> <br />
-                  <a href="mailto:info@example.com" className="link">
-                    info@example.com
+                  <span>Any additional queries</span> <br />
+                  <a href="mailto:contact@classicfry.co.uk" className="link">
+                  contact@classicfry.co.uk
                   </a>
                   <div className="social-icon d-flex align-items-center">
                     <a href="#">
@@ -59,7 +60,7 @@ const Footer1 = () => {
                 </div>
               </div>
             </div>
-            <div
+            {/* <div
               className="col-xl-2 ps-lg-5 col-sm-6 col-md-3 col-lg-3 wow fadeInUp"
               data-wow-delay=".4s"
             >
@@ -112,9 +113,9 @@ const Footer1 = () => {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
             <div
-              className="col-xl-2 col-sm-6 col-md-6 col-lg-3 wow fadeInUp"
+              className="wow fadeInUp"
               data-wow-delay=".8s"
             >
               <div className="single-footer-widget">
@@ -134,7 +135,7 @@ const Footer1 = () => {
                 </div>
               </div>
             </div>
-            <div
+            {/* <div
               className="col-xl-3 ps-xl-5 col-sm-6 col-md-6 col-lg-4 wow fadeInUp"
               data-wow-delay=".9s"
             >
@@ -160,7 +161,7 @@ const Footer1 = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

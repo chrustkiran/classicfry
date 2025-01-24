@@ -4,485 +4,79 @@ import ProductTopBar from "@/components/ProductTopBar";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 
+
+// const Item = ({item}) => {
+//   return (
+//     <div
+//       className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
+//       data-wow-delay=".3s"
+//     >
+//       <div className="catagory-product-card-2 shadow-style text-center">
+//         {/* <div className="icon">
+//           <Link href="/shop-cart">
+//             <i className="far fa-heart" />
+//           </Link>
+//         </div> */}
+//         <div className="catagory-product-image">
+//           <img src={item['image']} alt="product-img" />
+//         </div>
+//         <div className="catagory-product-content">
+//           <div className="catagory-button">
+//             <Link href="/shop-cart" className="theme-btn-2">
+//               <i className="far fa-shopping-basket" />
+//               Add To Cart
+//             </Link>
+//           </div>
+//           <div className="info-price d-flex align-items-center justify-content-center">
+//             {/* <p>-5%</p> */}
+//             <h4>{item.portionPrices.map(price => price.price).toSorted()[0]}</h4>
+//             <span>{item.tag}</span>
+//             {/* <span>$28.52</span> */}
+//           </div>
+//           <h4>
+//             <Link href="/shop-single">{item.name}</Link>
+//           </h4>
+//           {/* <div className="star">
+//                     <span className="fas fa-star" />
+//                     <span className="fas fa-star" />
+//                     <span className="fas fa-star" />
+//                     <span className="fas fa-star" />
+//                     <span className="fas fa-star text-white" />
+//                   </div> */}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
 const page = () => {
+  // const [items, fetchItems] = useItem();
+
+  // const [consItems, setConsItems ] = useState({})
+
+  // useEffect(() => {
+  //   fetchItems();
+  // }, []);
+
+  // useEffect(() => {
+  //   setConsItems(items.filter(item => item.isAvailable).reduce((obj, item) => {
+  //     if (!item.category in obj) {
+  //       obj[item.category] = [];
+  //     }
+  //     obj[item.category].push(obj);
+  //   }, {}));
+  // }, [items]);
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Shop Page"} />
-      <section className="food-category-section fix section-padding">
+      {/* <section className="food-category-section fix section-padding">
         <div className="container">
           <ProductTopBar />
           <div className="row">
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/beef-ruti.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">ruti with beef slice</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 active shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/burger-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Whopper Burger King</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pasta-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Chiness pasta</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pizza-3.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/main-food-2.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">fast food combo</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/ruti.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">ruti with chiken</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/grilled-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">grilled chiken</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/delicious-burger.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pasta-3.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">ruti with beef slice</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/french-fry-3.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Whopper Burger King</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/fried-chicken-2.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Chiness pasta</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/french-fry-4.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            {consItems.map(item => {
+              <Item item={item}></Item>
+            })}
           </div>
           <div
             className="page-nav-wrap mt-5 text-center wow fadeInUp"
@@ -522,7 +116,7 @@ const page = () => {
             </ul>
           </div>
         </div>
-      </section>
+      </section> */}
       <Cta />
     </FoodKingLayout>
   );

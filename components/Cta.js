@@ -3,7 +3,7 @@ const Cta = () => {
     <section
       className="main-cta-banner-2 section-padding bg-cover"
       style={{
-        backgroundImage: 'url("assets/img/banner/main-cta-bg-2.jpg")',
+        backgroundImage: 'url("assets/img/hero/hero-bg.jpg")',
       }}
     >
       <div className="tomato-shape-left float-bob-y">
@@ -19,7 +19,7 @@ const Cta = () => {
               crispy, every bite taste
             </span>
             <h2 className="text-white wow fadeInUp" data-wow-delay=".3s">
-              30 minutes fast <br />
+              Real Cripsy <br />
               <span className="theme-color-3">delivery</span> challage
             </h2>
           </div>

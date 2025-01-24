@@ -450,7 +450,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      <section className="food-category-section fix section-padding section-bg">
+      {/* <section className="food-category-section fix section-padding section-bg">
         <div className="container">
           <div className="section-title text-center">
             <span className="wow fadeInUp">crispy, every bite taste</span>
@@ -613,7 +613,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <Cta />
     </FoodKingLayout>
   );
