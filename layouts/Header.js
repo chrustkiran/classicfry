@@ -19,7 +19,7 @@ const Menus = () => {
   return (
     <ul>
       <li className="has-dropdown">
-        <Link href="shop">
+        <Link href="shop-list">
           Menu
           {/* <i className="fas fa-angle-down" /> */}
         </Link>

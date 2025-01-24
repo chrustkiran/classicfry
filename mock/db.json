@@ -16,7 +16,7 @@
           { "ingredientId": "91f71cf5-19a1-4a8f-97c5-59242a37c6fc", "name": "Hot Sauce", "calories": 50, "notes": "Spicy sauce for flavor." }
         ],
         "description": "Crispy chicken wings with spicy sauce.",
-        "image": "https://example.com/spicy-chicken-wings.jpg"
+        "image": "https://media.istockphoto.com/id/835903320/photo/baked-chicken-wings-with-sesame-seeds-and-sweet-chili-sauce-on-white-wooden-board.jpg?s=612x612&w=0&k=20&c=SH8ZCkEKuWD_wxulpntIJ0uD4yRnUf9UXovQwSwrmmA="
       },
       {
         "itemId": "5b84e0fd-e99e-47b0-b6db-bc984adae9b2",
@@ -34,7 +34,7 @@
           { "ingredientId": "c12f3b3a-5b3f-4fe1-b348-607a1f219fa0", "name": "Garlic Butter", "calories": 100, "notes": "Buttery, garlicky sauce." }
         ],
         "description": "Buttery wings with a garlic kick.",
-        "image": "https://example.com/garlic-butter-wings.jpg"
+        "image": "https://media.istockphoto.com/id/835903320/photo/baked-chicken-wings-with-sesame-seeds-and-sweet-chili-sauce-on-white-wooden-board.jpg?s=612x612&w=0&k=20&c=SH8ZCkEKuWD_wxulpntIJ0uD4yRnUf9UXovQwSwrmmA="
       },
       {
         "itemId": "b8d22cd1-1f9f-417e-b60e-ffae3fe1c540",
@@ -52,7 +52,7 @@
           { "ingredientId": "91f71cf5-19a1-4a8f-97c5-59242a37c6fc", "name": "Hot Sauce", "calories": 50, "notes": "Spicy sauce for flavor." }
         ],
         "description": "Boneless chicken with spicy hot sauce.",
-        "image": "https://example.com/boneless-chicken-bites.jpg"
+        "image": "https://media.istockphoto.com/id/835903320/photo/baked-chicken-wings-with-sesame-seeds-and-sweet-chili-sauce-on-white-wooden-board.jpg?s=612x612&w=0&k=20&c=SH8ZCkEKuWD_wxulpntIJ0uD4yRnUf9UXovQwSwrmmA="
       },
       {
         "itemId": "b3474fe0-1b37-4fa2-a0ba-7d924a9d6f91",
@@ -70,7 +70,7 @@
           { "ingredientId": "ab3a9f9c-5b24-4fdb-8f37-0be7414f2c82", "name": "Lemon Pepper", "calories": 20, "notes": "Zesty lemon pepper seasoning." }
         ],
         "description": "Crispy wings with zesty lemon pepper.",
-        "image": "https://example.com/lemon-pepper-wings.jpg"
+        "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="
       },
       {
         "itemId": "9b7291b9-91fa-4200-8b5b-6fe8b92eaf74",
@@ -88,7 +88,7 @@
           { "ingredientId": "b2e9e2c7-49e6-4ae5-b7ea-63f0f913bdb8", "name": "BBQ Sauce", "calories": 80, "notes": "Smoky barbecue sauce." }
         ],
         "description": "BBQ boneless chicken bites.",
-        "image": "https://example.com/bbq-boneless-bites.jpg"
+        "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="
       },
       {
         "itemId": "3cfb60f9-cc5a-4c73-a557-107a40563136",
@@ -106,7 +106,7 @@
           { "ingredientId": "6c1b9a3c-6a6e-46a6-b2b0-03be28b191b8", "name": "Mango Habanero Sauce", "calories": 70, "notes": "Sweet and spicy sauce." }
         ],
         "description": "Crispy wings with a sweet and spicy mango habanero sauce.",
-        "image": "https://example.com/mango-habanero-wings.jpg"
+        "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="
       },
       {
         "itemId": "6b3a61b5-e948-47ab-a685-d1a8fbc5071f",
@@ -124,7 +124,7 @@
           { "ingredientId": "3d1a4d70-33f1-4cf4-a27c-b19b741f5425", "name": "Breading", "calories": 100, "notes": "Crunchy breaded coating." }
         ],
         "description": "Tender, breaded boneless chicken tenders.",
-        "image": "https://example.com/chicken-tenders.jpg"
+        "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="
       },
       {
         "itemId": "e1c0c46b-90b8-4310-b259-e004aff82a94",

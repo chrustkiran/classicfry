@@ -169,12 +169,9 @@ const Footer1 = () => {
         <div className="container">
           <div className="footer-bottom-wrapper d-flex align-items-center justify-content-between">
             <p className="wow fadeInLeft" data-wow-delay=".3s">
-              © Copyright <span className="theme-color-3">2024</span>{" "}
-              <Link href="/">Foodking </Link>. All Rights Reserved.
+              © Copyright <span className="theme-color-3">2025</span>{" "}
+              <Link href="/">ClassicFry </Link>. All Rights Reserved.
             </p>
-            <div className="card-image wow fadeInRight" data-wow-delay=".5s">
-              <img src="assets/img/card.png" alt="card-img" />
-            </div>
           </div>
         </div>
       </div>

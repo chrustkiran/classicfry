@@ -11309,7 +11309,7 @@ p.sticky-label {
 
 .footer-bottom {
   padding: 35px 0;
-  background-color: var(--theme);
+  background-color: black;
 }
 @media (max-width: 767px) {
   .footer-bottom .footer-bottom-wrapper {
@@ -11417,3 +11417,15 @@ p.sticky-label {
   .effect-1 {
   top: -100%;
 } /*# sourceMappingURL=main.css.map */
+
+li.shop-category a {
+  color: black;
+}
+
+li.shop-category a:hover {
+  color: var(--theme2)!important;
+}
+
+li.shop-category-selected a {
+  color: var(--theme2)!important;
+}

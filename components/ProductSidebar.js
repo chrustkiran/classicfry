@@ -1,13 +1,29 @@
 "use client";
 import Link from "next/link";
 import Slider from "rc-slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductSidebar = ({
   className = "col-xl-3 col-lg-4 order-2 order-md-1 mt-5",
   style = "style-1",
+  item = {},
+  filter = () => {},
 }) => {
+  const [selectedCategory, selectCategory] = useState(undefined);
   const [value, setValue] = useState([10, 30]);
+
+  const onClickCategory = (cat) => {
+    if (selectedCategory === cat) {
+      selectCategory(undefined);
+    } else {
+      selectCategory(cat);
+    }
+  };
+
+  useEffect(() => {
+    filter(value, selectedCategory);
+  }, [value, selectedCategory])
+
   return (
     <div className={className}>
       <div className={`main-sidebar ${style}`}>
@@ -17,7 +33,24 @@ const ProductSidebar = ({
           </div>
           <div className="widget-categories">
             <ul>
-              <li>
+              {Object.keys(item).map((cat) => (
+                <li
+                  className={
+                    cat === selectedCategory
+                      ? "shop-category-selected"
+                      : "shop-category"
+                  }
+                >
+                  <a
+                    onClick={() => onClickCategory(cat)}
+                    className="list-group-item-action"
+                  >
+                    {/* <i className="flaticon-burger" /> */}
+                    {cat}
+                  </a>
+                </li>
+              ))}
+              {/* <li>
                 <Link href="/shop-single">
                   <i className="flaticon-burger" />
                   burger
@@ -64,10 +97,11 @@ const ProductSidebar = ({
                   <i className="flaticon-hotdog" />
                   hot dog
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
+        {/* TODO:: add filters*/}
         <div className="single-sidebar-widget">
           <div className="wid-title">
             <h4>price filter</h4>
@@ -96,17 +130,17 @@ const ProductSidebar = ({
                 <div className="field">
                   <span>${value[1]}</span>
                 </div>
-                <Link
+                {/* <Link
                   href="/shop-left-sidebar"
                   className="theme-btn border-radius-none"
                 >
                   Filter
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
         </div>
-        <div className="single-sidebar-widget">
+        {/* <div className="single-sidebar-widget">
           <div className="wid-title">
             <h4>filter by size</h4>
           </div>
@@ -227,7 +261,7 @@ const ProductSidebar = ({
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
