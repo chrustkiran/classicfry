@@ -11,8 +11,8 @@ Version: 1.0.0
   --body: #fff;
   --black: #000;
   --white: #fff;
-  --theme: #00813d;
-  --theme2: #d12525;
+  --theme: #ffb936;
+  --theme2: #7d091e;
   --theme3: #ffb936;
   --header: #212121;
   --base: #00813d;
@@ -2117,7 +2117,7 @@ input.main-search-input::placeholder {
 }
 .breadcrumb-wrapper .page-heading .breadcrumb-items li {
   font-size: 20px;
-  color: var(--theme2);
+  color: var(--white);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -2127,7 +2127,7 @@ input.main-search-input::placeholder {
   }
 }
 .breadcrumb-wrapper .page-heading .breadcrumb-items li a {
-  color: var(--theme2);
+  color: var(--white);
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
@@ -2136,7 +2136,7 @@ input.main-search-input::placeholder {
 }
 .breadcrumb-wrapper .page-heading .breadcrumb-items li i {
   font-size: 20px;
-  color: var(--theme2);
+  color: var(--white);
 }
 @media (max-width: 575px) {
   .breadcrumb-wrapper .page-heading .breadcrumb-items li i {
@@ -3336,14 +3336,14 @@ input.main-search-input::placeholder {
   background-color: var(--white);
 }
 .catagory-product-card:hover .catagory-product-content h3 a {
-  color: var(--white);
+  /* color: var(--white); */
 }
 .catagory-product-card:hover .catagory-product-content p,
 .catagory-product-card:hover .catagory-product-content h3 {
-  opacity: 0;
+  /* opacity: 0; */
   z-index: -1;
   position: relative;
-  visibility: hidden;
+  /* visibility: hidden; */
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -3410,6 +3410,14 @@ input.main-search-input::placeholder {
   -o-object-fit: contain;
   object-fit: contain;
 }
+
+.category-product-main-image {
+  width: 100%; /* Ensures the image fills its container's width */
+  height: 100%; /* Ensures the image fills its container's height */
+  object-fit: cover; /* Crops the image while maintaining its aspect ratio */
+  object-position: center; /* Ensures the image is centered within the container */
+}
+
 .catagory-product-card-2 .catagory-product-content {
   position: relative;
   z-index: 9;

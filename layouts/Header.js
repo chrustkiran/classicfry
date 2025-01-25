@@ -384,7 +384,8 @@ const Sidebar = ({ toggle, setToggle }) => {
               <div className="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
                 <div className="offcanvas__logo">
                   <Link href="/">
-                    <img src="assets/img/logo/logo.svg" alt="logo-img" />
+                    {/* <img src="assets/img/logo/logo.svg" alt="logo-img" /> */}
+                    <h3>Classic Fry</h3>
                   </Link>
                 </div>
                 <div className="offcanvas__close">
@@ -393,12 +394,15 @@ const Sidebar = ({ toggle, setToggle }) => {
                   </button>
                 </div>
               </div>
-              <p className="text d-none d-lg-block">
-                This involves interactions between a business and its customers.
-                It's about meeting customers' needs and resolving their
-                problems. Effective customer service is crucial.
-              </p>
-              <div className="offcanvas-gallery-area d-none d-lg-block">
+
+              <div className="offcanvas-image img-popup">
+                <img
+                  width={"100%"}
+                  src="assets/img/header/fry.png"
+                  alt="gallery-img"
+                />
+              </div>
+              {/* <div className="offcanvas-gallery-area d-none d-lg-block">
                 <div className="offcanvas-gallery-items">
                   <a
                     href="assets/img/header/01.jpg"
@@ -439,7 +443,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                     <img src="assets/img/header/06.jpg" alt="gallery-img" />
                   </a>
                 </div>
-              </div>
+              </div> */}
               <MobileMenu />
               <div className="offcanvas__contact">
                 <h4>Contact Info</h4>

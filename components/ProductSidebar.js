@@ -8,10 +8,13 @@ const ProductSidebar = ({
   style = "style-1",
   item = {},
   filter = () => {},
+  selectedCategoryProp = undefined,
+  priceValue = [0, 100000]
 }) => {
-  const [selectedCategory, selectCategory] = useState(undefined);
-  const [value, setValue] = useState([10, 30]);
+  const [selectedCategory, selectCategory] = useState(selectedCategoryProp);
+  const [value, setValue] = useState([priceValue[0], priceValue[1]]);
 
+  useEffect(() => {selectCategory(selectedCategoryProp)}, [selectedCategoryProp])
   const onClickCategory = (cat) => {
     if (selectedCategory === cat) {
       selectCategory(undefined);

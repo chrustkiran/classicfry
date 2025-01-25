@@ -9,6 +9,8 @@ import useItem from "@/hooks/useItem";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { useSearchParams } from "next/navigation";
+
 const Item = ({ item }) => {
   return (
     <div className="col-xl-12 col-lg-12">
@@ -58,12 +60,19 @@ const Item = ({ item }) => {
     </div>
   );
 };
-const page = () => {
+
+const ShopPage = () => {
   const { items, fetchItems } = useItem();
 
   const [consItems, setConsItems] = useState({});
-  const [priceFilter, setPriceFilter] = useState([0, 100000]);
+  const [priceFilter, setPriceFilter] = useState([0, 500]);
   const [selectedCategory, selectCategory] = useState(undefined);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    selectCategory(searchParams.get("category"));
+  }, [searchParams]);
 
   useEffect(() => {
     fetchItems();
@@ -99,7 +108,12 @@ const page = () => {
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
           <div className="row g-5">
-            <ProductSidebar item={consItems} filter={addFilter} />
+            <ProductSidebar
+              item={consItems}
+              filter={addFilter}
+              selectedCategoryProp={selectedCategory}
+              priceValue={priceFilter}
+            />
             <div className="col-xl-9 col-lg-8 order-1 order-md-2">
               {/* <ProductTopBar mb0={true} /> */}
               <div className="row gap-3">
@@ -172,4 +186,4 @@ const page = () => {
     </FoodKingLayout>
   );
 };
-export default page;
+export default ShopPage;
