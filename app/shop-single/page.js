@@ -3,13 +3,30 @@ import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { Nav, Tab, Tabs } from "react-bootstrap";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/AppContext";
+
 const page = () => {
   const [quantity, setQuantity] = useState(0);
+  const {getQueryParams} = useAppContext();
+  const [item, setItem] = useState({});
+  const router = useRouter();
+  useEffect(() => {
+    const item = getQueryParams();
+    if (!item) {
+      router.push('/');
+    } else {
+      setItem(item);
+    }
+  }, []);
+
+
   return (
     <FoodKingLayout>
-      <PageBanner pageName={"product single"} />
+      <PageBanner pageName={item.name} />
       <section className="product-details-section section-padding">
         <div className="container">
           <div className="product-details-wrapper">
@@ -171,7 +188,7 @@ const page = () => {
                       ( 2 Reviews )
                     </a>
                   </div>
-                  <h3 className="pb-3">Whopper Burger King</h3>
+                  <h3 className="pb-3">{item.name}</h3>
                   <p className="mb-4">
                     There are many variations of passages of Lorem Ipsum
                     available, but majority have suffered teration in some form,

@@ -10,8 +10,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
+import { useAppContext } from "@/context/AppContext";
 
 const Item = ({ item }) => {
+  const {setQueryParams} = useAppContext();
+
+  const onChooseItem = () => {
+    console.log('item :: ', item);
+    setQueryParams(item);
+  }
+
   return (
     <div className="col-xl-12 col-lg-12">
       <div className="shop-list-items">
@@ -46,7 +54,7 @@ const Item = ({ item }) => {
           <p>{item.description}</p>
           <h5>£{item.basePrice}</h5>
           <div className="shop-list-btn">
-            <Link href="shop-single" className="theme-btn">
+            <Link href="shop-single" className="theme-btn" onClick={onChooseItem}>
               <span className="button-content-wrapper d-flex align-items-center">
                 <span className="button-icon">
                   <i className="flaticon-chicken" />
@@ -137,7 +145,7 @@ const ShopPage = () => {
                               <Item key={item.id} item={item} />
                             ))
                           ) : (
-                            <h4 className="mt-3">No Items</h4>
+                            <h4 className="mt-3 fw-normal">No Items</h4>
                           )}
                         </div>
                       </div>

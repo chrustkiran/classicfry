@@ -10,11 +10,8 @@ import Link from "next/link";
 const page = () => {
   return (
     <FoodKingLayout>
-      {/* Hero Section Start */}
       <HomeSlider />
-      {/* Food Catagory Section Start */}
       <FoodSlider />
-      {/* Food Banner Section Start */}
       <section className="food-banner-section section-padding fix section-bg pt-0">
         <div className="chili-shape">
           <img src="assets/img/shape/chili-shape.png" alt="shape-img" />
@@ -117,16 +114,16 @@ const page = () => {
             <div className="row align-items-center">
               <div className="col-xl-6 col-lg-6">
                 <div className="grilled-content">
-                  <h4 className="wow fadeInUp">save 20%</h4>
+                  <h4 className="wow fadeInUp">Where</h4>
                   <h2 className="wow fadeInUp" data-wow-delay=".3s">
-                    tODAY'S <span>ASTACKIN</span> DAY
+                    <span>Crispy</span> Meet Perfection.
                   </h2>
-                  <h3 className="wow fadeInUp" data-wow-delay=".5s">
+                  {/* <h3 className="wow fadeInUp" data-wow-delay=".5s">
                     <Link href="/shop">
                       grilled <span className="text-1">chiken</span>
                     </Link>
                     <span className="text-2">$59,00</span>
-                  </h3>
+                  </h3> */}
                   <div
                     className="grilled-button wow fadeInUp"
                     data-wow-delay=".7s"

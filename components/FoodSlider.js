@@ -48,7 +48,7 @@ const FoodSlider = () => {
         >
           <div className="swiper-wrapper">
             {categories.map((category, index) => (
-              <SwiperSlide className="swiper-slide">
+              <SwiperSlide key={index} className="swiper-slide">
                 <CategoryCard key={index} category={category} />
               </SwiperSlide>
             ))}

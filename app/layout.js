@@ -8,6 +8,7 @@ import "@css/swiper-bundle.min.css"
 import "@css/nice-select.css"
 import "@css/main.css"
 import 'rc-slider/assets/index.css';
+import { AppProvider } from "@/context/AppContext";
 
 import Preloader from "@/layouts/Preloader";
 export const metadata = {
@@ -19,8 +20,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+      <AppProvider>
         <Preloader />
         {children}
+        </AppProvider>
       </body>
     </html>
   );

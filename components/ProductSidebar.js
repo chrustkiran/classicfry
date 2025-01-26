@@ -4,17 +4,19 @@ import Slider from "rc-slider";
 import { useEffect, useState } from "react";
 
 const ProductSidebar = ({
-  className = "col-xl-3 col-lg-4 order-2 order-md-1 mt-5",
+  className = "col-xl-3 col-lg-4 order-md-1 mt-5 product-side-bar",
   style = "style-1",
   item = {},
   filter = () => {},
   selectedCategoryProp = undefined,
-  priceValue = [0, 100000]
+  priceValue = [0, 100000],
 }) => {
   const [selectedCategory, selectCategory] = useState(selectedCategoryProp);
   const [value, setValue] = useState([priceValue[0], priceValue[1]]);
 
-  useEffect(() => {selectCategory(selectedCategoryProp)}, [selectedCategoryProp])
+  useEffect(() => {
+    selectCategory(selectedCategoryProp);
+  }, [selectedCategoryProp]);
   const onClickCategory = (cat) => {
     if (selectedCategory === cat) {
       selectCategory(undefined);
@@ -25,7 +27,7 @@ const ProductSidebar = ({
 
   useEffect(() => {
     filter(value, selectedCategory);
-  }, [value, selectedCategory])
+  }, [value, selectedCategory]);
 
   return (
     <div className={className}>
@@ -34,8 +36,11 @@ const ProductSidebar = ({
           <div className="wid-title">
             <h4>catagories</h4>
           </div>
-          <div className="widget-categories">
-            <ul>
+          <div className="widget-categories d-flex">
+            <ul
+              className="d-flex flex-row gap-3 overflow-auto list-unstyled d-md-none"
+              style={{ whiteSpace: "nowrap" }}
+            >
               {Object.keys(item).map((cat) => (
                 <li
                   className={
@@ -102,6 +107,25 @@ const ProductSidebar = ({
                 </Link>
               </li> */}
             </ul>
+            <ul className="list-unstyled d-none d-md-block">
+              {Object.keys(item).map((cat) => (
+                <li
+                  key={cat}
+                  className={`${
+                    cat === selectedCategory
+                      ? "shop-category-selected mb-2"
+                      : "shop-category mb-2"
+                  }`}
+                >
+                  <a
+                    onClick={() => onClickCategory(cat)}
+                    className="list-group-item-action"
+                  >
+                    {cat}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
         {/* TODO:: add filters*/}
@@ -114,10 +138,10 @@ const ProductSidebar = ({
               value={value}
               range
               onChange={(e) => setValue(e)}
-              trackStyle={{ backgroundColor: "#00813D" }}
+              trackStyle={{ backgroundColor: "#ffb936" }}
               handleStyle={{
-                borderColor: "#00813D",
-                backgroundColor: "#00813D",
+                borderColor: "#ffb936",
+                backgroundColor: "#ffb936",
               }}
               railStyle={{ backgroundColor: "#212121" }}
             />
