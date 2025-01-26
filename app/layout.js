@@ -1,14 +1,15 @@
 import "./globals.css";
-import "@css/bootstrap.min.css"
-import "@css/font-awesome.css"
-import "@css/animate.css"
-import "@css/magnific-popup.css"
-import "@css/meanmenu.css"
-import "@css/swiper-bundle.min.css"
-import "@css/nice-select.css"
-import "@css/main.css"
-import 'rc-slider/assets/index.css';
+import "@css/bootstrap.min.css";
+import "@css/font-awesome.css";
+import "@css/animate.css";
+import "@css/magnific-popup.css";
+import "@css/meanmenu.css";
+import "@css/swiper-bundle.min.css";
+import "@css/nice-select.css";
+import "@css/main.css";
+import "rc-slider/assets/index.css";
 import { AppProvider } from "@/context/AppContext";
+import { Suspense } from "react";
 
 import Preloader from "@/layouts/Preloader";
 export const metadata = {
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-      <AppProvider>
-        <Preloader />
-        {children}
+        <AppProvider>
+          <Suspense>
+            <Preloader />
+            {children}
+          </Suspense>
         </AppProvider>
       </body>
     </html>

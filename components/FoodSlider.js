@@ -1,12 +1,13 @@
 "use client";
-import useItem from "@/hooks/useItem";
+
 import { sliderProps } from "@/utility/sliderProps";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CategoryCard from "./CategoryCard";
+import { useAppContext } from "@/context/AppContext";
 
 const FoodSlider = () => {
-  const { categories, fetchCategories } = useItem();
+  const { categories, fetchCategories } = useAppContext();
   useEffect(() => {
     fetchCategories();
   }, []);

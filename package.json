@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "powershell -Command \"& { next dev }\"",
-    "build": "next build",
+    "build": "powershell -Command \" & {next build}\"",
     "start": "next start",
     "lint": "next lint"
   },

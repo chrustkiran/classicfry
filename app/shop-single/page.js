@@ -8,21 +8,22 @@ import { useEffect, useState } from "react";
 import { Nav, Tab, Tabs } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/AppContext";
+import { useSearchParams } from "next/navigation";
 
 const page = () => {
   const [quantity, setQuantity] = useState(0);
-  const {getQueryParams} = useAppContext();
+  const { items } = useAppContext();
   const [item, setItem] = useState({});
   const router = useRouter();
+  const searchParams = useSearchParams();
   useEffect(() => {
-    const item = getQueryParams();
-    if (!item) {
-      router.push('/');
+   const item_ = items.filter(item => item.itemId === searchParams.get('item'));
+    if (item_.length != 1) {
+      setItem({})
     } else {
-      setItem(item);
+      setItem(item_[0]);
     }
   }, []);
-
 
   return (
     <FoodKingLayout>
@@ -40,125 +41,10 @@ const page = () => {
                     >
                       <Tab.Pane className="tab-pane fade" eventKey="nav-home">
                         <div className="product-image">
-                          <img
-                            src="assets/img/shop-food/details-1.png"
-                            alt="img"
-                          />
-                          <a
-                            href="assets/img/shop-food/details-1.png"
-                            className="icon img-popup"
-                          >
-                            <i className="far fa-search" />
-                          </a>
-                        </div>
-                      </Tab.Pane>
-                      <Tab.Pane
-                        className="tab-pane fade"
-                        eventKey="nav-profile"
-                      >
-                        <div className="product-image">
-                          <img
-                            src="assets/img/shop-food/details-1.png"
-                            alt="img"
-                          />
-                          <a
-                            href="assets/img/shop-food/details-1.png"
-                            className="icon img-popup"
-                          >
-                            <i className="far fa-search" />
-                          </a>
-                        </div>
-                      </Tab.Pane>
-                      <Tab.Pane
-                        className="tab-pane fade"
-                        eventKey="nav-contact"
-                      >
-                        <div className="product-image">
-                          <img
-                            src="assets/img/shop-food/details-1.png"
-                            alt="img"
-                          />
-                          <a
-                            href="assets/img/shop-food/details-1.png"
-                            className="icon img-popup"
-                          >
-                            <i className="far fa-search" />
-                          </a>
-                        </div>
-                      </Tab.Pane>
-                      <Tab.Pane
-                        className="tab-pane fade"
-                        eventKey="nav-contact2"
-                      >
-                        <div className="product-image">
-                          <img
-                            src="assets/img/shop-food/details-1.png"
-                            alt="img"
-                          />
-                          <a
-                            href="assets/img/shop-food/details-1.png"
-                            className="icon img-popup"
-                          >
-                            <i className="far fa-search" />
-                          </a>
+                          <img src={item.image} alt="img" />
                         </div>
                       </Tab.Pane>
                     </Tab.Content>
-                    <Nav
-                      as={"ul"}
-                      className="nav nav-tabs wow"
-                      id="nav-tab"
-                      role="tablist"
-                    >
-                      <Nav.Link
-                        as={"button"}
-                        className="nav-link"
-                        id="nav-home-tab"
-                        eventKey="nav-home"
-                      >
-                        <img
-                          src="assets/img/shop-food/s1.png"
-                          alt="img"
-                          className="image-tab"
-                        />
-                      </Nav.Link>
-                      <Nav.Link
-                        as={"button"}
-                        className="nav-link"
-                        id="nav-home-tab"
-                        eventKey="nav-profile"
-                      >
-                        <img
-                          src="assets/img/shop-food/s2.png"
-                          alt="img"
-                          className="image-tab"
-                        />
-                      </Nav.Link>
-                      <Nav.Link
-                        as={"button"}
-                        className="nav-link"
-                        id="nav-home-tab"
-                        eventKey="nav-contact"
-                      >
-                        <img
-                          src="assets/img/shop-food/s3.png"
-                          alt="img"
-                          className="image-tab"
-                        />
-                      </Nav.Link>
-                      <Nav.Link
-                        as={"button"}
-                        className="nav-link"
-                        id="nav-home-tab"
-                        eventKey="nav-contact2"
-                      >
-                        <img
-                          src="assets/img/shop-food/s4.png"
-                          alt="img"
-                          className="image-tab"
-                        />
-                      </Nav.Link>
-                    </Nav>
                   </Tab.Container>
                 </div>
               </div>
@@ -166,7 +52,7 @@ const page = () => {
                 <div className="product-details-content">
                   <div className="star pb-3">
                     <span>-5%</span>
-                    <a href="#">
+                    {/* <a href="#">
                       {" "}
                       <i className="fas fa-star" />
                     </a>
@@ -186,17 +72,13 @@ const page = () => {
                     </a>
                     <a href="#" className="text-color">
                       ( 2 Reviews )
-                    </a>
+                    </a> */}
                   </div>
                   <h3 className="pb-3">{item.name}</h3>
-                  <p className="mb-4">
-                    There are many variations of passages of Lorem Ipsum
-                    available, but majority have suffered teration in some form,
-                    by injected humour, or randomised
-                  </p>
+                  <p className="mb-4">{item.description}</p>
                   <div className="price-list d-flex align-items-center">
-                    <span>$4,600.00</span>
-                    <del>$4,600.00</del>
+                    <span>£{item.basePrice}</span>
+                    {/* <del>$4,600.00</del> */}
                   </div>
                   <div className="cart-wrp">
                     <div className="cart-quantity">
@@ -241,19 +123,25 @@ const page = () => {
                       </Link>
                     </div>
                   </div>
-                  <h6 className="shop-text">
+                  {/* <h6 className="shop-text">
                     GROUND DELIVERY SURCHARGE: <span>$180.00</span>
-                  </h6>
-                  <h6 className="details-info">
+                  </h6> */}
+                  {/* <h6 className="details-info">
                     <Link href={"#"}>SKU:</Link> <a href="shop-single">N/A</a>
-                  </h6>
+                  </h6> */}
                   <h6 className="details-info">
                     <span>Categories:</span>{" "}
-                    <Link href="shop-single">Pizza</Link>
+                    <Link
+                      href={{
+                        pathname: "/shop-list",
+                        query: { category: item.category },
+                      }}
+                    >
+                      {item.category}
+                    </Link>
                   </h6>
                   <h6 className="details-info">
-                    <span>Tags:</span>{" "}
-                    <Link href="shop-single">Burgers, Tacos</Link>
+                    <span>Tags:</span> <Link href="#">{item.tag}</Link>
                   </h6>
                 </div>
               </div>

@@ -5,7 +5,6 @@ import PageBanner from "@/components/PageBanner";
 import ProductSidebar from "@/components/ProductSidebar";
 import ProductTopBar from "@/components/ProductTopBar";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
-import useItem from "@/hooks/useItem";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -13,13 +12,6 @@ import { useSearchParams } from "next/navigation";
 import { useAppContext } from "@/context/AppContext";
 
 const Item = ({ item }) => {
-  const {setQueryParams} = useAppContext();
-
-  const onChooseItem = () => {
-    console.log('item :: ', item);
-    setQueryParams(item);
-  }
-
   return (
     <div className="col-xl-12 col-lg-12">
       <div className="shop-list-items">
@@ -54,7 +46,13 @@ const Item = ({ item }) => {
           <p>{item.description}</p>
           <h5>£{item.basePrice}</h5>
           <div className="shop-list-btn">
-            <Link href="shop-single" className="theme-btn" onClick={onChooseItem}>
+            <Link
+              href={{
+                pathname: "/shop-single",
+                query: { item: item.itemId },
+              }}
+              className="theme-btn"
+            >
               <span className="button-content-wrapper d-flex align-items-center">
                 <span className="button-icon">
                   <i className="flaticon-chicken" />
@@ -70,7 +68,7 @@ const Item = ({ item }) => {
 };
 
 const ShopPage = () => {
-  const { items, fetchItems } = useItem();
+  const { items, fetchItems } = useAppContext();
 
   const [consItems, setConsItems] = useState({});
   const [priceFilter, setPriceFilter] = useState([0, 500]);
