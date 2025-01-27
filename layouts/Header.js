@@ -1,4 +1,5 @@
 "use client";
+import { useAppContext } from "@/context/AppContext";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 
@@ -118,6 +119,7 @@ const Menus = () => {
 
 const Header1 = () => {
   const [toggle, setToggle] = useState(false);
+  const { cart, getTotalCartItem } = useAppContext();
   return (
     <Fragment>
       <header className="section-bg">
@@ -189,13 +191,37 @@ const Header1 = () => {
                   <div className="menu-cart">
                     <div className="cart-box">
                       <ul>
-                        <li>
+                        {cart.map((item) => (
+                          <li>
+                            <img src={item.image} alt="image" />
+                            <div className="cart-product">
+                              <a href="#">{item.name}</a>
+                              <div className="d-flex justify-content-between align-items-center">
+  <div className="d-flex align-items-center">
+    <span>{item.quantity} - </span>
+    {item.size !== "default" && (
+      <span
+        style={{ fontSize: "10px", width: "20px", }}
+        className="badge bg-warning"
+      >
+        {item.size.substring(0, 1)}
+      </span>
+    )}
+    <span>{item.price}</span>
+  </div>
+  <span className="fw-bold">{(item.quantity * item.price).toFixed(2)}</span>
+</div>
+
+                            </div>
+                          </li>
+                        ))}
+                        {/* <li>
                           <img src="assets/img/shop-food/s2.png" alt="image" />
                           <div className="cart-product">
-                            <a href="#0">grilled chiken</a>
+                            <a href="#9">grilled chiken</a>
                             <span>2 - 168$</span>
                           </div>
-                        </li>
+                        </li> */}
                       </ul>
                       {/* <ul>
                         <li className="border-none">
@@ -219,9 +245,16 @@ const Header1 = () => {
                         </Link>
                       </div>
                     </div>
-                    <Link href="shop-cart" className="cart-icon">
+                    <div className="cart-icon">
+                      <i className="far fa-lg fa-drumstick"></i>
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                        {getTotalCartItem()}
+                      </span>
+                    </div>
+
+                    {/* <Link href="shop-cart" className="cart-icon">
                       <i className="far fa-shopping-basket" />
-                    </Link>
+                    </Link> */}
                   </div>
                   <div className="header-button">
                     <Link href="contact" className="theme-btn bg-red-2">
@@ -296,7 +329,7 @@ const Header2 = () => {
                       {/* for wp */}
                     </div>
                   </div>
-                  <a href="#0" className="search-trigger search-icon">
+                  <a href="#7" className="search-trigger search-icon">
                     <i className="fal fa-search" />
                   </a>
                   <div className="menu-cart">

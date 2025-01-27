@@ -9,16 +9,23 @@ import { Nav, Tab, Tabs } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
+import { useAppContext } from "@/context/AppContext";
+
+const DEFAULT = "default";
 
 const page = () => {
   const [quantity, setQuantity] = useState(0);
   const [itemPrice, setItemPrice] = useState(0);
   const [portionSize, setPortionSize] = useState(undefined);
+  const [addToCartHover, setHover] = useState(false);
 
   const { item, fetchItem } = useItem();
   const [fetchedItem, setFetchedItem] = useState({});
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const { addItemToCart } = useAppContext();
+
   useEffect(() => {
     const itemId = searchParams.get("item");
     if (itemId) {
@@ -39,6 +46,17 @@ const page = () => {
       }
     }
   }, [item]);
+
+  const addToCart = () => {
+    addItemToCart(
+      fetchedItem.itemId,
+      fetchedItem.name,
+      itemPrice,
+      fetchedItem.image,
+      portionSize ? portionSize : DEFAULT,
+      quantity
+    );
+  };
 
   const handlePrice = (fetchedItem) => {
     if (!fetchedItem.portionPrices) {
@@ -163,19 +181,19 @@ const page = () => {
                       </div>
                     </div>
                     <div className="shop-button d-flex align-items-center">
-                      <Link href="shop-single" className="theme-btn">
+                      <button
+                        disabled={quantity == 0}
+                        onClick={addToCart}
+                        className={`theme-btn ${quantity == 0 ? 'disabled' : ''}`}
+                      >
                         <span className="button-content-wrapper d-flex align-items-center justify-content-center">
                           <span className="button-icon">
                             <i className="flaticon-shopping-cart" />
                           </span>
                           <span className="button-text">Add To Cart</span>
                         </span>
-                      </Link>
+                      </button>
                     </div>
-                          
-
-
-
                   </div>
                   {/* <h6 className="shop-text">
                     GROUND DELIVERY SURCHARGE: <span>$180.00</span>
@@ -218,7 +236,6 @@ const page = () => {
                         >
                           <div className="d-flex w-100 justify-content-between">
                             <h5 className="mb-1">List group item heading</h5>
-                           
                           </div>
                           <small>3 dyas</small>
                           <p className="mb-1">
@@ -232,11 +249,8 @@ const page = () => {
                         >
                           <div className="d-flex w-100 justify-content-between">
                             <h5 className="mb-1">List group item heading</h5>
-                            
                           </div>
-                          <small class="text-body-secondary">
-                              3 days ago
-                            </small>
+                          <small class="text-body-secondary">3 days ago</small>
                           <p className="mb-1">
                             Some placeholder content in a paragraph.
                           </p>
