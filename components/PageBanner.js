@@ -11,7 +11,7 @@ const PageBanner = ({ pageName }) => {
           <h1>{pageName}</h1>
           <ul className="breadcrumb-items">
             <li>
-              <Link href="/">Home Page</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
               <i className="far fa-chevron-right" />

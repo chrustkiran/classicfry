@@ -11438,3 +11438,20 @@ li.shop-category a:hover {
 li.shop-category-selected a {
   color: var(--theme2)!important;
 }
+
+.size-btn {
+  background-color: var(--theme);
+  font-weight: bold;
+}
+
+.size-btn-selected, .size-btn:hover {
+  background-color: var(--theme);
+  border-color: var(--theme2);
+  border-width: 5px;
+  border-style: solid;
+  font-weight: bold;
+}
+
+.category-batch {
+  background-color: var(--theme2);
+}

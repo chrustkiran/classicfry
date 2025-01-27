@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "powershell -Command \"& { next dev }\"",
-    "build": "powershell -Command \" & {next build}\"",
+    "build-ws": "powershell -Command \" & {next build}\"",
+    "build": "next build",
     "start": "next start",
+    "start-ws": "powershell -Command \" & {next start}\"",
     "lint": "next lint"
   },
   "dependencies": {

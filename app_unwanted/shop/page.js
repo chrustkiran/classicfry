@@ -3,7 +3,7 @@
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import ProductTopBar from "@/components/ProductTopBar";
-import { useAppContext } from "@/context/AppContext";
+import useItem from "@/hooks/useItem";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -55,7 +55,7 @@ const Item = ({ item }) => {
 };
 
 const page = () => {
-  const { items, fetchItems } = useAppContext();
+  const { items, fetchItems } = useItem();
 
   const [consItems, setConsItems] = useState({});
 

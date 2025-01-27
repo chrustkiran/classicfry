@@ -7,27 +7,61 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Nav, Tab, Tabs } from "react-bootstrap";
 import { useRouter } from "next/navigation";
-import { useAppContext } from "@/context/AppContext";
 import { useSearchParams } from "next/navigation";
+import useItem from "@/hooks/useItem";
 
 const page = () => {
   const [quantity, setQuantity] = useState(0);
-  const { items } = useAppContext();
-  const [item, setItem] = useState({});
+  const [itemPrice, setItemPrice] = useState(0);
+  const [portionSize, setPortionSize] = useState(undefined);
+
+  const { item, fetchItem } = useItem();
+  const [fetchedItem, setFetchedItem] = useState({});
   const router = useRouter();
   const searchParams = useSearchParams();
   useEffect(() => {
-   const item_ = items.filter(item => item.itemId === searchParams.get('item'));
-    if (item_.length != 1) {
-      setItem({})
+    const itemId = searchParams.get("item");
+    if (itemId) {
+      fetchItem(itemId);
     } else {
-      setItem(item_[0]);
+      router.back(); // Go back if the item ID is not provided in the URL
     }
   }, []);
 
+  useEffect(() => {
+    if (item) {
+      if (item?.length != 1 || !item[0].itemId) {
+        console.warn("Item does not have an itemId. Navigating back.");
+        router.back();
+      } else {
+        setFetchedItem(item[0]);
+        handlePrice(item[0]);
+      }
+    }
+  }, [item]);
+
+  const handlePrice = (fetchedItem) => {
+    if (!fetchedItem.portionPrices) {
+      //TODO :: check what it is.
+      setItemPrice(item.basePrice);
+    } else {
+      const portionPrices = fetchedItem.portionPrices.sort(
+        (a, b) => a.price - b.price
+      );
+      setItemPrice(portionPrices[0].price);
+      setPortionSize(portionPrices[0].portionSize);
+      setFetchedItem({ ...fetchedItem, portionPrices: portionPrices });
+    }
+  };
+
+  const selectSize = (size) => {
+    setPortionSize(size.portionSize);
+    setItemPrice(size.price);
+  };
+
   return (
     <FoodKingLayout>
-      <PageBanner pageName={item.name} />
+      <PageBanner pageName={fetchedItem.name} />
       <section className="product-details-section section-padding">
         <div className="container">
           <div className="product-details-wrapper">
@@ -41,7 +75,7 @@ const page = () => {
                     >
                       <Tab.Pane className="tab-pane fade" eventKey="nav-home">
                         <div className="product-image">
-                          <img src={item.image} alt="img" />
+                          <img src={fetchedItem.image} alt="img" />
                         </div>
                       </Tab.Pane>
                     </Tab.Content>
@@ -51,7 +85,7 @@ const page = () => {
               <div className="col-lg-7 mt-5 mt-lg-0">
                 <div className="product-details-content">
                   <div className="star pb-3">
-                    <span>-5%</span>
+                    <span>{fetchedItem.tag}</span>
                     {/* <a href="#">
                       {" "}
                       <i className="fas fa-star" />
@@ -74,12 +108,31 @@ const page = () => {
                       ( 2 Reviews )
                     </a> */}
                   </div>
-                  <h3 className="pb-3">{item.name}</h3>
-                  <p className="mb-4">{item.description}</p>
+                  <h3 className="pb-3">{fetchedItem.name}</h3>
+                  <p className="mb-4">{fetchedItem.description}</p>
                   <div className="price-list d-flex align-items-center">
-                    <span>£{item.basePrice}</span>
+                    <span>£{itemPrice}</span>
                     {/* <del>$4,600.00</del> */}
                   </div>
+                  <div className="d-flex mt-4">
+                    {fetchedItem.portionPrices &&
+                      // fetchedItem.portionPrices.length > 0 &&
+                      fetchedItem.portionPrices.map((size) => (
+                        <button
+                          onClick={() => selectSize(size)}
+                          key={size.portionPriceId}
+                          className={`btn btn-sm rounded-circle me-2 ${
+                            portionSize === size.portionSize
+                              ? "size-btn-selected"
+                              : "size-btn"
+                          }`}
+                          style={{ width: "40px", height: "40px" }}
+                        >
+                          {size.portionSize.substring(0, 1)}
+                        </button>
+                      ))}
+                  </div>
+                  <div className="price-list d-flex align-items-center"></div>
                   <div className="cart-wrp">
                     <div className="cart-quantity">
                       <h5>QUANTITY:</h5>
@@ -118,10 +171,11 @@ const page = () => {
                           <span className="button-text">Add To Cart</span>
                         </span>
                       </Link>
-                      <Link href="shop-single" className="star-icon">
-                        <i className="fal fa-star" />
-                      </Link>
                     </div>
+                          
+
+
+
                   </div>
                   {/* <h6 className="shop-text">
                     GROUND DELIVERY SURCHARGE: <span>$180.00</span>
@@ -130,113 +184,71 @@ const page = () => {
                     <Link href={"#"}>SKU:</Link> <a href="shop-single">N/A</a>
                   </h6> */}
                   <h6 className="details-info">
-                    <span>Categories:</span>{" "}
+                    <span>Category:</span>{" "}
                     <Link
+                      className="badge rounded-pill category-batch text-white"
                       href={{
                         pathname: "/shop-list",
-                        query: { category: item.category },
+                        query: { category: fetchedItem.category },
                       }}
                     >
-                      {item.category}
+                      {fetchedItem.category}
                     </Link>
                   </h6>
-                  <h6 className="details-info">
-                    <span>Tags:</span> <Link href="#">{item.tag}</Link>
-                  </h6>
+                  {/* <h6 className="details-info">
+                    <span>Tags:</span> <Link href="#">{fetchItem.tag}</Link>
+                  </h6> */}
                 </div>
               </div>
             </div>
             <div className="single-tab">
               <Tabs
-                defaultActiveKey="description"
+                defaultActiveKey="Ingredients"
                 id="product-tabs"
                 className="mb-4"
               >
-                <Tab eventKey="description" title="Description">
+                <Tab eventKey="Ingredients" title="Ingredients">
                   <div className="description-items">
                     <div className="row">
-                      <div className="col-lg-12">
-                        <div className="description-content">
-                          <h3>Experience is over the world visit</h3>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Curabitur vulputate vestibulum Phasellus
-                            rhoncus, dolor eget viverra pretium, dolor Numquam
-                            odit accusantium odit aut commodi et. Nostrum est
-                            atque ut dolorum. Et sequi aut atque doloribus qui.
-                            Iure amet in voluptate reiciendis. Perspiciatis
-                            consequatur aperiam repellendus velit quia est
-                            minima. tellus aliquet nunc vitae ultricies erat
-                            elit eu lacus. Vestibulum non justo consectetur,
-                            cursus ante, tincidunt sapien. Nulla quis diam sit
-                            amet turpis interdum accumsan quis necenim. Vivamus
-                            faucibus ex sed nibh egestas elementum. Mauris et
-                            bibendum dui. Aenean consequat pulvinar luctus
-                          </p>
-                          <h3 className="mb-0 mt-5">More Details</h3>
-                          <div className="description-list-items d-flex">
-                            <ul className="description-list">
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  Lorem Ipsum is simply dummy text of the
-                                  printing and typesetting industry
-                                </span>
-                              </li>
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  Lorem Ipsum has been the 's standard dummy
-                                  text. Lorem Ipsumum is simply dummy text.
-                                </span>
-                              </li>
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  type here your detail one by one li more add
-                                </span>
-                              </li>
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  has been the industry's standard dummy text
-                                  ever since. Lorem Ips
-                                </span>
-                              </li>
-                            </ul>
-                            <ul className="description-list">
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  Lorem Ipsum generators on the tend to repeat.
-                                </span>
-                              </li>
-                              <li>
-                                <i className="fal fa-check" />
-                                <span> If you are going to use a passage.</span>
-                              </li>
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  {" "}
-                                  Lorem Ipsum generators on the tend to repeat.
-                                </span>
-                              </li>
-                              <li>
-                                <i className="fal fa-check" />
-                                <span>
-                                  {" "}
-                                  Lorem Ipsum generators on the tend to repeat.
-                                </span>
-                              </li>
-                            </ul>
+                      <div className="list-group">
+                        <a
+                          href="#"
+                          className="list-group-item list-group-item-action"
+                          aria-current="true"
+                        >
+                          <div className="d-flex w-100 justify-content-between">
+                            <h5 className="mb-1">List group item heading</h5>
+                           
                           </div>
-                        </div>
+                          <small>3 dyas</small>
+                          <p className="mb-1">
+                            Some placeholder content in a paragraph.
+                          </p>
+                          <small>And some small print.</small>
+                        </a>
+                        <a
+                          href="#"
+                          className="list-group-item list-group-item-action"
+                        >
+                          <div className="d-flex w-100 justify-content-between">
+                            <h5 className="mb-1">List group item heading</h5>
+                            
+                          </div>
+                          <small class="text-body-secondary">
+                              3 days ago
+                            </small>
+                          <p className="mb-1">
+                            Some placeholder content in a paragraph.
+                          </p>
+                          <small className="text-body-secondary">
+                            And some muted small print.
+                          </small>
+                        </a>
                       </div>
                     </div>
                   </div>
                 </Tab>
-                <Tab eventKey="additional" title="Additional Information">
+                {/* <Tab eventKey="additional" title="Additional Information">
                   <div className="table-responsive">
                     <table className="table table-bordered">
                       <tbody>
@@ -286,8 +298,7 @@ const page = () => {
                           pretium.
                         </p>
                       </div>
-                    </div>
-                    {/* More review items... */}
+                    </div>              
                     <div className="review-title mt-5 py-15 mb-30">
                       <h4>add a review</h4>
                       <div className="rate-now d-flex align-items-center">
@@ -349,7 +360,7 @@ const page = () => {
                       </form>
                     </div>
                   </div>
-                </Tab>
+                </Tab> */}
               </Tabs>
             </div>
           </div>

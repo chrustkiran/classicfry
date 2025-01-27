@@ -6,12 +6,13 @@ const { useState } = require("react")
 const base_url = env.API_URL
 const useItem = () => {
     
-    const [items, setItem] = useState([]);
+    const [items, setItems] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [item, setItem] = useState(undefined);
 
     const fetchItems = () => {
         axios.get(base_url+'items').then(res => {
-            setItem(res.data);
+            setItems(res.data);
         });
     }
 
@@ -21,7 +22,14 @@ const useItem = () => {
         })
     }
 
-    return {items, fetchItems, categories, fetchCategories}
+    
+    const fetchItem = (itemId) => {
+        axios.get(base_url+`items?itemId=${itemId}`).then(res => {
+            setItem(res.data);
+        });
+    }
+
+    return {items, fetchItems, categories, fetchCategories, fetchItem, item}
 
 }
 

@@ -1,41 +1,44 @@
 "use client"
 import { createContext, useState, useContext } from "react";
-import axios from "axios";
-import env from "../env";
 
 const AppContext = createContext();
 
-const base_url = env.API_URL
+const cartName = 'classic-fry-cart';
 
 export const AppProvider = ({ children }) => {
-  const [queryParams, setQueryParams] = useState(null);
 
-  // const getQueryParams = () => {
-  //   const queryParams_ = queryParams;
-  //   setQueryParams(null);
-  //   return queryParams_;
-  // }
+  const getCartFromLocalStorage = () => {
+    const savedCart = localStorage.getItem(cartName);
+    return savedCart ? JSON.parse(savedCart) : [];
+  };
 
-  const [items, setItem] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [cart, setCart] = useState(getCartFromLocalStorage);
 
-  const fetchItems = () => {
-      axios.get(base_url+'items').then(res => {
-          setItem(res.data);
-      });
-  }
+ 
+  const addItemToCart = (name, size, price) => {
+    const newItem = new CartItem(name, size, price);
+    const updatedCart = [...cart, newItem];
+    setCart(updatedCart);
+    localStorage.setItem(cartName, JSON.stringify(updatedCart));
+  };
 
-  const fetchCategories = () => {
-      axios.get(base_url + 'categories').then(res => {
-          setCategories(res.data);
-      })
-  }
+
+  const removeItemFromCart = (index) => {
+    const updatedCart = cart.filter((_, i) => i !== index);
+    setCart(updatedCart);
+    localStorage.setItem(cartName, JSON.stringify(updatedCart));
+  };
+
+ 
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.calculateTotalPrice(), 0);
+  };
 
 
   const contextValue = {
-    setQueryParams,
-    queryParams,
-    items, fetchItems, categories, fetchCategories
+    addItemToCart,
+    removeItemFromCart,
+    getTotalPrice
   }
   return (
     <AppContext.Provider value={contextValue}>

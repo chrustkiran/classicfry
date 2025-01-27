@@ -4,10 +4,10 @@ import { sliderProps } from "@/utility/sliderProps";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CategoryCard from "./CategoryCard";
-import { useAppContext } from "@/context/AppContext";
+import useItem from "@/hooks/useItem";
 
 const FoodSlider = () => {
-  const { categories, fetchCategories } = useAppContext();
+  const { categories, fetchCategories } = useItem();
   useEffect(() => {
     fetchCategories();
   }, []);

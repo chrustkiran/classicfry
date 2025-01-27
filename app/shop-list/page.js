@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
-import { useAppContext } from "@/context/AppContext";
+import useItem from "@/hooks/useItem";
 
 const Item = ({ item }) => {
   return (
@@ -68,7 +68,7 @@ const Item = ({ item }) => {
 };
 
 const ShopPage = () => {
-  const { items, fetchItems } = useAppContext();
+  const { items, fetchItems } = useItem();
 
   const [consItems, setConsItems] = useState({});
   const [priceFilter, setPriceFilter] = useState([0, 500]);

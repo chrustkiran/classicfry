@@ -97,15 +97,15 @@ const page = () => {
         <div className="patato-shape">
           <img src="assets/img/shape/patato-shape.png" alt="shape-img" />
         </div>
-        <div className="offer-shape float-bob-y">
+        {/* <div className="offer-shape float-bob-y">
           <img src="assets/img/offer/50percent-off-2.png" alt="shape-img" />
-        </div>
-        <div className="text-shape">
+        </div> */}
+        {/* <div className="text-shape">
           <img src="assets/img/shape/pizza-text-2.png" alt="shape-img" />
-        </div>
-        <div className="spicy-shape">
+        </div> */}
+        {/* <div className="spicy-shape">
           <img src="assets/img/shape/spicy.png" alt="shape-img" />
-        </div>
+        </div> */}
         <div className="tomato-shape">
           <img src="assets/img/shape/tomato-shape-2.png" alt="shape-img" />
         </div>
@@ -502,16 +502,13 @@ const page = () => {
                 <div className="food-comboo-content">
                   <div className="section-title">
                     <span className="wow fadeInUp">
-                      crispy, every bite taste
+                      Fries That Make You Fly!
                     </span>
                     <h2 className="wow fadeInUp" data-wow-delay=".3s">
-                      trending Food combo offer less <span>20%</span>
+                      <span>Golden</span> Crunch, Perfectly Delicious Always!
                     </h2>
                   </div>
-                  <p className="wow fadeInUp" data-wow-delay=".5s">
-                    A team of dreamers and doers building unique interactive
-                    music and art festivals.
-                  </p>
+
                   <div className="nav nav-tabs" id="nav-tab" role="tablist">
                     <button
                       className="nav-link wow fadeInUp"
@@ -529,7 +526,9 @@ const page = () => {
                           <img src="assets/img/offer/chicken.png" alt="img" />
                         </span>
                         <span className="comboo-title">
-                          30% off 4pcs hot crispy &amp; 8 pcs wing
+                        <Link href={'/shop-list'}>
+                          Your Perfect Bite, Every Time.
+                          </Link>
                         </span>
                       </span>
                     </button>
@@ -548,8 +547,12 @@ const page = () => {
                         <span className="offer-image">
                           <img src="assets/img/offer/pizza.png" alt="img" />
                         </span>
+                        
                         <span className="comboo-title">
-                          20% off tasty pizza with drink
+                        <span className="button-icon">
+                          <i className="flaticon-delivery" />
+                        </span> &nbsp;
+                          <Link href={'/shop-list'}> Order Now & Bite into Happiness!</Link>
                         </span>
                       </span>
                     </button>
@@ -569,7 +572,9 @@ const page = () => {
                           <img src="assets/img/offer/burger.png" alt="img" />
                         </span>
                         <span className="comboo-title">
-                          2pcs humbergur with drinks &amp; sauce
+                          <Link href={'/shop-list'}>
+                         Explore our combos
+                         </Link>
                         </span>
                       </span>
                     </button>
@@ -588,16 +593,10 @@ const page = () => {
                       className="comboo-image bg-cover"
                       style={{
                         backgroundImage:
-                          'url("assets/img/banner/comboo-bg.jpg")',
+                          'url("assets/img/food/chicken-fly.jpeg")',
                       }}
                     >
-                      <div className="pizza-text">
-                        <img
-                          src="assets/img/shape/combo-pizza-text.png"
-                          alt="shape-img"
-                        />
-                      </div>
-                      <div className="pizza-image">
+                      {/* <div className="pizza-image">
                         <img
                           src="assets/img/food/big-pizza.png"
                           alt="food-img"
@@ -614,7 +613,7 @@ const page = () => {
                           src="assets/img/shape/vegetable.png"
                           alt="shape-img"
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <div
@@ -723,10 +722,10 @@ const page = () => {
                   </div>
                   <div className="content">
                     <h4>super quality food</h4>
-                    <p>
+                    {/* <p>
                       A team of dreamers and doers building unique interactive
                       music and art
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -740,10 +739,10 @@ const page = () => {
                   </div>
                   <div className="content">
                     <h4>original recipes</h4>
-                    <p>
+                    {/* <p>
                       A team of dreamers and doers building unique interactive
                       music and art
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -753,14 +752,14 @@ const page = () => {
               >
                 <div className="single-food-icon">
                   <div className="icon">
-                    <i className="flaticon-fast-delivery" />
+                  <i class="fal fa-drumstick-bite"></i>
                   </div>
                   <div className="content">
-                    <h4>quick fast delivery</h4>
-                    <p>
+                    <h4>Unmatched Taste</h4>
+                    {/* <p>
                       A team of dreamers and doers building unique interactive
                       music and art
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -774,10 +773,10 @@ const page = () => {
                   </div>
                   <div className="content">
                     <h4>100% fresh foods</h4>
-                    <p>
+                    {/* <p>
                       A team of dreamers and doers building unique interactive
                       music and art
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -786,7 +785,7 @@ const page = () => {
         </div>
       </section>
       {/* About Section Start */}
-      <section className="about-section fix section-padding pt-0 section-bg">
+      {/* <section className="about-section fix section-padding pt-0 section-bg">
         <div className="container">
           <div className="about-wrapper">
             <div className="row align-items-center">
@@ -885,7 +884,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Food Banner Section Start */}
       {/* <section className="food-banner-section fix section-padding section-bg pt-0">
         <div className="container">
@@ -990,30 +989,29 @@ const page = () => {
                   }}
                 >
                   <div className="kfc-image">
-                    <img src="assets/img/food/kfc.png" alt="food-img" />
+                    <img src="assets/img/food/wrap.png" alt="food-img" />
                   </div>
-                  <div className="offer-shape">
+                  {/* <div className="offer-shape">
                     <img
                       src="assets/img/offer/50percent-off-2.png"
                       alt="shape-img"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-lg-6">
                 <div className="kfc-content text-center">
                   <div className="section-title">
                     <span className="wow fadeInUp">
-                      crispy, every bite taste
+                    Crunch in Every Bite
                     </span>
                     <h2 className="wow fadeInUp" data-wow-delay=".3s">
-                      kfc chiken hot <br />
-                      wing &amp; french fries
+                    Crispy Chicken Wrapped <br />
+                      to Perfection!
                     </h2>
                   </div>
                   <p className="mt-3 mt-lg-0 wow fadeInUp" data-wow-delay=".5s">
-                    Wheat tortilla with spicy chicken bites, cheese sauce <br />
-                    tomatoes and soft cheese
+                  Emphasizes the crispiness and the delicious wrap format.
                   </p>
                   <ul
                     className="countdown-items wow fadeInUp"
