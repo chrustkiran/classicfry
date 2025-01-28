@@ -22,7 +22,7 @@ const Footer1 = () => {
       </div>
       <div className="container ">
         <div className="footer-widgets-wrapper ">
-          <div className="flex-row d-flex justify-content-between">
+          <div className="flex-row d-flex justify-content-evenly">
             <div
               className="wow fadeInUp"
               data-wow-delay=".2s"

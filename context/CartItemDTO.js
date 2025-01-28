@@ -8,7 +8,7 @@ export class CartItem {
       this.image = image
     }
   
-    calculateTotalPrice() {
+    calculateTotalPrice = () => {
       return this.price * this.quantity;
     }
 

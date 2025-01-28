@@ -119,7 +119,7 @@ const Menus = () => {
 
 const Header1 = () => {
   const [toggle, setToggle] = useState(false);
-  const { cart, getTotalCartItem } = useAppContext();
+  const { cart, getTotalCartItem, getTotalPrice } = useAppContext();
   return (
     <Fragment>
       <header className="section-bg">
@@ -195,23 +195,25 @@ const Header1 = () => {
                           <li>
                             <img src={item.image} alt="image" />
                             <div className="cart-product">
-                              <a href="#">{item.name}</a>
+                              <div>{item.size !== "default" && (
+                                    <span
+                                      style={{
+                                        fontSize: "10px",
+                                        width: "20px",
+                                      }}
+                                      className="badge bg-warning"
+                                    >
+                                      {item.size.substring(0, 1)}
+                                    </span>
+                                  )}{item.name}</div>
                               <div className="d-flex justify-content-between align-items-center">
-  <div className="d-flex align-items-center">
-    <span>{item.quantity} - </span>
-    {item.size !== "default" && (
-      <span
-        style={{ fontSize: "10px", width: "20px", }}
-        className="badge bg-warning"
-      >
-        {item.size.substring(0, 1)}
-      </span>
-    )}
-    <span>{item.price}</span>
-  </div>
-  <span className="fw-bold">{(item.quantity * item.price).toFixed(2)}</span>
-</div>
-
+                                <div className="d-flex align-items-center">
+                                  <span>{item.quantity} <small className="fw-light fs-6">x</small> &nbsp;£{item.price}</span>
+                                </div>
+                                <span className="fw-bold">
+                                 £{(item.quantity * item.price).toFixed(2)}
+                                </span>
+                              </div>
                             </div>
                           </li>
                         ))}
@@ -233,8 +235,7 @@ const Header1 = () => {
                         </li>
                       </ul> */}
                       <div className="shopping-items d-flex align-items-center justify-content-between">
-                        <span>Shopping : $20.00</span>
-                        <span>Total : $168.00</span>
+                        <span>Total : £{getTotalPrice().toFixed(2)}</span>
                       </div>
                       <div className="cart-button d-flex justify-content-between mb-4">
                         <Link href="shop-cart" className="theme-btn">
@@ -246,10 +247,12 @@ const Header1 = () => {
                       </div>
                     </div>
                     <div className="cart-icon">
+                      <Link href={'/shop-cart'}>
                       <i className="far fa-lg fa-drumstick"></i>
                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                         {getTotalCartItem()}
                       </span>
+                      </Link>
                     </div>
 
                     {/* <Link href="shop-cart" className="cart-icon">
@@ -562,16 +565,9 @@ const Sidebar = ({ toggle, setToggle }) => {
 const MobileMenu = () => {
   const [activeMenu, setActiveMenu] = useState("");
   const [multiMenu, setMultiMenu] = useState("");
-  const activeMenuSet = (value) =>
-      setActiveMenu(activeMenu === value ? "" : value),
-    activeLi = (value) =>
-      value === activeMenu ? { display: "block" } : { display: "none" };
-  const multiMenuSet = (value) =>
-      setMultiMenu(multiMenu === value ? "" : value),
-    multiMenuActiveLi = (value) =>
-      value === multiMenu ? { display: "block" } : { display: "none" };
+
   return (
-    <div className="mobile-menu fix mb-3 mean-container d-block d-lg-none">
+    <div className="mobile-menu fix mb-3 mean-container d-block d-lg-none mb-5">
       <div className="mean-bar">
         <a href="#nav" className="meanmenu-reveal">
           <span>
@@ -583,206 +579,12 @@ const MobileMenu = () => {
         <nav className="mean-nav">
           <ul>
             <li className="has-dropdown active">
-              <Link href="/">
-                Home Page
-                <i className="fas fa-angle-down" />
-              </Link>
-              <ul className="submenu has-homemenu" style={activeLi("home")}>
-                <li className="border-none">
-                  <div className="row g-4">
-                    <div className="col-lg-4 homemenu">
-                      <div className="homemenu-thumb">
-                        <img src="assets/img/header/home-1.jpg" alt="img" />
-                        <div className="demo-button">
-                          <Link href="/" className="theme-btn">
-                            View Demo
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="homemenu-content text-center">
-                        <h4 className="homemenu-title">
-                          <Link href="/">Home 01</Link>
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="col-lg-4  homemenu">
-                      <div className="homemenu-thumb mb-15">
-                        <img src="assets/img/header/home-2.jpg" alt="img" />
-                        <div className="demo-button">
-                          <Link href="/index-2" className="theme-btn">
-                            View Demo
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="homemenu-content text-center">
-                        <h4 className="homemenu-title">
-                          <Link href="/index-2">Home 02</Link>
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="col-lg-4 homemenu">
-                      <div className="homemenu-thumb mb-15">
-                        <img src="assets/img/header/home-3.jpg" alt="img" />
-                        <div className="demo-button">
-                          <Link href="/index-3" className="theme-btn">
-                            View Demo
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="homemenu-content text-center">
-                        <h4 className="homemenu-title">
-                          <Link href="/index-3">Home 03</Link>
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <a
-                className="mean-expand"
-                href="#"
-                onClick={() => activeMenuSet("home")}
-              >
-                <i className="far fa-plus" />
-              </a>
-            </li>
-            <li className="has-dropdown">
               <Link href="/shop">
-                Shop
-                <i className="fas fa-angle-down" />
+                Menu
               </Link>
-              <ul className="submenu" style={activeLi("shop")}>
-                <li>
-                  <Link href="/shop">Shop Grid</Link>
-                </li>
-                <li>
-                  <Link href="/shop-list">Shop List</Link>
-                </li>
-                <li>
-                  <Link href="/shop-left-sidebar">Shop Left SideBar</Link>
-                </li>
-                <li>
-                  <Link href="/shop-right-sidebar">Shop Right SideBar</Link>
-                </li>
-                <li>
-                  <Link href="/shop-single">Shop Single</Link>
-                </li>
-                <li>
-                  <Link href="/shop-cart">Shop Cart</Link>
-                </li>
-                <li>
-                  <Link href="/checkout">checkout</Link>
-                </li>
-              </ul>
-              <a
-                className="mean-expand"
-                href="#"
-                onClick={() => activeMenuSet("shop")}
-              >
-                <i className="far fa-plus" />
-              </a>
-            </li>
-            <li>
-              <Link href="/news">
-                Blog
-                <i className="fas fa-angle-down" />
-              </Link>
-              <ul className="submenu" style={activeLi("news")}>
-                <li>
-                  <Link href="/news">Blog</Link>
-                </li>
-                <li>
-                  <Link href="/news-details">Blog Details</Link>
-                </li>
-              </ul>
-              <a
-                className="mean-expand"
-                href="#"
-                onClick={() => activeMenuSet("news")}
-              >
-                <i className="far fa-plus" />
-              </a>
-            </li>
-            <li className="has-dropdown">
-              <Link href="/news">
-                Pages
-                <i className="fas fa-angle-down" />
-              </Link>
-              <ul className="submenu" style={activeLi("pages")}>
-                <li>
-                  <Link href="/about">About Us</Link>
-                </li>
-                <li className="has-dropdown">
-                  <Link href="/team">
-                    Chef Page
-                    <i className="fas fa-angle-down" />
-                  </Link>
-                  <ul className="submenu" style={multiMenuActiveLi("team")}>
-                    <li>
-                      <Link href="/team">Chef</Link>
-                    </li>
-                    <li>
-                      <Link href="/team-details">Chef Details</Link>
-                    </li>
-                  </ul>
-                  <a
-                    className="mean-expand"
-                    href="#"
-                    onClick={() => multiMenuSet("team")}
-                  >
-                    <i className="far fa-plus" />
-                  </a>
-                </li>
-                <li className="has-dropdown">
-                  <Link href="/food-menu">
-                    Food Menu
-                    <i className="fas fa-angle-down" />
-                  </Link>
-                  <ul
-                    className="submenu"
-                    style={multiMenuActiveLi("food-menu")}
-                  >
-                    <li>
-                      <Link href="/food-menu">Food Menu 01</Link>
-                    </li>
-                    <li>
-                      <Link href="/food-menu-2">Food Menu 02</Link>
-                    </li>
-                  </ul>
-                  <a
-                    className="mean-expand"
-                    href="#"
-                    onClick={() => multiMenuSet("food-menu")}
-                  >
-                    <i className="far fa-plus" />
-                  </a>
-                </li>
-                <li>
-                  <Link href="/gallery">Gallery</Link>
-                </li>
-                <li>
-                  <Link href="/testimonial">testimonial</Link>
-                </li>
-                <li>
-                  <Link href="/reservation">Reservation</Link>
-                </li>
-                <li>
-                  <Link href="/faq">Faq's</Link>
-                </li>
-                <li>
-                  <Link href="/404">404 Page</Link>
-                </li>
-              </ul>
-              <a
-                className="mean-expand"
-                href="#"
-                onClick={() => activeMenuSet("pages")}
-              >
-                <i className="far fa-plus" />
-              </a>
             </li>
             <li className="mean-last">
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact">Orders</Link>
             </li>
           </ul>
         </nav>

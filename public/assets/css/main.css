@@ -65,16 +65,12 @@ Version: 1.0.0
   height: 100%;
   left: 0px;
   top: 0px;
-  -webkit-transform: scale(0, 0);
-  transform: scale(0, 0);
   z-index: -1;
   -webkit-transition: all 500ms ease;
   transition: all 500ms ease;
 }
 .theme-btn:hover::before {
   background-color: var(--theme2);
-  -webkit-transform: scale(1, 1);
-  transform: scale(1, 1);
 }
 
 .theme-btn.disabled:hover::before {
@@ -347,7 +343,7 @@ Version: 1.0.0
     Template Default Fonts & Fonts Styles
  ---------------------------------------------- */
 body {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
@@ -385,7 +381,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: "Rubik", sans-serif;
   margin: 0px;
   padding: 0;
   color: var(--header);
@@ -395,84 +391,84 @@ h6 {
 }
 
 h1 {
-  font-size: 105px;
+  font-size: 95px;
   font-weight: 600;
   line-height: 100%;
 }
 @media (max-width: 1399px) {
   h1 {
-    font-size: 130px;
+    font-size: 124px;
   }
 }
 @media (max-width: 1199px) {
   h1 {
-    font-size: 110px;
+    font-size: 102px;
   }
 }
 @media (max-width: 991px) {
   h1 {
-    font-size: 72px;
+    font-size: 64px;
   }
 }
 @media (max-width: 575px) {
   h1 {
-    font-size: 52px;
+    font-size: 48px;
   }
 }
 
 h2 {
-  font-size: 70px;
+  font-size: 66px;
   line-height: 110%;
   font-weight: 700;
 }
 @media (max-width: 1399px) {
   h2 {
-    font-size: 58px;
+    font-size: 54px;
   }
 }
 @media (max-width: 1199px) {
   h2 {
-    font-size: 54px;
+    font-size: 50px;
   }
 }
 @media (max-width: 991px) {
   h2 {
-    font-size: 42px;
+    font-size: 38px;
   }
 }
 @media (max-width: 575px) {
   h2 {
-    font-size: 32px;
+    font-size: 28px;
   }
 }
 
 h3 {
-  font-size: 44px;
+  font-size: 40px;
   font-weight: 700;
 }
 @media (max-width: 1399px) {
   h3 {
-    font-size: 28px;
+    font-size: 24px;
   }
 }
 @media (max-width: 991px) {
   h3 {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 h5 {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 h6 {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 145%;
 }
@@ -1255,7 +1251,7 @@ input.main-search-input::placeholder {
 }
 .header-main .main-menu ul li a {
   display: inline-block;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--header);
   padding: 30px 0;
@@ -3718,7 +3714,7 @@ input.main-search-input::placeholder {
   margin-right: 10px;
 }
 .shop-list-items .shop-content h3 {
-  font-size: 28px;
+  font-size: 24px;
   margin-bottom: 10px;
 }
 .shop-list-items .shop-content h3 a:hover {
@@ -5686,8 +5682,6 @@ input.main-search-input::placeholder {
   border-radius: 5px;
 }
 .main-cart-wrapper .cart-wrapper {
-  -webkit-box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.06);
-  box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.06);
   border-radius: 5px;
   padding: 40px 40px;
 }
@@ -5872,7 +5866,6 @@ input.main-search-input::placeholder {
   border-bottom: 1px solid var(--border);
 }
 .main-cart-wrapper .cart-graph ul li span {
-  width: 50%;
   color: var(--header);
   font-size: 18px;
   text-transform: uppercase;

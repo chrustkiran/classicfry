@@ -1,59 +1,59 @@
 "use client";
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
+import { useAppContext } from "@/context/AppContext";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useState } from "react";
 const page = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Deluxe Burger",
-      price: 12.99,
-      quantity: 2,
-      image: "assets/img/shop-food/s1.png",
-    },
-    {
-      id: 2,
-      name: "Margherita Pizza",
-      price: 14.99,
-      quantity: 1,
-      image: "assets/img/shop-food/s2.png",
-    },
-    {
-      id: 3,
-      name: "Caesar Salad",
-      price: 8.99,
-      quantity: 1,
-      image: "assets/img/shop-food/s3.png",
-    },
-  ]);
+  // const [cart, setcart] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Deluxe Burger",
+  //     price: 12.99,
+  //     quantity: 2,
+  //     image: "assets/img/shop-food/s1.png",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Margherita Pizza",
+  //     price: 14.99,
+  //     quantity: 1,
+  //     image: "assets/img/shop-food/s2.png",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Caesar Salad",
+  //     price: 8.99,
+  //     quantity: 1,
+  //     image: "assets/img/shop-food/s3.png",
+  //   },
+  // ]);
+
+  const {
+    cart,
+    decreaseQuantity,
+    removeItemFromCart,
+    getTotalPrice,
+    increaseQuantity,
+  } = useAppContext();
 
   const calculateCartTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+    return getTotalPrice();
   };
 
-  const incrementQuantity = (index) => {
-    const newCartItems = [...cartItems];
-    newCartItems[index].quantity += 1;
-    setCartItems(newCartItems);
+  const incrementQuantity = (item) => {
+    increaseQuantity(item.itemId, item.size);
   };
 
-  const decrementQuantity = (index) => {
-    const newCartItems = [...cartItems];
-    if (newCartItems[index].quantity > 1) {
-      newCartItems[index].quantity -= 1;
-      setCartItems(newCartItems);
-    }
+  const decrementQuantity = (item) => {
+    decreaseQuantity(item.itemId, item.size);
   };
 
-  const removeItem = (index) => {
-    const newCartItems = cartItems.filter((_, i) => i !== index);
-    setCartItems(newCartItems);
+  const removeItem = (item) => {
+    removeItemFromCart(item.itemId, item.size);
   };
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"shop Cart"} />
@@ -63,7 +63,7 @@ const page = () => {
             <div className="row">
               <div className="col-12">
                 <div className="cart-wrapper">
-                  <div className="cart-items-wrapper">
+                  <div className="cart-items-wrapper shadow-sm p-4">
                     <table>
                       <thead>
                         <tr>
@@ -75,10 +75,19 @@ const page = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {cartItems.map((item, index) => (
+                        {cart.map((item, index) => (
                           <tr key={index} className="cart-item">
                             <td className="cart-item-info">
-                              <img src={item.image} alt={item.name} />
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                style={{
+                                  width: "120px", // Set a fixed width
+                                  height: "100px", // Set a fixed height
+                                  objectFit: "cover", // Ensures the image covers the area without distortion
+                                  borderRadius: "4px", // Optional: Add rounded corners
+                                }}
+                              />
                               <span>{item.name}</span>
                             </td>
                             <td className="cart-item-price">
@@ -98,7 +107,7 @@ const page = () => {
                                     className="cart-increment"
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      incrementQuantity(index);
+                                      incrementQuantity(item);
                                     }}
                                   >
                                     <i className="far fa-caret-up" />
@@ -108,7 +117,7 @@ const page = () => {
                                     className="cart-decrement"
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      decrementQuantity(index);
+                                      decrementQuantity(item);
                                     }}
                                   >
                                     <i className="far fa-caret-down" />
@@ -117,7 +126,7 @@ const page = () => {
                               </div>
                             </td>
                             <td className="cart-item-price">
-                              ${" "}
+                            £{" "}
                               <span className="total-price">
                                 {(item.price * item.quantity).toFixed(2)}
                               </span>
@@ -127,7 +136,7 @@ const page = () => {
                                 href="#"
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  removeItem(index);
+                                  removeItem(item);
                                 }}
                               >
                                 <i className="fas fa-times" />
@@ -152,45 +161,35 @@ const page = () => {
                           e.preventDefault();
                           // Add your promo code logic here
                         }}
-                        className="theme-btn border-radius-none"
+                        className="theme-btn"
                       >
                         Apply Code
                       </Link>
                     </form>
-                    <Link
-                      href="/shop-cart"
-                      className="theme-btn border-radius-none"
-                    >
-                      Update Cart
+                    <Link href="/shop-list" className="theme-btn">
+                      Add more
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-lg-6" />
-              <div className="col-xl-6">
+            <div className="d-flex justify-content-end">
+              <div className="col-lg-4" />
+              <div className="col-xl-4">
                 <div className="cart-pragh-box">
-                  <div className="cart-graph">
+                  <div className="cart-graph shadow-sm">
                     <h4>Cart Total</h4>
                     <ul>
-                      <li>
+                      <li className="d-flex justify-content-between">
                         <span>Subtotal</span>
                         <span>${calculateCartTotal().toFixed(2)}</span>
                       </li>
-                      <li>
-                        <span>Shipping</span>
-                        <span>
-                          ${cartItems.length > 0 ? "$10.00" : "$0.00"}
-                        </span>
-                      </li>
-                      <li>
+                      <li className="justify-content-between">
                         <span>Total</span>
                         <span>
-                          $
+                        £
                           {(
-                            calculateCartTotal() +
-                            (cartItems.length > 0 ? 10 : 0)
+                            calculateCartTotal() + (cart.length > 0 ? 10 : 0)
                           ).toFixed(2)}
                         </span>
                       </li>
@@ -198,9 +197,15 @@ const page = () => {
                     <div className="chck">
                       <Link
                         href="/checkout"
-                        className="theme-btn border-radius-none"
+                        className="theme-btn d-flex justify-content-between align-items-center w-100"
                       >
                         Checkout
+                        <span>
+                        £
+                          {(
+                            calculateCartTotal() + (cart.length > 0 ? 10 : 0)
+                          ).toFixed(2)}
+                        </span>
                       </Link>
                     </div>
                   </div>

@@ -13,6 +13,22 @@ import { useAppContext } from "@/context/AppContext";
 
 const DEFAULT = "default";
 
+const Ingredient = ({ingredient}) => {
+  return (
+    <a
+      href="#"
+      className="list-group-item list-group-item-action"
+      aria-current="true"
+    >
+      <div className="d-flex w-100 justify-content-between">
+        <h5 className="mb-1">{ingredient.name}</h5>
+      </div>
+      {ingredient.calories && <small>{ingredient.calories} KJ</small>}
+      {ingredient.notes && <p className="mb-1">{ingredient.notes}</p>}
+    </a>
+  );
+};
+
 const page = () => {
   const [quantity, setQuantity] = useState(0);
   const [itemPrice, setItemPrice] = useState(0);
@@ -184,7 +200,9 @@ const page = () => {
                       <button
                         disabled={quantity == 0}
                         onClick={addToCart}
-                        className={`theme-btn ${quantity == 0 ? 'disabled' : ''}`}
+                        className={`theme-btn ${
+                          quantity == 0 ? "disabled" : ""
+                        }`}
                       >
                         <span className="button-content-wrapper d-flex align-items-center justify-content-center">
                           <span className="button-icon">
@@ -229,35 +247,9 @@ const page = () => {
                   <div className="description-items">
                     <div className="row">
                       <div className="list-group">
-                        <a
-                          href="#"
-                          className="list-group-item list-group-item-action"
-                          aria-current="true"
-                        >
-                          <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1">List group item heading</h5>
-                          </div>
-                          <small>3 dyas</small>
-                          <p className="mb-1">
-                            Some placeholder content in a paragraph.
-                          </p>
-                          <small>And some small print.</small>
-                        </a>
-                        <a
-                          href="#"
-                          className="list-group-item list-group-item-action"
-                        >
-                          <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1">List group item heading</h5>
-                          </div>
-                          <small class="text-body-secondary">3 days ago</small>
-                          <p className="mb-1">
-                            Some placeholder content in a paragraph.
-                          </p>
-                          <small className="text-body-secondary">
-                            And some muted small print.
-                          </small>
-                        </a>
+                        {fetchedItem?.ingredientsList?.length > 0 && fetchedItem.ingredientsList.map((ingredient, index) => (
+                          <Ingredient key={index} ingredient={ingredient}></Ingredient>
+                        ))}
                       </div>
                     </div>
                   </div>

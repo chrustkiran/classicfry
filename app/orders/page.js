@@ -67,7 +67,7 @@ const Item = ({ item }) => {
   );
 };
 
-const ShopPage = () => {
+const OrderPage = () => {
   const { items, fetchItems } = useItem();
 
   const [consItems, setConsItems] = useState({});
@@ -111,12 +111,6 @@ const ShopPage = () => {
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
           <div className="row g-5">
-            <ProductSidebar
-              item={consItems}
-              filter={addFilter}
-              selectedCategoryProp={selectedCategory}
-              priceValue={priceFilter}
-            />
             <div className="col-xl-9 col-lg-8 order-1 order-md-2">
               {/* <ProductTopBar mb0={true} /> */}
               <div className="row gap-3">
@@ -189,4 +183,4 @@ const ShopPage = () => {
     </FoodKingLayout>
   );
 };
-export default ShopPage;
+export default OrderPage;

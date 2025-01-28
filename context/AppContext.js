@@ -9,9 +9,11 @@ const cartName = 'classic-fry-cart';
 export const AppProvider = ({ children }) => {
 
   const getCartFromLocalStorage = () => {
-    const savedCart = localStorage.getItem(cartName);
-    return savedCart ? JSON.parse(savedCart) : [];
-  };
+    const savedCart = localStorage.getItem(cartName); // Use your cart name here
+    return savedCart ? JSON.parse(savedCart).map(item => 
+        new CartItem(item.itemId, item.name, item.price, item.image, item.size, item.quantity)
+    ) : [];
+};
 
   const [cart, setCart] = useState(getCartFromLocalStorage);
 
@@ -43,7 +45,7 @@ export const AppProvider = ({ children }) => {
 
   // Method to remove an item from the cart
   const removeItemFromCart = (itemId, size) => {
-    const index = findIndexByItem(item, size);
+    const index = findIndexByItem(itemId, size);
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     localStorage.setItem(cartName, JSON.stringify(updatedCart));
@@ -58,9 +60,17 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
+  const increaseQuantity = (itemId, size) => {
+    const index = findIndexByItem(itemId, size);
+    const updatedCart = [...cart];
+    updatedCart[index].increaseQuantity();
+    setCart(updatedCart);
+    localStorage.setItem(cartName, JSON.stringify(updatedCart));
+  };
+
   // Method to calculate the total price of all items in the cart
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.calculateTotalPrice(), 0);
+    return cart.reduce((total, item) => {return total + item.calculateTotalPrice()}, 0);
   };
 
   const getTotalCartItem = () => {
@@ -68,7 +78,7 @@ export const AppProvider = ({ children }) => {
   }
 
   const contextValue = {
-    cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem
+    cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem, increaseQuantity
   }
   return (
     <AppContext.Provider value={contextValue}>

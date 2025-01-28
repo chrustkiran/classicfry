@@ -16,11 +16,11 @@ const Cta = () => {
         <div className="main-cta-banner-wrapper-2 d-flex align-items-center justify-content-between">
           <div className="section-title mb-0">
             <span className="theme-color-3 wow fadeInUp">
-              crispy, every bite taste
+            Your Perfect Bite, Every Time.
             </span>
             <h2 className="text-white wow fadeInUp" data-wow-delay=".3s">
-              Real Cripsy <br />
-              <span className="theme-color-3">delivery</span> challage
+            Try our zesty, fiery  <span className="theme-color-3">chicken fries </span><br /> for a flavor-packed kick! 
+             
             </h2>
           </div>
           {/* <Link  href="/shop-single">
