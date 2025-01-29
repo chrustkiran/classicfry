@@ -91,7 +91,7 @@ const page = () => {
                               <span>{item.name}</span>
                             </td>
                             <td className="cart-item-price">
-                              ${" "}
+                            £{" "}
                               <span className="base-price">
                                 {item.price.toFixed(2)}
                               </span>

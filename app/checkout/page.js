@@ -1,10 +1,154 @@
+"use client";
+
 import Cta from "@/components/Cta";
 import NiceSelect from "@/components/NiceSelect";
 import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  CardElement,
+  CheckoutProvider,
+  Elements,
+  PaymentElement,
+  PaymentRequestButtonElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { useState, useEffect } from "react";
+import env from "@/env";
+import { useAppContext } from "@/context/AppContext";
+import axios from "axios";
+
+const USER_ID = "classic-fry-user-id";
+
+const PaymentForm = ({ amount }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const result = await stripe.confirmPayment({
+      elements,
+      confirmParams: {},
+      redirect: "if_required",
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    } else {
+      await fetch(`${env.API_URL_STRIPE}/api/confirm-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentIntentId: result?.paymentIntent.id }),
+      });
+
+      alert("Payment successful! Your order is being processed.");
+    }
+  };
+
+  return (
+    <div className="p-4">
+      <form onSubmit={handleSubmit}>
+        <PaymentElement
+          options={{
+            layout: "accordion",
+          }}
+        ></PaymentElement>
+        <button
+          disabled={isLoading || !stripe || !elements}
+          id="submit"
+          className="mt-3"
+          style={{
+            background: "#ffb936",
+            fontFamily: "Arial, sans-serif",
+            color: "#ffffff",
+            borderRadius: "4px",
+            border: 0,
+            padding: "12px 16px",
+            fontSize: "16px",
+            fontWeight: 600,
+            cursor: "PointerEvent",
+            display: "block",
+            transition: "all 0.2s ease",
+            boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
+            width: "100%",
+          }}
+        >
+          <span id="button-text">
+            {isLoading ? (
+              <div className="spinner" id="spinner"></div>
+            ) : (
+              `Pay £${amount} now`
+            )}
+          </span>
+        </button>
+      </form>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && <p style={{ color: "green" }}>Payment successful!</p>}
+    </div>
+  );
+};
 
 const page = () => {
+  const stripePromise = loadStripe(env.stripeAPIKey);
+
+  const [clientSecret, setClientSecret] = useState(null);
+
+  const { getTotalPrice } = useAppContext();
+
+  const [amount, setAmount] = useState(0);
+
+  const [userId, setUserId] = useState(localStorage.getItem(USER_ID));
+
+  useEffect(() => {
+    if (!userId) {
+      axios.post(`${env.API_URL_STRIPE}/api/create-user-id`).then(res => {
+        localStorage.setItem(USER_ID, res.data);
+        setUserId(res.data);
+      })
+    }
+  }, []);
+
+  useEffect(() => {
+    const amount_ = getTotalPrice();
+    if (userId && clientSecret === null) {
+      console.log("init payment intent");
+      fetch(`${env.API_URL_STRIPE}/api/create-payment-intent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: amount_ * 100, userId: userId }),
+      })
+        .then((response) => response.json())
+        .then((json) => setClientSecret(json.clientSecret))
+        .catch((error) =>
+          console.error("Error fetching payment intent:", error)
+        );
+    }
+    setAmount(amount_);
+  }, [userId, clientSecret, getTotalPrice]);
+
+  const appearance = {
+    theme: "stripe",
+    variables: {
+      colorPrimary: "#00000",
+      colorBackground: "#ffffff",
+      colorText: "#30313d",
+      colorDanger: "#7d091e",
+    },
+  };
+
+  const loader = "auto";
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"CHECKOUT"} />
@@ -12,7 +156,16 @@ const page = () => {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <form action="#" method="post">
+              {clientSecret && (
+                <Elements
+                  stripe={stripePromise}
+                  options={{ clientSecret, appearance, loader }}
+                >
+                  <PaymentForm clientSecret={clientSecret} amount={amount} />
+                </Elements>
+              )}
+
+              {/* <form action="#" method="post">
                 <div className="row g-4">
                   <div className="col-md-5 col-lg-4 col-xl-3">
                     <div className="checkout-radio">
@@ -227,7 +380,7 @@ const page = () => {
                     </div>
                   </div>
                 </div>
-              </form>
+              </form> */}
             </div>
           </div>
         </div>

@@ -105,77 +105,157 @@ const OrderPage = () => {
     selectCategory(category);
   };
 
+  const [activeTab, setActiveTab] = useState("active");
+  const [expandedOrder, setExpandedOrder] = useState(null);
+
+  const toggleOrder = (orderId) => {
+    setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
+
+  const orders = {
+    active: [
+      {
+        id: 1,
+        date: "2025-01-30",
+        time: "10:30 AM",
+        totalPayment: "$50.00",
+        status: "Processing",
+        items: [
+          {
+            name: "Chicken Burger",
+            quantity: 2,
+            unitPrice: "$10.00",
+            image: "https://via.placeholder.com/50",
+          },
+          {
+            name: "Fries",
+            quantity: 1,
+            unitPrice: "$5.00",
+            image: "https://via.placeholder.com/50",
+          },
+        ],
+      },
+    ],
+    completed: [
+      {
+        id: 2,
+        date: "2025-01-29",
+        time: "9:15 AM",
+        totalPayment: "$25.00",
+        status: "Delivered",
+        items: [
+          {
+            name: "Coke",
+            quantity: 1,
+            unitPrice: "$3.00",
+            image: "https://via.placeholder.com/50",
+          },
+          {
+            name: "Pizza",
+            quantity: 1,
+            unitPrice: "$20.00",
+            image: "https://via.placeholder.com/50",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
           <div className="row g-5">
-            <div className="col-xl-9 col-lg-8 order-1 order-md-2">
+           
               {/* <ProductTopBar mb0={true} /> */}
-              <div className="row gap-3">
-                {Object.keys(consItems)
-                  .filter((category) =>
-                    selectedCategory ? selectedCategory === category : true
-                  )
-                  .map((category) => {
-                    const filteredItems = consItems[category].filter(
-                      (item) =>
-                        item.basePrice > priceFilter[0] &&
-                        item.basePrice < priceFilter[1]
-                    );
+              <div className="row gap-3"></div>
 
-                    return (
-                      <div key={category}>
-                        <h3>{category}</h3>
-                        <div className="row d-flex">
-                          {filteredItems.length > 0 ? (
-                            filteredItems.map((item) => (
-                              <Item key={item.id} item={item} />
-                            ))
-                          ) : (
-                            <h4 className="mt-3 fw-normal">No Items</h4>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-              {/* <div className="page-nav-wrap mt-5 text-center">
-                <ul>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      <i className="fal fa-long-arrow-left" />
-                    </a>
+              <div className="container">
+                {/* Tabs */}
+                <ul className="nav nav-tabs d-flex flex-wrap">
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${
+                        activeTab === "active" ? "active" : ""
+                      }`}
+                      onClick={() => setActiveTab("active")}
+                    >
+                      Active Orders
+                    </button>
                   </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      4
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      <i className="fal fa-long-arrow-right" />
-                    </a>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${
+                        activeTab === "completed" ? "active" : ""
+                      }`}
+                      onClick={() => setActiveTab("completed")}
+                    >
+                      Completed Orders
+                    </button>
                   </li>
                 </ul>
-              </div> */}
-            </div>
+
+                {/* Order List */}
+                <div className="mt-3">
+                  {orders[activeTab].length === 0 ? (
+                    <p className="text-muted text-center">
+                      No orders available.
+                    </p>
+                  ) : (
+                    orders[activeTab].map((order) => (
+                      <div key={order.id} className="card mb-2">
+                        <div className="card-header d-flex justify-content-between align-items-center">
+                          <div>
+                            <strong>Date:</strong> {order.date} |{" "}
+                            <strong>Time:</strong> {order.time} |{" "}
+                            <strong>Total:</strong> {order.totalPayment}
+                          </div>
+                          <button
+                            className="btn btn-primary btn-sm"
+                            onClick={() => toggleOrder(order.id)}
+                          >
+                            {expandedOrder === order.id
+                              ? "Hide Details"
+                              : "View Details"}
+                          </button>
+                        </div>
+
+                        {/* Expandable Order Details */}
+                        <div
+                          className={`collapse ${
+                            expandedOrder === order.id ? "show" : ""
+                          }`}
+                        >
+                          <div className="card-body">
+                            <h6>Order Items</h6>
+                            <ul className="list-group">
+                              {order.items.map((item, index) => (
+                                <li
+                                  key={index}
+                                  className="list-group-item d-flex align-items-center"
+                                >
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="me-3"
+                                    width="50"
+                                    height="50"
+                                  />
+                                  <div>
+                                    <strong>{item.name}</strong> (
+                                    {item.quantity} x {item.unitPrice})
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
           </div>
         </div>
       </section>

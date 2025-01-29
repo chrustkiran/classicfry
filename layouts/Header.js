@@ -191,8 +191,8 @@ const Header1 = () => {
                   <div className="menu-cart">
                     <div className="cart-box">
                       <ul>
-                        {cart.map((item) => (
-                          <li>
+                        {cart.map((item, index) => (
+                          <li key={index}>
                             <img src={item.image} alt="image" />
                             <div className="cart-product">
                               <div>{item.size !== "default" && (
@@ -249,7 +249,7 @@ const Header1 = () => {
                     <div className="cart-icon">
                       <Link href={'/shop-cart'}>
                       <i className="far fa-lg fa-drumstick"></i>
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                         {getTotalCartItem()}
                       </span>
                       </Link>
