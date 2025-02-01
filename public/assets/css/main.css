@@ -11447,7 +11447,7 @@ li.shop-category-selected a {
   font-weight: bold;
 }
 
-.size-btn-selected, .size-btn:hover {
+.size-btn-selected, .size-btn:hover, .size-btn-selected:hover {
   background-color: var(--theme);
   border-color: var(--theme2);
   border-width: 5px;
@@ -11458,6 +11458,41 @@ li.shop-category-selected a {
 .category-batch {
   background-color: var(--theme2);
 }
+
+@media (max-width: 768px) {
+  .size-btn-container, .responsive-cnt {
+    justify-content: center !important;
+    text-align: center !important;
+    display: block;
+  }
+}
+
+@media (max-width: 768px) { /* Apply only on mobile */
+  .responsive-qty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .quantity {
+    display: flex;
+    flex-direction: row; /* Keep buttons and input inline */
+    align-items: center;
+    gap: 10px; /* Add spacing */
+  }
+
+  .qty {
+    text-align: center;
+    width: 50px; /* Adjust width */
+  }
+
+  .qtyminus, .qtyplus {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 
 .order-tab li button {
  color: var(--black); 

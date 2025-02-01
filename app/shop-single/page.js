@@ -4,16 +4,16 @@ import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Nav, Tab, Tabs } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
 import { useAppContext } from "@/context/AppContext";
 import env from "@/env";
+import useDeal from "@/hooks/useDeal";
 
-
-const Ingredient = ({ingredient}) => {
+const Ingredient = ({ ingredient }) => {
   return (
     <a
       href="#"
@@ -35,33 +35,60 @@ const page = () => {
   const [portionSize, setPortionSize] = useState(undefined);
   const [addToCartHover, setHover] = useState(false);
 
+  const [itemType, setItemType] = useState(undefined);
   const { item, fetchItem } = useItem();
+  const { deal, fetchDeal } = useDeal();
   const [fetchedItem, setFetchedItem] = useState({});
+  const [fetchedDeal, setFetchedDeal] = useState({});
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [addTab, setAddTab] = useState("Ingredients");
 
   const { addItemToCart } = useAppContext();
 
+  const dealItemRef = useRef(null);
+
+  const scrollToTarget = () => {
+    if (dealItemRef.current) {
+      dealItemRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+
   useEffect(() => {
     const itemId = searchParams.get("item");
+    const dealId = searchParams.get("deal");
     if (itemId) {
       fetchItem(itemId);
+    } else if (dealId) {
+      fetchDeal(dealId);
     } else {
+      console.warn("no deal or item id");
       router.back(); // Go back if the item ID is not provided in the URL
     }
   }, []);
 
+  const validateItem = (item, setItem, itemType) => {
+    if (item?.length == 1 && (item[0].itemId || item[0].dealId)) {
+      setItem(item[0]);
+      handlePrice(item[0]);
+      setItemType(itemType);
+      if (itemType === "deal") {
+        setAddTab("DealItems");
+      }
+    } else {
+      console.warn("Item does not have an itemId. Navigating back.");
+      router.back();
+    }
+  };
+
   useEffect(() => {
     if (item) {
-      if (item?.length != 1 || !item[0].itemId) {
-        console.warn("Item does not have an itemId. Navigating back.");
-        router.back();
-      } else {
-        setFetchedItem(item[0]);
-        handlePrice(item[0]);
-      }
+      validateItem(item, setFetchedItem, "item");
+    } else if (deal) {
+      validateItem(deal, setFetchedDeal, "deal");
     }
-  }, [item]);
+  }, [item, deal]);
 
   const addToCart = () => {
     addItemToCart(
@@ -77,7 +104,7 @@ const page = () => {
   const handlePrice = (fetchedItem) => {
     if (!fetchedItem.portionPrices) {
       //TODO :: check what it is.
-      setItemPrice(item.basePrice);
+      setItemPrice(fetchedItem.basePrice);
     } else {
       const portionPrices = fetchedItem.portionPrices.sort(
         (a, b) => a.price - b.price
@@ -95,8 +122,8 @@ const page = () => {
 
   return (
     <FoodKingLayout>
-      <PageBanner pageName={fetchedItem.name} />
-      <section className="product-details-section section-padding">
+      <PageBanner pageName={fetchedItem.name || fetchedDeal.name} />
+      <section className="product-details-section section-padding responsive-cnt">
         <div className="container">
           <div className="product-details-wrapper">
             <div className="row">
@@ -109,7 +136,10 @@ const page = () => {
                     >
                       <Tab.Pane className="tab-pane fade" eventKey="nav-home">
                         <div className="product-image">
-                          <img src={fetchedItem.image} alt="img" />
+                          <img
+                            src={fetchedItem.image || fetchedDeal.image}
+                            alt="img"
+                          />
                         </div>
                       </Tab.Pane>
                     </Tab.Content>
@@ -119,7 +149,11 @@ const page = () => {
               <div className="col-lg-7 mt-5 mt-lg-0">
                 <div className="product-details-content">
                   <div className="star pb-3">
-                    <span>{fetchedItem.tag}</span>
+                    {(fetchedItem.tag || fetchedDeal.tag) && (
+                      <span>
+                        {(fetchedItem.tag || fetchedDeal.tag).replace("_", " ")}
+                      </span>
+                    )}
                     {/* <a href="#">
                       {" "}
                       <i className="fas fa-star" />
@@ -142,13 +176,18 @@ const page = () => {
                       ( 2 Reviews )
                     </a> */}
                   </div>
-                  <h3 className="pb-3">{fetchedItem.name}</h3>
-                  <p className="mb-4">{fetchedItem.description}</p>
-                  <div className="price-list d-flex align-items-center">
+                  <h3 className="pb-3 responsive-cnt">
+                    {fetchedItem.name || fetchedDeal.name}
+                  </h3>
+                  {itemType === "deal" && < button onClick={scrollToTarget} href="#dealItems">Check what's included</button>}
+                  <p className="mb-4 responsive-cnt">
+                    {fetchedItem.description || fetchedDeal.description}
+                  </p>
+                  <div className="price-list d-flex align-items-center responsive-cnt">
                     <span>£{itemPrice}</span>
                     {/* <del>$4,600.00</del> */}
                   </div>
-                  <div className="d-flex mt-4">
+                  <div className="d-flex mt-4 size-btn-container">
                     {fetchedItem.portionPrices &&
                       // fetchedItem.portionPrices.length > 0 &&
                       fetchedItem.portionPrices.map((size) => (
@@ -166,9 +205,8 @@ const page = () => {
                         </button>
                       ))}
                   </div>
-                  <div className="price-list d-flex align-items-center"></div>
-                  <div className="cart-wrp">
-                    <div className="cart-quantity">
+                  <div className="cart-wrp responsive-cnt">
+                    <div className="cart-quantity responsive-cnt responsive-qty">
                       <h5>QUANTITY:</h5>
                       <div className="quantity align-items-center d-flex">
                         <button
@@ -196,7 +234,7 @@ const page = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="shop-button d-flex align-items-center">
+                    <div className="shop-button d-flex align-items-center responsive-cnt">
                       <button
                         disabled={quantity == 0}
                         onClick={addToCart}
@@ -219,18 +257,20 @@ const page = () => {
                   {/* <h6 className="details-info">
                     <Link href={"#"}>SKU:</Link> <a href="shop-single">N/A</a>
                   </h6> */}
-                  <h6 className="details-info">
-                    <span>Category:</span>{" "}
-                    <Link
-                      className="badge rounded-pill category-batch text-white"
-                      href={{
-                        pathname: "/shop-list",
-                        query: { category: fetchedItem.category },
-                      }}
-                    >
-                      {fetchedItem.category}
-                    </Link>
-                  </h6>
+                  <div className="responsive-cnt">
+                    <div className="">
+                      <span>Category:</span>{" "}
+                      <Link
+                        className="badge rounded-pill category-batch text-white"
+                        href={{
+                          pathname: "/shop-list",
+                          query: { category: fetchedItem.category },
+                        }}
+                      >
+                        {fetchedItem.category}
+                      </Link>
+                    </div>
+                  </div>
                   {/* <h6 className="details-info">
                     <span>Tags:</span> <Link href="#">{fetchItem.tag}</Link>
                   </h6> */}
@@ -239,17 +279,44 @@ const page = () => {
             </div>
             <div className="single-tab">
               <Tabs
-                defaultActiveKey="Ingredients"
-                id="product-tabs"
-                className="mb-4"
+                activeKey={addTab}
+                id="product-tabs" 
+                className="mb-4 responsive-cnt"
               >
+                {itemType === "deal" && (
+                  <Tab eventKey="DealItems" ref={dealItemRef}  title="What's included?">
+                    <div className="description-items">
+                      <div className="row">
+                        <div className="list-group">
+                          {fetchedItem?.ingredientsList?.length > 0 &&
+                            fetchedItem.ingredientsList.map(
+                              (ingredient, index) => (
+                                // <Ingredient
+                                //   key={index}
+                                //   ingredient={ingredient}
+                                // ></Ingredient>
+                                <div>Hello</div>
+                              )
+                            )}
+                        </div>
+                      </div>
+                    </div>
+                  </Tab>
+                )}
+
                 <Tab eventKey="Ingredients" title="Ingredients">
                   <div className="description-items">
                     <div className="row">
                       <div className="list-group">
-                        {fetchedItem?.ingredientsList?.length > 0 && fetchedItem.ingredientsList.map((ingredient, index) => (
-                          <Ingredient key={index} ingredient={ingredient}></Ingredient>
-                        ))}
+                        {fetchedItem?.ingredientsList?.length > 0 &&
+                          fetchedItem.ingredientsList.map(
+                            (ingredient, index) => (
+                              <Ingredient
+                                key={index}
+                                ingredient={ingredient}
+                              ></Ingredient>
+                            )
+                          )}
                       </div>
                     </div>
                   </div>

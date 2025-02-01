@@ -47,8 +47,8 @@ const useDeal = () => {
   };
 
   const fetchDeal = (dealId) => {
-    axios.get(base_url + `deal?dealId=${dealId}`).then((res) => {
-      setDeal(res.data.map(item => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
+    axios.get(base_url + `deals?dealId=${dealId}`).then((res) => {
+      setDeal(res.data.map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
     });
   };
 

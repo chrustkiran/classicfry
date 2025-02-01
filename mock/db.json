@@ -141,7 +141,7 @@
           { "ingredientId": "4a7f17fd-e3fc-400e-b680-712f90646685", "name": "Cheese", "calories": 100, "notes": "Melted cheese topping." }
         ],
         "description": "Crispy fries topped with melted cheese.",
-        "image": "https://example.com/cheese-fries.jpg"
+        "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="
       }
     ],
     "deals": [
@@ -155,7 +155,7 @@
             "name": "Crispy Chicken Piece",
             "description": "Crunchy and juicy fried chicken",
             "quantity": 2,
-            "image": "https://example.com/images/chicken_piece.jpg",
+            "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg=",
             "deal": {
               "dealId": "c5aef4b0-8c32-4b9f-b58e-73a8d0957e41",
               "name": "Crispy Chicken Meal"
@@ -165,7 +165,7 @@
         "description": "A delicious crispy chicken meal with fries.",
         "isAvailable": true,
         "tag": "SPECIAL",
-        "image": "https://example.com/images/chicken_deal.jpg",
+        "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg=",
         "price": 12.99
       },
       {
@@ -178,7 +178,7 @@
             "name": "Spicy Chicken Wings",
             "description": "Hot and spicy chicken wings",
             "quantity": 4,
-            "image": "https://example.com/images/spicy_wings.jpg",
+            "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg=",
             "deal": {
               "dealId": "e5b6d882-9a7c-412b-b5c9-4d82e5f8c3d2",
               "name": "Spicy Chicken Platter"
