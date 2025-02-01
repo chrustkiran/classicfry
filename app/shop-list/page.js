@@ -10,10 +10,11 @@ import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
+import useDeal from "@/hooks/useDeal";
 
-const Item = ({ item }) => {
+const Item = ({ item, key }) => {
   return (
-    <div className="col-xl-12 col-lg-12">
+    <div key={key} className="col-xl-12 col-lg-12">
       <div className="shop-list-items">
         <div className="shop-image">
           <img src={item.image} alt="shop-img" />
@@ -69,20 +70,46 @@ const Item = ({ item }) => {
 
 const ShopPage = () => {
   const { items, fetchItems } = useItem();
+  const {deals, fetchDeals} = useDeal();
 
   const [consItems, setConsItems] = useState({});
+  const [consDeals, setConsDeals] = useState({});
   const [priceFilter, setPriceFilter] = useState([0, 500]);
   const [selectedCategory, selectCategory] = useState(undefined);
 
+  const [activeTab, setActiveTab] = useState("active");
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    selectCategory(searchParams.get("category"));
+    if (searchParams.get("category")) {
+      selectCategory(searchParams.get("category"));
+      setActiveTab("items");
+    } else if (searchParams.get("dealType")) {
+      selectCategory(searchParams.get("dealType"));
+      setActiveTab("deals");
+    }
   }, [searchParams]);
 
   useEffect(() => {
     fetchItems();
+    fetchDeals();
   }, []);
+
+  useEffect(() => {
+    if (deals.length > 0) {
+      setConsDeals(
+        deals
+          .filter((deal) => deal.isAvailable)
+          .reduce((obj, deal) => {
+            if (!obj[deal.dealType]) {
+              obj[deal.dealType] = [];
+            }
+            obj[deal.dealType].push(deal);
+            return obj;
+          }, {})
+      );
+    }
+  }, [deals]);
 
   useEffect(() => {
     if (items.length > 0) {
@@ -105,13 +132,43 @@ const ShopPage = () => {
     selectCategory(category);
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    selectCategory(undefined);
+  };
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
-          <div className="row g-5">
+          <div className="mb-5">
+            <ul className="nav nav-tabs d-flex  order-tab gap-3">
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${
+                    activeTab === "items" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabChange("items")}
+                >
+                  <h3>Items</h3>
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${
+                    activeTab === "deals" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabChange("deals")}
+                >
+                   <h3>Deals</h3>
+                </button>
+              </li>
+            </ul>
+          </div>
+          {activeTab == "items" && <div className="row g-5">
             <ProductSidebar
+              activeTab={activeTab}
               item={consItems}
               filter={addFilter}
               selectedCategoryProp={selectedCategory}
@@ -147,7 +204,50 @@ const ShopPage = () => {
                     );
                   })}
               </div>
-              {/* <div className="page-nav-wrap mt-5 text-center">
+            </div>
+          </div>}
+
+          {activeTab == "deals" && <div className="row g-5">
+            <ProductSidebar
+              activeTab={activeTab}
+              item={consDeals}
+              filter={addFilter}
+              selectedCategoryProp={selectedCategory}
+              priceValue={priceFilter}
+            />
+            <div className="col-xl-9 col-lg-8 order-1 order-md-2">
+              {/* <ProductTopBar mb0={true} /> */}
+              <div className="row gap-3">
+                {Object.keys(consDeals)
+                  .filter((category) =>
+                    selectedCategory ? selectedCategory === category : true
+                  )
+                  .map((category, index) => {
+                    const filteredItems = consDeals[category].filter(
+                      (item) =>
+                        item.basePrice > priceFilter[0] &&
+                        item.basePrice < priceFilter[1]
+                    );
+
+                    return (
+                      <div key={index}>
+                        <h3>{category}</h3>
+                        <div className="row d-flex">
+                          {filteredItems.length > 0 ? (
+                            filteredItems.map((item, index) => (
+                              <Item key={index} item={item} />
+                            ))
+                          ) : (
+                            <h4 className="mt-3 fw-normal">No Items</h4>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>}
+          {/* <div className="page-nav-wrap mt-5 text-center">
                 <ul>
                   <li>
                     <a className="page-numbers" href="#">
@@ -181,8 +281,6 @@ const ShopPage = () => {
                   </li>
                 </ul>
               </div> */}
-            </div>
-          </div>
         </div>
       </section>
       <Cta />

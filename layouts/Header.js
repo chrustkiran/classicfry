@@ -1,5 +1,6 @@
 "use client";
 import { useAppContext } from "@/context/AppContext";
+import env from "@/env";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 
@@ -49,7 +50,7 @@ const Menus = () => {
         </ul> */}
       </li>
       <li className="has-dropdown active">
-        <Link href="/">Orders</Link>
+        <Link href="/orders">Orders</Link>
       </li>
       {/* <li>
         <Link href="news">
@@ -195,7 +196,7 @@ const Header1 = () => {
                           <li key={index}>
                             <img src={item.image} alt="image" />
                             <div className="cart-product">
-                              <div>{item.size !== "default" && (
+                              <div>{item.size !== env.DEFAULT && (
                                     <span
                                       style={{
                                         fontSize: "10px",
@@ -584,7 +585,7 @@ const MobileMenu = () => {
               </Link>
             </li>
             <li className="mean-last">
-              <Link href="/contact">Orders</Link>
+              <Link href="/orders">Orders</Link>
             </li>
           </ul>
         </nav>

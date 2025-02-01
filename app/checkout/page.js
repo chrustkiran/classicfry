@@ -15,12 +15,59 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import env from "@/env";
 import { useAppContext } from "@/context/AppContext";
 import axios from "axios";
 
 const USER_ID = "classic-fry-user-id";
+
+const ParentPayment = ({ amount, userId }) => {
+  const stripePromise = loadStripe(env.stripeAPIKey);
+
+  const [clientSecret, setClientSecret] = useState(null);
+
+  
+  const appearance = {
+    theme: "stripe",
+    variables: {
+      colorPrimary: "#00000",
+      colorBackground: "#ffffff",
+      colorText: "#30313d",
+      colorDanger: "#7d091e",
+    },
+  };
+
+  const loader = "auto";
+
+  useEffect(() => {
+    if (clientSecret === null) {
+      fetch(`${env.API_URL_STRIPE}/api/create-payment-intent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: amount * 100, userId: userId }),
+      })
+        .then((response) => response.json())
+        .then((json) => setClientSecret(json.clientSecret))
+        .catch((error) =>
+          console.error("Error fetching payment intent:", error)
+        );
+    }
+  }, [clientSecret]);
+  return (
+    <div>
+      {clientSecret && (
+        <Elements
+          stripe={stripePromise}
+          options={{ clientSecret, appearance, loader }}
+        >
+          <PaymentForm clientSecret={clientSecret} amount={amount} />
+        </Elements>
+      )}
+      {!clientSecret && <p className="mb-0">Please wait...</p>}
+    </div>
+  );
+};
 
 const PaymentForm = ({ amount }) => {
   const stripe = useStripe();
@@ -100,10 +147,6 @@ const PaymentForm = ({ amount }) => {
 };
 
 const page = () => {
-  const stripePromise = loadStripe(env.stripeAPIKey);
-
-  const [clientSecret, setClientSecret] = useState(null);
-
   const { getTotalPrice } = useAppContext();
 
   const [amount, setAmount] = useState(0);
@@ -112,58 +155,99 @@ const page = () => {
 
   useEffect(() => {
     if (!userId) {
-      axios.post(`${env.API_URL_STRIPE}/api/create-user-id`).then(res => {
+      axios.post(`${env.API_URL_STRIPE}/api/create-user-id`).then((res) => {
         localStorage.setItem(USER_ID, res.data);
         setUserId(res.data);
-      })
+      });
     }
   }, []);
 
+  const [selectedCash, setSelectedCash] = useState("counter");
+
   useEffect(() => {
-    const amount_ = getTotalPrice();
-    if (userId && clientSecret === null) {
-      console.log("init payment intent");
-      fetch(`${env.API_URL_STRIPE}/api/create-payment-intent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amount_ * 100, userId: userId }),
-      })
-        .then((response) => response.json())
-        .then((json) => setClientSecret(json.clientSecret))
-        .catch((error) =>
-          console.error("Error fetching payment intent:", error)
-        );
-    }
-    setAmount(amount_);
-  }, [userId, clientSecret, getTotalPrice]);
+    setAmount(getTotalPrice());
+  }, [userId, getTotalPrice]);
 
-  const appearance = {
-    theme: "stripe",
-    variables: {
-      colorPrimary: "#00000",
-      colorBackground: "#ffffff",
-      colorText: "#30313d",
-      colorDanger: "#7d091e",
-    },
-  };
-
-  const loader = "auto";
 
   return (
     <FoodKingLayout>
       <PageBanner pageName={"CHECKOUT"} />
-      <section className="checkout-section fix section-padding border-bottom">
+      {userId && <section className="checkout-section fix section-padding border-bottom">
         <div className="container">
           <div className="row">
             <div className="col-12">
-              {clientSecret && (
-                <Elements
-                  stripe={stripePromise}
-                  options={{ clientSecret, appearance, loader }}
+              <ul className="list-group px-4">
+                {/* Pay at Counter Option */}
+                <li className="list-group-item">
+                  <div className="custom-control cash-radio custom-radio d-flex gap-3">
+                    <input
+                      type="radio"
+                      id="cashRadioCounter"
+                      name="cashRadio"
+                      className="custom-control-input"
+                      checked={selectedCash === "counter"}
+                      onChange={() => setSelectedCash("counter")}
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor="cashRadioCounter"
+                    >
+                      <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;
+                      I want to pay at the counter
+                    </label>
+                  </div>
+                  {selectedCash === "counter" && (
+                    <div className="mt-3 p-3 border rounded bg-light">
+                       <p className="mb-0">You have selected to pay at the counter. Please make sure to pay <strong>£{amount}</strong>
+                        {" "}by using card or cash.</p>
+                    </div>
+                  )}
+                </li>
+
+                {/* Pay Online Option */}
+                <li className="list-group-item">
+                  <div className="custom-control cash-radio custom-radio d-flex gap-3">
+                    <input
+                      type="radio"
+                      id="cashRadioOnline"
+                      name="cashRadio"
+                      className="custom-control-input"
+                      checked={selectedCash === "online"}
+                      onChange={() => setSelectedCash("online")}
+                    />
+
+                    <label
+                      className="form-check-label"
+                      htmlFor="cashRadioOnline"
+                    >
+                      <i className="fas fa-computer-classic"></i>&nbsp;&nbsp; I
+                      can pay online
+                    </label>
+                  </div>
+
+                  {/* Expandable Div when "Pay Online" is selected */}
+                  {selectedCash === "online" && (
+                    <div className="mt-3 p-3 border rounded bg-light">
+                      <ParentPayment amount={amount} userId={userId}></ParentPayment>
+                    </div>
+                  )}
+                </li>
+
+                {selectedCash === "counter" && <button
+                  id="submit"
+                  className="mt-3 btn btn-warning text-white fw-bold w-100"
+                  style={{
+                    borderRadius: "4px",
+                    padding: "12px 16px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
+                  }}
                 >
-                  <PaymentForm clientSecret={clientSecret} amount={amount} />
-                </Elements>
-              )}
+                  <span id="button-text">Confirm your order</span>
+                </button>}
+              </ul>
 
               {/* <form action="#" method="post">
                 <div className="row g-4">
@@ -384,7 +468,8 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
+      {!userId && <p>Loading...</p>}
       <Cta />
     </FoodKingLayout>
   );

@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
 import { useAppContext } from "@/context/AppContext";
+import env from "@/env";
 
-const DEFAULT = "default";
 
 const Ingredient = ({ingredient}) => {
   return (
@@ -69,7 +69,7 @@ const page = () => {
       fetchedItem.name,
       itemPrice,
       fetchedItem.image,
-      portionSize ? portionSize : DEFAULT,
+      portionSize ? portionSize : env.DEFAULT,
       quantity
     );
   };

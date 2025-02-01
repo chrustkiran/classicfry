@@ -10,6 +10,7 @@ const ProductSidebar = ({
   filter = () => {},
   selectedCategoryProp = undefined,
   priceValue = [0, 100000],
+  activeTab = 'items'
 }) => {
   const [selectedCategory, selectCategory] = useState(selectedCategoryProp);
   const [value, setValue] = useState([priceValue[0], priceValue[1]]);
@@ -34,15 +35,32 @@ const ProductSidebar = ({
       <div className={`main-sidebar ${style}`}>
         <div className="single-sidebar-widget">
           <div className="wid-title">
-            <h4>catagories</h4>
+            <h4>{activeTab == 'items' ? 'catagories' : 'Deal Types'}</h4>
           </div>
           <div className="widget-categories d-flex">
             <ul
               className="d-flex flex-row gap-3 overflow-auto list-unstyled d-md-none"
               style={{ whiteSpace: "nowrap" }}
             >
+              <li
+                key={"001"}
+                className={
+                  "all" === selectedCategory
+                    ? "shop-category-selected"
+                    : "shop-category"
+                }
+              >
+                <a
+                  onClick={() => onClickCategory(undefined)}
+                  className="list-group-item-action"
+                >
+                  {/* <i className="flaticon-burger" /> */}
+                  All
+                </a>
+              </li>
               {Object.keys(item).map((cat) => (
                 <li
+                  key={cat}
                   className={
                     cat === selectedCategory
                       ? "shop-category-selected"
@@ -108,6 +126,22 @@ const ProductSidebar = ({
               </li> */}
             </ul>
             <ul className="list-unstyled d-none d-md-block">
+              <li
+                key={"001"}
+                className={
+                  "all" === selectedCategory
+                    ? "shop-category-selected"
+                    : "shop-category mb-2"
+                }
+              >
+                <a
+                  onClick={() => onClickCategory(undefined)}
+                  className="list-group-item-action"
+                >
+                  {/* <i className="flaticon-burger" /> */}
+                  All
+                </a>
+              </li>
               {Object.keys(item).map((cat) => (
                 <li
                   key={cat}

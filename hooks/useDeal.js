@@ -1,0 +1,65 @@
+import axios from "axios";
+import env from "../env";
+
+const { useState } = require("react");
+
+const dealTypeMapper = (dealType) => {
+  const Dealtype = {
+    CHICKEN_DEAL: "Chicken",
+    BURGER_DEAL: "Burger",
+    MIXED_DEAL: "Mixed",
+    WRAP_DEAL: "Wrap",
+    RIPS_DEAL: "Rips",
+    PERI_PERI_DEAL: "Peri Peri",
+    FAMILY_DEAL: "Family",
+    KIDS_DEAL: "Kids",
+  };
+  if (dealType in Dealtype) {
+    return Dealtype[dealType];
+  }
+  return dealType;
+};
+
+const base_url = env.API_URL;
+const useDeal = () => {
+  const [deals, setDeals] = useState([]);
+  const [dealCategories, setDealCategories] = useState([]);
+  const [deal, setDeal] = useState(undefined);
+
+  const fetchDeals = () => {
+    axios.get(base_url + "deals").then((res) => {
+      setDeals(res.data.map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
+    });
+  };
+
+  const fetchCategories = () => {
+    axios.get(base_url + "deals").then((res) => {
+      if (res.data && res.data.length > 0) {
+        const category = res.data.reduce((obj, item) => {
+          if (!obj[dealTypeMapper(item.dealType)]) {
+            obj[dealTypeMapper(item.dealType)] = {item, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)};
+          }
+          return obj;
+        }, {});
+        setDealCategories(Object.values(category));
+      }
+    });
+  };
+
+  const fetchDeal = (dealId) => {
+    axios.get(base_url + `deal?dealId=${dealId}`).then((res) => {
+      setDeal(res.data.map(item => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
+    });
+  };
+
+  return {
+    deals,
+    fetchDeals,
+    dealCategories,
+    fetchCategories,
+    fetchDeal,
+    deal,
+  };
+};
+
+export default useDeal;

@@ -3,7 +3,7 @@
       {
         "itemId": "1f8f7a19-c7a4-4c80-9b5d-6a2a97f153a0",
         "name": "Spicy Chicken Wings",
-        "category": "Wings",
+        "category": "BURGER",
         "portionPrices": [
           { "portionPriceId": "9bf9f1f1-ff9d-4a4c-9b29-c39dce255dbd", "portionSize": "SMALL", "price": 5.99 },
           { "portionPriceId": "660fb3e5-5f77-4c10-bbbf-0fa0a21d1be4", "portionSize": "REGULAR", "price": 7.99 },
@@ -21,7 +21,7 @@
       {
         "itemId": "5b84e0fd-e99e-47b0-b6db-bc984adae9b2",
         "name": "Garlic Butter Wings",
-        "category": "Wings",
+        "category": "DIPS_AND_SIDE",
         "portionPrices": [
           { "portionPriceId": "89a647ed-5e0d-41a0-91e6-f501e98f6f69", "portionSize": "SMALL", "price": 6.99 },
           { "portionPriceId": "c41c0f36-2e88-4e9c-925f-4fd2a8e3b10d", "portionSize": "REGULAR", "price": 8.99 },
@@ -39,7 +39,7 @@
       {
         "itemId": "b8d22cd1-1f9f-417e-b60e-ffae3fe1c540",
         "name": "Boneless Chicken Bites",
-        "category": "Boneless",
+        "category": "DIPS_AND_SIDE",
         "portionPrices": [
           { "portionPriceId": "a9ff5b6f-df34-4ac3-bf34-70abfa42c529", "portionSize": "SMALL", "price": 5.49 },
           { "portionPriceId": "9e60155f-2cb6-4fcf-a029-cb88fc23e2ad", "portionSize": "REGULAR", "price": 7.49 },
@@ -57,7 +57,7 @@
       {
         "itemId": "b3474fe0-1b37-4fa2-a0ba-7d924a9d6f91",
         "name": "Lemon Pepper Wings",
-        "category": "Wings",
+        "category": "PERI_PERI",
         "portionPrices": [
           { "portionPriceId": "93b29cde-11e2-4b6d-97e1-d3cf20b2ab6c", "portionSize": "SMALL", "price": 6.99 },
           { "portionPriceId": "a589710f-13a1-42da-9252-0f915cb616f9", "portionSize": "REGULAR", "price": 8.99 },
@@ -75,7 +75,7 @@
       {
         "itemId": "9b7291b9-91fa-4200-8b5b-6fe8b92eaf74",
         "name": "BBQ Boneless Bites",
-        "category": "Boneless",
+        "category": "PERI_PERI",
         "portionPrices": [
           { "portionPriceId": "35dcb9a7-4ecf-457f-a8cc-635dc465f9a1", "portionSize": "SMALL", "price": 5.99 },
           { "portionPriceId": "57e77b10-e600-473d-82e2-b14e6b42307b", "portionSize": "REGULAR", "price": 7.99 },
@@ -93,7 +93,7 @@
       {
         "itemId": "3cfb60f9-cc5a-4c73-a557-107a40563136",
         "name": "Mango Habanero Wings",
-        "category": "Wings",
+        "category": "PERI_PERI",
         "portionPrices": [
           { "portionPriceId": "27ebd4b7-e2bb-4879-94c3-081018e3585d", "portionSize": "SMALL", "price": 7.99 },
           { "portionPriceId": "c5fe1b2f-3a19-47ad-85d6-bfc2767a5f68", "portionSize": "REGULAR", "price": 9.99 },
@@ -111,7 +111,7 @@
       {
         "itemId": "6b3a61b5-e948-47ab-a685-d1a8fbc5071f",
         "name": "Chicken Tenders",
-        "category": "Boneless",
+        "category": "WRAPS",
         "portionPrices": [
           { "portionPriceId": "8bf52f1b-3452-49bb-b2e9-bbce87733ed9", "portionSize": "SMALL", "price": 6.99 },
           { "portionPriceId": "2b50b2fd-d8b2-4db1-bb6e-2f0629ab0285", "portionSize": "REGULAR", "price": 8.49 },
@@ -129,7 +129,7 @@
       {
         "itemId": "e1c0c46b-90b8-4310-b259-e004aff82a94",
         "name": "Cheese Fries",
-        "category": "Sides",
+        "category": "WRAPS",
         "portionPrices": [
           { "portionPriceId": "fb5399ab-0c7f-4c64-83f7-c97f03c57c5e", "portionSize": "SMALL", "price": 3.49 },
           { "portionPriceId": "e5d20228-2d47-4f8c-93cf-d7c2f71c01db", "portionSize": "REGULAR", "price": 5.49 }
@@ -144,10 +144,146 @@
         "image": "https://example.com/cheese-fries.jpg"
       }
     ],
-    "categories": [
-      {"category": "Wings", "total": 5, "image": "https://media.istockphoto.com/id/835903320/photo/baked-chicken-wings-with-sesame-seeds-and-sweet-chili-sauce-on-white-wooden-board.jpg?s=612x612&w=0&k=20&c=SH8ZCkEKuWD_wxulpntIJ0uD4yRnUf9UXovQwSwrmmA=" },
-      {"category": "Boneless", "total": 3, "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="},
-      {"category": "Sides", "total": 3, "image": "https://media.istockphoto.com/id/2163052205/photo/homemade-garlic-parmesan-chicken-wings-in-a-plate.jpg?s=2048x2048&w=is&k=20&c=55KAIM75-y88b-aaw1PyRWNhYsP2_LqMfGX1r8OyYIg="}
+    "deals": [
+      {
+        "dealId": "c5aef4b0-8c32-4b9f-b58e-73a8d0957e41",
+        "dealType": "CHICKEN_DEAL",
+        "name": "Crispy Chicken Meal",
+        "dealItems": [
+          {
+            "dealItemId": "9f2b1c3a-ef45-46c3-aef9-1fbc99a6f312",
+            "name": "Crispy Chicken Piece",
+            "description": "Crunchy and juicy fried chicken",
+            "quantity": 2,
+            "image": "https://example.com/images/chicken_piece.jpg",
+            "deal": {
+              "dealId": "c5aef4b0-8c32-4b9f-b58e-73a8d0957e41",
+              "name": "Crispy Chicken Meal"
+            }
+          }
+        ],
+        "description": "A delicious crispy chicken meal with fries.",
+        "isAvailable": true,
+        "tag": "SPECIAL",
+        "image": "https://example.com/images/chicken_deal.jpg",
+        "price": 12.99
+      },
+      {
+        "dealId": "e5b6d882-9a7c-412b-b5c9-4d82e5f8c3d2",
+        "dealType": "CHICKEN_DEAL",
+        "name": "Spicy Chicken Platter",
+        "dealItems": [
+          {
+            "dealItemId": "a8f4e3b1-3d7a-4e5c-85b9-c4d2f8b3d112",
+            "name": "Spicy Chicken Wings",
+            "description": "Hot and spicy chicken wings",
+            "quantity": 4,
+            "image": "https://example.com/images/spicy_wings.jpg",
+            "deal": {
+              "dealId": "e5b6d882-9a7c-412b-b5c9-4d82e5f8c3d2",
+              "name": "Spicy Chicken Platter"
+            }
+          }
+        ],
+        "description": "A platter of spicy and flavorful chicken wings.",
+        "isAvailable": true,
+        "tag": "HOT",
+        "image": "https://example.com/images/spicy_chicken_deal.jpg",
+        "price": 14.99
+      },
+      {
+        "dealId": "a3b6f852-3d19-4b62-946e-84e32fb7c1c5",
+        "dealType": "BURGER_DEAL",
+        "name": "Cheesy Burger Combo",
+        "dealItems": [
+          {
+            "dealItemId": "5e8b2d4f-927b-4eb2-b34b-2b8f2baf94a5",
+            "name": "Cheese Burger",
+            "description": "Beef burger with melted cheese",
+            "quantity": 1,
+            "image": "https://example.com/images/cheese_burger.jpg",
+            "deal": {
+              "dealId": "a3b6f852-3d19-4b62-946e-84e32fb7c1c5",
+              "name": "Cheesy Burger Combo"
+            }
+          }
+        ],
+        "description": "A juicy burger with a refreshing drink.",
+        "isAvailable": true,
+        "tag": "POPULAR",
+        "image": "https://example.com/images/burger_deal.jpg",
+        "price": 10.49
+      },
+      {
+        "dealId": "b7d6c8f3-2a45-4f62-85b9-3c4d2f8e7b14",
+        "dealType": "BURGER_DEAL",
+        "name": "Double Patty Delight",
+        "dealItems": [
+          {
+            "dealItemId": "c4d8f3e7-2a9b-4c6f-8b5d-2f3b7c45e9a1",
+            "name": "Double Patty Burger",
+            "description": "A double beef patty burger with extra cheese",
+            "quantity": 1,
+            "image": "https://example.com/images/double_patty_burger.jpg",
+            "deal": {
+              "dealId": "b7d6c8f3-2a45-4f62-85b9-3c4d2f8e7b14",
+              "name": "Double Patty Delight"
+            }
+          }
+        ],
+        "description": "A burger with double the meat and double the flavor.",
+        "isAvailable": true,
+        "tag": "NEW",
+        "image": "https://example.com/images/double_burger_deal.jpg",
+        "price": 13.99
+      },
+      {
+        "dealId": "d4f6b8c9-3a7e-4b52-9c5d-8b3e4f2a7b1c",
+        "dealType": "MIXED_DEAL",
+        "name": "Ultimate Feast",
+        "dealItems": [
+          {
+            "dealItemId": "b8c9f3a7-4d5e-9b2c-8f3a7e4f1b5d",
+            "name": "Burger + Chicken + Fries",
+            "description": "A combination of all your favorites in one meal",
+            "quantity": 1,
+            "image": "https://example.com/images/mixed_deal.jpg",
+            "deal": {
+              "dealId": "d4f6b8c9-3a7e-4b52-9c5d-8b3e4f2a7b1c",
+              "name": "Ultimate Feast"
+            }
+          }
+        ],
+        "description": "A feast with a burger, chicken, and fries.",
+        "isAvailable": true,
+        "tag": "FAMILY",
+        "image": "https://example.com/images/ultimate_feast.jpg",
+        "price": 18.99
+      },
+      {
+        "dealId": "e8f3b7c9-2a4d-5b6e-9c5f-3a7e4b2d1c8f",
+        "dealType": "WRAP_DEAL",
+        "name": "Grilled Chicken Wrap",
+        "dealItems": [
+          {
+            "dealItemId": "c9f3a7b8-4d5e-2b6c-9f3a7e4b1d5c",
+            "name": "Grilled Chicken Wrap",
+            "description": "Soft tortilla filled with grilled chicken and veggies",
+            "quantity": 1,
+            "image": "https://example.com/images/chicken_wrap.jpg",
+            "deal": {
+              "dealId": "e8f3b7c9-2a4d-5b6e-9c5f-3a7e4b2d1c8f",
+              "name": "Grilled Chicken Wrap"
+            }
+          }
+        ],
+        "description": "A healthy and delicious grilled chicken wrap.",
+        "isAvailable": true,
+        "tag": "HEALTHY",
+        "image": "https://example.com/images/grilled_wrap.jpg",
+        "price": 9.99
+      }
     ]
+    
   }
   

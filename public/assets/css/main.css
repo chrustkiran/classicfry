@@ -2685,7 +2685,7 @@ input.main-search-input::placeholder {
 }
 .hero-1 .hero-content p {
   font-weight: 600;
-  color: var(--theme2);
+  color: var(--theme);
   text-transform: uppercase;
   font-size: 20px;
 }
@@ -9066,7 +9066,6 @@ input.main-search-input::placeholder {
   -webkit-box-shadow: 0px 4px 31px 0px rgba(0, 0, 0, 0.04);
   box-shadow: 0px 4px 31px 0px rgba(0, 0, 0, 0.04);
   z-index: -1;
-  background-image: url(../../assets/img/client/bg-shape.png);
 }
 
 .testimonial-wrapper-2 {
@@ -11458,4 +11457,54 @@ li.shop-category-selected a {
 
 .category-batch {
   background-color: var(--theme2);
+}
+
+.order-tab li button {
+ color: var(--black); 
+}
+
+.order-tab li button:hover {
+  color: var(--black); 
+ }
+
+.order-tab li button.nav-link.active {
+  color: #000000;
+  background-color: var(--theme);
+}
+
+.order-tab li button.nav-link {
+  color: #000000;
+  background-color: var(--white);
+}
+
+.cash-radio {
+  font-size: 16Px;
+}
+
+.custom-control-input {
+  margin-top: 4px;
+  appearance: none; /* Remove default styling */
+  width: 16px; /* Size of radio button */
+  height: 16px;
+  border: 2px solid #000; /* Outer border */
+  border-radius: 50%; /* Make it round */
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-control-input:checked {
+  background-color: transparent; /* Keep outer border visible */
+  border: 2px solid #000; /* Maintain border */
+}
+
+.custom-control-input:checked::before {
+  content: "";
+  width: 8px; /* Inner dot size */
+  height: 8px;
+  background-color: #000; /* Inner fill */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center inner dot */
 }

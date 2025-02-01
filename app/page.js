@@ -444,7 +444,7 @@ const page = () => {
               >
                 <div className="single-food-icon">
                   <div className="icon">
-                  <i class="fal fa-drumstick-bite"></i>
+                  <i className="fal fa-drumstick-bite"></i>
                   </div>
                   <div className="content">
                     <h4>Unmatched Taste</h4>
