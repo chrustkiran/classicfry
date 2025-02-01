@@ -180,16 +180,16 @@ const ProductSidebar = ({
               railStyle={{ backgroundColor: "#212121" }}
             />
             <div className="range-items">
-              <div className="price-input d-flex">
+              <div className="price-input d-flex gap-2">
                 <div className="field">
-                  <span>Price:</span>
+                  <span>Price: </span>
                 </div>
                 <div className="field">
-                  <span>${value[0]}</span>
+                  <span>£{value[0]}</span>
                 </div>
                 <div className="separators">-</div>
                 <div className="field">
-                  <span>${value[1]}</span>
+                  <span>£{value[1]}</span>
                 </div>
                 {/* <Link
                   href="/shop-left-sidebar"

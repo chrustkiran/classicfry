@@ -21,7 +21,7 @@ const Item = ({ item, key }) => {
         </div>
         <div className="shop-content">
           <div className="star pb-4">
-            <span>{item.tag}</span>
+            <span>{(item.tag).replace("_", " ")}</span>
             {/*<Link href="#">
               {" "}
               <i className="fas fa-star" />
@@ -68,16 +68,72 @@ const Item = ({ item, key }) => {
   );
 };
 
+const Deal = ({ deal, key }) => {
+  return (
+    <div key={key} className="col-xl-12 col-lg-12">
+      <div className="shop-list-items">
+        <div className="shop-image">
+          <img src={deal.image} alt="shop-img" />
+        </div>
+        <div className="d-flex">
+          <div className="shop-content col-6">
+            <div className="star pb-4">
+              <span>{(deal.tag).replace("_", " ")}</span>
+            </div>
+            <h3>
+              <Link href="shop-single">{deal.name}</Link>
+            </h3>
+            <p>{deal.description}</p>
+            <h5>£{deal.basePrice}</h5>
+            <div className="shop-list-btn">
+              <Link
+                href={{
+                  pathname: "/shop-single",
+                  query: { deal: deal.dealId },
+                }}
+                className="theme-btn"
+              >
+                <span className="button-content-wrapper d-flex align-items-center">
+                  <span className="button-icon">
+                    <i className="flaticon-chicken" />
+                  </span>
+                  <span className="button-text">Choose Deal</span>
+                </span>
+              </Link>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="card shadow-sm">
+              <div className="card-header bg-warning text-white">
+                <h5 className="mb-0">Deal Items</h5>
+              </div>
+              <div className="card-body">
+                <ul className="list-group">
+                  {deal.dealItems.map((dealItem, index) => (
+                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                      {dealItem.name}<span class="badge bg-danger rounded-pill">{dealItem.quantity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ShopPage = () => {
   const { items, fetchItems } = useItem();
-  const {deals, fetchDeals} = useDeal();
+  const { deals, fetchDeals } = useDeal();
 
   const [consItems, setConsItems] = useState({});
   const [consDeals, setConsDeals] = useState({});
   const [priceFilter, setPriceFilter] = useState([0, 500]);
   const [selectedCategory, selectCategory] = useState(undefined);
 
-  const [activeTab, setActiveTab] = useState("active");
+  const [activeTab, setActiveTab] = useState("items");
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -87,6 +143,8 @@ const ShopPage = () => {
     } else if (searchParams.get("dealType")) {
       selectCategory(searchParams.get("dealType"));
       setActiveTab("deals");
+    } else {
+      setActiveTab("items");
     }
   }, [searchParams]);
 
@@ -161,92 +219,96 @@ const ShopPage = () => {
                   }`}
                   onClick={() => handleTabChange("deals")}
                 >
-                   <h3>Deals</h3>
+                  <h3>Deals</h3>
                 </button>
               </li>
             </ul>
           </div>
-          {activeTab == "items" && <div className="row g-5">
-            <ProductSidebar
-              activeTab={activeTab}
-              item={consItems}
-              filter={addFilter}
-              selectedCategoryProp={selectedCategory}
-              priceValue={priceFilter}
-            />
-            <div className="col-xl-9 col-lg-8 order-1 order-md-2">
-              {/* <ProductTopBar mb0={true} /> */}
-              <div className="row gap-3">
-                {Object.keys(consItems)
-                  .filter((category) =>
-                    selectedCategory ? selectedCategory === category : true
-                  )
-                  .map((category) => {
-                    const filteredItems = consItems[category].filter(
-                      (item) =>
-                        item.basePrice > priceFilter[0] &&
-                        item.basePrice < priceFilter[1]
-                    );
+          {activeTab == "items" && (
+            <div className="row g-5">
+              <ProductSidebar
+                activeTab={activeTab}
+                item={consItems}
+                filter={addFilter}
+                selectedCategoryProp={selectedCategory}
+                priceValue={priceFilter}
+              />
+              <div className="col-xl-9 col-lg-8 order-1 order-md-2">
+                {/* <ProductTopBar mb0={true} /> */}
+                <div className="row gap-3">
+                  {Object.keys(consItems)
+                    .filter((category) =>
+                      selectedCategory ? selectedCategory === category : true
+                    )
+                    .map((category) => {
+                      const filteredItems = consItems[category].filter(
+                        (item) =>
+                          item.basePrice > priceFilter[0] &&
+                          item.basePrice < priceFilter[1]
+                      );
 
-                    return (
-                      <div key={category}>
-                        <h3>{category}</h3>
-                        <div className="row d-flex">
-                          {filteredItems.length > 0 ? (
-                            filteredItems.map((item) => (
-                              <Item key={item.id} item={item} />
-                            ))
-                          ) : (
-                            <h4 className="mt-3 fw-normal">No Items</h4>
-                          )}
+                      return (
+                        <div key={category}>
+                          <h3>{category}</h3>
+                          <div className="row d-flex">
+                            {filteredItems.length > 0 ? (
+                              filteredItems.map((item) => (
+                                <Item key={item.id} item={item} />
+                              ))
+                            ) : (
+                              <h4 className="mt-3 fw-normal">No Items</h4>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                </div>
               </div>
             </div>
-          </div>}
+          )}
 
-          {activeTab == "deals" && <div className="row g-5">
-            <ProductSidebar
-              activeTab={activeTab}
-              item={consDeals}
-              filter={addFilter}
-              selectedCategoryProp={selectedCategory}
-              priceValue={priceFilter}
-            />
-            <div className="col-xl-9 col-lg-8 order-1 order-md-2">
-              {/* <ProductTopBar mb0={true} /> */}
-              <div className="row gap-3">
-                {Object.keys(consDeals)
-                  .filter((category) =>
-                    selectedCategory ? selectedCategory === category : true
-                  )
-                  .map((category, index) => {
-                    const filteredItems = consDeals[category].filter(
-                      (item) =>
-                        item.basePrice > priceFilter[0] &&
-                        item.basePrice < priceFilter[1]
-                    );
+          {activeTab == "deals" && (
+            <div className="row g-5">
+              <ProductSidebar
+                activeTab={activeTab}
+                item={consDeals}
+                filter={addFilter}
+                selectedCategoryProp={selectedCategory}
+                priceValue={priceFilter}
+              />
+              <div className="col-xl-9 col-lg-8 order-1 order-md-2">
+                {/* <ProductTopBar mb0={true} /> */}
+                <div className="row gap-3">
+                  {Object.keys(consDeals)
+                    .filter((category) =>
+                      selectedCategory ? selectedCategory === category : true
+                    )
+                    .map((category, index) => {
+                      const filteredItems = consDeals[category].filter(
+                        (item) =>
+                          item.basePrice > priceFilter[0] &&
+                          item.basePrice < priceFilter[1]
+                      );
 
-                    return (
-                      <div key={index}>
-                        <h3>{category}</h3>
-                        <div className="row d-flex">
-                          {filteredItems.length > 0 ? (
-                            filteredItems.map((item, index) => (
-                              <Item key={index} item={item} />
-                            ))
-                          ) : (
-                            <h4 className="mt-3 fw-normal">No Items</h4>
-                          )}
+                      return (
+                        <div key={index}>
+                          <h3>{category}</h3>
+                          <div className="row d-flex">
+                            {filteredItems.length > 0 ? (
+                              filteredItems.map((item, index) => (
+                                <Deal key={index} deal={item} />
+                              ))
+                            ) : (
+                              <h4 className="mt-3 fw-normal">No Items</h4>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                </div>
               </div>
             </div>
-          </div>}
+          )}
           {/* <div className="page-nav-wrap mt-5 text-center">
                 <ul>
                   <li>
