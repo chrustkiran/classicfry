@@ -55,6 +55,70 @@ const page = () => {
     removeItemFromCart(item.itemId, item.size);
   };
 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    mobileNumber: "",
+  });
+
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    mobileNumber: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    let newErrors = { firstName: "", lastName: "", mobileNumber: "" };
+
+    if (!formData.firstName) {
+      newErrors.firstName = "First name is required";
+      isValid = false;
+    }
+
+    if (!formData.lastName) {
+      newErrors.lastName = "Last name is required";
+      isValid = false;
+    }
+
+    if (!formData.mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      fetch(`${env.API_URL_STRIPE}/api/create-payment-intent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: amount * 100, userId: userId }),
+      })
+        .then((response) => response.json())
+        .then((json) => setClientSecret(json.clientSecret))
+        .catch((error) =>
+          console.error("Error fetching payment intent:", error)
+        );
+    }
+    } else {
+      console.log(
+        "Form submission failed. Please fill in all required fields."
+      );
+    }
+  };
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"shop Cart"} />
@@ -91,11 +155,15 @@ const page = () => {
                               />
                               <div className="d-flex row">
                                 <span>{item.name}</span>
-                                <span style={{backgroundColor: 'yellow'}} class="badge badge-warning px-0">Warning</span>
+                                {item.size !== env.DEFAULT && (
+                                  <span className="badge size-badge badge-warning px-0">
+                                    {item.size.substring(0, 1)}
+                                  </span>
+                                )}
                               </div>
                             </td>
 
-                            <td className="cart-item-price">
+                            <td className="cart-item-price1">
                               £{" "}
                               <span className="base-price">
                                 {item.price.toFixed(2)}
@@ -103,34 +171,36 @@ const page = () => {
                             </td>
                             <td>
                               <div className="cart-item-quantity">
-                                <span className="cart-item-quantity-amount">
-                                  {item.quantity}
-                                </span>
-                                <div className="cart-item-quantity-controller">
-                                  <Link
-                                    href="#"
-                                    className="cart-increment"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      incrementQuantity(item);
-                                    }}
-                                  >
-                                    <i className="far fa-caret-up" />
-                                  </Link>
-                                  <Link
-                                    href="#"
-                                    className="cart-decrement"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      decrementQuantity(item);
-                                    }}
-                                  >
-                                    <i className="far fa-caret-down" />
-                                  </Link>
+                                <div className="cart-item-quantity-box">
+                                  <span className="cart-item-quantity-amount">
+                                    {item.quantity}
+                                  </span>
+                                  <div className="cart-item-quantity-controller">
+                                    <Link
+                                      href="#"
+                                      className="cart-increment"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        incrementQuantity(item);
+                                      }}
+                                    >
+                                      <i className="far fa-caret-up" />
+                                    </Link>
+                                    <Link
+                                      href="#"
+                                      className="cart-decrement"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        decrementQuantity(item);
+                                      }}
+                                    >
+                                      <i className="far fa-caret-down" />
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </td>
-                            <td className="cart-item-price">
+                            <td className="cart-item-price2">
                               £{" "}
                               <span className="total-price">
                                 {(item.price * item.quantity).toFixed(2)}
@@ -144,7 +214,7 @@ const page = () => {
                                   removeItem(item);
                                 }}
                               >
-                                <i className="fas fa-times" />
+                                <i className="fas fa-trash"></i>
                               </Link>
                             </td>
                           </tr>
@@ -179,10 +249,12 @@ const page = () => {
               </div>
             </div>
             <div className="d-flex justify-content-end">
-              <div className="col-lg-4" />
-              <div className="col-xl-4">
+              <div className="col-sm-12 col-lg-6">
                 <div className="cart-pragh-box">
-                  <div className="cart-graph shadow-sm">
+                  <form
+                    className="cart-graph shadow-sm"
+                    onSubmit={handleSubmit}
+                  >
                     <h4>Cart Total</h4>
                     <ul>
                       <li className="d-flex justify-content-between">
@@ -191,17 +263,79 @@ const page = () => {
                       </li>
                       <li className="justify-content-between">
                         <span>Total</span>
-                        <span>
-                          £
-                          {(
-                            calculateCartTotal() + (cart.length > 0 ? 10 : 0)
-                          ).toFixed(2)}
-                        </span>
+                        <span>£{calculateCartTotal().toFixed(2)}</span>
                       </li>
+
+                      <p className="border shadow-sm p-4">
+                        <h5>Required details</h5>
+                        <li className="justify-content-between mt-2">
+                          <span>
+                            <label htmlFor="firstName">First name</label>
+                          </span>
+                          <span className="col-7">
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="firstName"
+                              placeholder="First name"
+                              value={formData.firstName}
+                              onChange={handleInputChange}
+                              required
+                            />
+                            {errors.firstName && (
+                              <small className="text-danger">
+                                {errors.firstName}
+                              </small>
+                            )}
+                          </span>
+                        </li>
+                        <li className="justify-content-between">
+                          <span>
+                            <label htmlFor="lastName">Last name</label>
+                          </span>
+                          <span className="col-7">
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="lastName"
+                              placeholder="Last name"
+                              value={formData.lastName}
+                              onChange={handleInputChange}
+                              required
+                            />
+                            {errors.lastName && (
+                              <small className="text-danger">
+                                {errors.lastName}
+                              </small>
+                            )}
+                          </span>
+                        </li>
+                        <li className="justify-content-between">
+                          <span>
+                            <label htmlFor="mobileNumber">Mobile Number</label>
+                          </span>
+                          <span className="col-7">
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="mobileNumber"
+                              placeholder="Enter your mobile number"
+                              value={formData.mobileNumber}
+                              onChange={handleInputChange}
+                              required
+                            />
+                            {errors.mobileNumber && (
+                              <small className="text-danger">
+                                {errors.mobileNumber}
+                              </small>
+                            )}
+                          </span>
+                        </li>
+                      </p>
                     </ul>
                     <div className="chck">
-                      <Link
-                        href="/checkout"
+                      <button
+                        type="submit"
                         className="theme-btn d-flex justify-content-between align-items-center w-100"
                       >
                         Checkout
@@ -211,9 +345,9 @@ const page = () => {
                             calculateCartTotal() + (cart.length > 0 ? 10 : 0)
                           ).toFixed(2)}
                         </span>
-                      </Link>
+                      </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
