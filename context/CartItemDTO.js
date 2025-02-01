@@ -1,11 +1,14 @@
+import env from "@/env";
+
 export class CartItem {
-    constructor(itemId, name, price, image, size = 'default', quantity = 1) {
+    constructor(itemId, name, price, image, size = env.DEFAULT, quantity = 1, type = 'ITEM') {
       this.itemId = itemId;
       this.name = name;
       this.size = size; 
       this.price = price;
       this.quantity = quantity;
       this.image = image
+      this.type = type;
     }
   
     calculateTotalPrice = () => {

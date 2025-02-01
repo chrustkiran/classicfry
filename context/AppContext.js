@@ -11,7 +11,7 @@ export const AppProvider = ({ children }) => {
   const getCartFromLocalStorage = () => {
     const savedCart = localStorage.getItem(cartName); // Use your cart name here
     return savedCart ? JSON.parse(savedCart).map(item => 
-        new CartItem(item.itemId, item.name, item.price, item.image, item.size, item.quantity)
+        new CartItem(item.itemId, item.name, item.price, item.image, item.size, item.quantity, item.type)
     ) : [];
 };
 
@@ -23,7 +23,6 @@ export const AppProvider = ({ children }) => {
     );
   }
 
-  // Method to add a new item to the cart
   const addItemToCart = (itemId, name, price, image, size, quantity) => {
     // Check if the item already exists in the cart
     const existingItemIndex = findIndexByItem(itemId, size);

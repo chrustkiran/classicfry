@@ -2,6 +2,7 @@
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import { useAppContext } from "@/context/AppContext";
+import env from "@/env";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useState } from "react";
@@ -82,16 +83,20 @@ const page = () => {
                                 src={item.image}
                                 alt={item.name}
                                 style={{
-                                  width: "120px", // Set a fixed width
-                                  height: "100px", // Set a fixed height
-                                  objectFit: "cover", // Ensures the image covers the area without distortion
-                                  borderRadius: "4px", // Optional: Add rounded corners
+                                  width: "120px",
+                                  height: "100px",
+                                  objectFit: "cover",
+                                  borderRadius: "4px",
                                 }}
                               />
-                              <span>{item.name}</span>
+                              <div className="d-flex row">
+                                <span>{item.name}</span>
+                                <span style={{backgroundColor: 'yellow'}} class="badge badge-warning px-0">Warning</span>
+                              </div>
                             </td>
+
                             <td className="cart-item-price">
-                            £{" "}
+                              £{" "}
                               <span className="base-price">
                                 {item.price.toFixed(2)}
                               </span>
@@ -126,7 +131,7 @@ const page = () => {
                               </div>
                             </td>
                             <td className="cart-item-price">
-                            £{" "}
+                              £{" "}
                               <span className="total-price">
                                 {(item.price * item.quantity).toFixed(2)}
                               </span>
@@ -187,7 +192,7 @@ const page = () => {
                       <li className="justify-content-between">
                         <span>Total</span>
                         <span>
-                        £
+                          £
                           {(
                             calculateCartTotal() + (cart.length > 0 ? 10 : 0)
                           ).toFixed(2)}
@@ -201,7 +206,7 @@ const page = () => {
                       >
                         Checkout
                         <span>
-                        £
+                          £
                           {(
                             calculateCartTotal() + (cart.length > 0 ? 10 : 0)
                           ).toFixed(2)}

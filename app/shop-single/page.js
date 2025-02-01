@@ -29,11 +29,35 @@ const Ingredient = ({ ingredient }) => {
   );
 };
 
+const DealItem = ({ dealItem }) => {
+  return (
+    <div
+      key={dealItem.id}
+      className="col-12 d-flex align-items-center p-3 border rounded"
+    >
+      <div className="d-flex align-items-center" style={{ flex: 1 }}>
+        <img
+          src={dealItem.image}
+          alt={dealItem.name}
+          className="img-fluid"
+          style={{ width: "120px", height: "100px", marginRight: "20px" }}
+        />
+        <div>
+          <h4>{dealItem.name}</h4>
+          <p>{dealItem.description}</p>
+        </div>
+      </div>
+      <div className="ml-auto mr-4 col-3">
+        <span>Quantity: {dealItem.quantity}</span>
+      </div>
+    </div>
+  );
+};
+
 const page = () => {
   const [quantity, setQuantity] = useState(0);
   const [itemPrice, setItemPrice] = useState(0);
   const [portionSize, setPortionSize] = useState(undefined);
-  const [addToCartHover, setHover] = useState(false);
 
   const [itemType, setItemType] = useState(undefined);
   const { item, fetchItem } = useItem();
@@ -43,17 +67,29 @@ const page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [addTab, setAddTab] = useState("Ingredients");
+  const [showScrollUp, setShowCrollup] = useState(false);
 
   const { addItemToCart } = useAppContext();
 
-  const dealItemRef = useRef(null);
+  const dealItemRef = useRef();
 
   const scrollToTarget = () => {
     if (dealItemRef.current) {
-      dealItemRef.current.scrollIntoView({ behavior: "smooth" });
+      dealItemRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      setTimeout(() => {
+        window.scrollBy(0, -100);
+        setShowCrollup(true);
+      }, 800);
+
+      setTimeout(() => {
+        setShowCrollup(false);
+      }, 5000);
     }
   };
-
 
   useEffect(() => {
     const itemId = searchParams.get("item");
@@ -91,14 +127,28 @@ const page = () => {
   }, [item, deal]);
 
   const addToCart = () => {
-    addItemToCart(
-      fetchedItem.itemId,
-      fetchedItem.name,
-      itemPrice,
-      fetchedItem.image,
-      portionSize ? portionSize : env.DEFAULT,
-      quantity
-    );
+    if (itemType == 'item') {
+      addItemToCart(
+        fetchedItem.itemId,
+        fetchedItem.name,
+        itemPrice,
+        fetchedItem.image,
+        portionSize ? portionSize : env.DEFAULT,
+        quantity,
+        'ITEM'
+      );
+    } else {
+      addItemToCart(
+        fetchedDeal.dealId,
+        fetchedDeal.name,
+        itemPrice,
+        fetchedDeal.image,
+        portionSize ? portionSize : env.DEFAULT,
+        quantity,
+        'DEAL'
+      );
+    }
+    
   };
 
   const handlePrice = (fetchedItem) => {
@@ -179,7 +229,15 @@ const page = () => {
                   <h3 className="pb-3 responsive-cnt">
                     {fetchedItem.name || fetchedDeal.name}
                   </h3>
-                  {itemType === "deal" && < button onClick={scrollToTarget} href="#dealItems">Check what's included</button>}
+                  {itemType === "deal" && (
+                    <button
+                      style={{ borderWidth: "2px", borderRadius: "5px" }}
+                      className="border border-warning shadow-sm p-2 px-4"
+                      onClick={scrollToTarget}
+                    >
+                      <i className="fas flaticon-chicken"/> &nbsp; Check what's included in this Deal
+                    </button>
+                  )}
                   <p className="mb-4 responsive-cnt">
                     {fetchedItem.description || fetchedDeal.description}
                   </p>
@@ -264,10 +322,10 @@ const page = () => {
                         className="badge rounded-pill category-batch text-white"
                         href={{
                           pathname: "/shop-list",
-                          query: { category: fetchedItem.category },
+                          query: itemType === 'deal' ? {dealType: fetchedDeal.dealType}: { category: fetchedItem.category},
                         }}
                       >
-                        {fetchedItem.category}
+                        {fetchedItem.category || fetchedDeal.dealType}
                       </Link>
                     </div>
                   </div>
@@ -277,25 +335,48 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="single-tab">
+            <div className="single-tab" ref={dealItemRef}>
+              {showScrollUp && (
+                <p className="border p-3 mt-4 mb-2">
+                  <i className="fas fa-mouse" /> &nbsp; Scroll Up to Order this
+                  Deal
+                </p>
+              )}
               <Tabs
                 activeKey={addTab}
-                id="product-tabs" 
-                className="mb-4 responsive-cnt"
+                id="product-tabs"
+                className="mb-2 responsive-cnt"
               >
                 {itemType === "deal" && (
-                  <Tab eventKey="DealItems" ref={dealItemRef}  title="What's included?">
+                  <Tab eventKey="DealItems" title="What's included?">
+                    <div className="description-items">
+                      <div className="row">
+                        <div className="list-group">
+                          {fetchedDeal?.dealItems?.length > 0 &&
+                            fetchedDeal.dealItems.map((dealItem, index) => (
+                              <DealItem
+                                key={index}
+                                dealItem={dealItem}
+                              ></DealItem>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  </Tab>
+                )}
+
+                {itemType === "item" && (
+                  <Tab eventKey="Ingredients" title="Ingredients">
                     <div className="description-items">
                       <div className="row">
                         <div className="list-group">
                           {fetchedItem?.ingredientsList?.length > 0 &&
                             fetchedItem.ingredientsList.map(
                               (ingredient, index) => (
-                                // <Ingredient
-                                //   key={index}
-                                //   ingredient={ingredient}
-                                // ></Ingredient>
-                                <div>Hello</div>
+                                <Ingredient
+                                  key={index}
+                                  ingredient={ingredient}
+                                ></Ingredient>
                               )
                             )}
                         </div>
@@ -303,306 +384,11 @@ const page = () => {
                     </div>
                   </Tab>
                 )}
-
-                <Tab eventKey="Ingredients" title="Ingredients">
-                  <div className="description-items">
-                    <div className="row">
-                      <div className="list-group">
-                        {fetchedItem?.ingredientsList?.length > 0 &&
-                          fetchedItem.ingredientsList.map(
-                            (ingredient, index) => (
-                              <Ingredient
-                                key={index}
-                                ingredient={ingredient}
-                              ></Ingredient>
-                            )
-                          )}
-                      </div>
-                    </div>
-                  </div>
-                </Tab>
-                {/* <Tab eventKey="additional" title="Additional Information">
-                  <div className="table-responsive">
-                    <table className="table table-bordered">
-                      <tbody>
-                        <tr>
-                          <td>Weight</td>
-                          <td>240 Ton</td>
-                        </tr>
-                        <tr>
-                          <td>Dimensions</td>
-                          <td>20 × 30 × 40 cm</td>
-                        </tr>
-                        <tr>
-                          <td>Colors</td>
-                          <td>Black, Blue, Green</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </Tab>
-                <Tab eventKey="review" title="Reviews (4)">
-                  <div className="review-items">
-                    <div className="admin-items d-flex flex-wrap flex-md-nowrap align-items-center pb-4">
-                      <div className="admin-img pb-4 pb-md-0 me-4">
-                        <img
-                          src="assets/img/shop-food/review/01.jpg"
-                          alt="image"
-                        />
-                      </div>
-                      <div className="content p-4">
-                        <div className="head-content pb-1 d-flex flex-wrap justify-content-between">
-                          <h5>
-                            miklos salsa<span>27June 2024 at 5.44pm</span>
-                          </h5>
-                          <div className="star">
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                          </div>
-                        </div>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipiscing
-                          elit. Curabitur vulputate vestibulum Phasellus rhoncus
-                          dolor eget viverra pretium.Curabitur vulputate
-                          vestibulum Phasellus rhoncus dolor eget viverra
-                          pretium.
-                        </p>
-                      </div>
-                    </div>              
-                    <div className="review-title mt-5 py-15 mb-30">
-                      <h4>add a review</h4>
-                      <div className="rate-now d-flex align-items-center">
-                        <p>Rate this product? *</p>
-                        <div className="star">
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star" />
-                          <i className="fas fa-star" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="review-form">
-                      <form action="#" id="contact-form" method="POST">
-                        <div className="row g-4">
-                          <div className="col-lg-6">
-                            <div className="form-clt">
-                              <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Full Name"
-                              />
-                            </div>
-                          </div>
-                          <div className="col-lg-6">
-                            <div className="form-clt">
-                              <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                placeholder="email addres"
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="col-lg-12 wow fadeInUp"
-                            data-wow-delay=".8"
-                          >
-                            <div className="form-clt-big form-clt">
-                              <textarea
-                                name="message"
-                                id="message"
-                                placeholder="message"
-                                defaultValue={""}
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="col-lg-6 wow fadeInUp"
-                            data-wow-delay=".9"
-                          >
-                            <button type="submit" className="theme-btn">
-                              post Submit
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </Tab> */}
               </Tabs>
             </div>
           </div>
         </div>
       </section>
-      {/* <section className="food-category-section fix section-padding section-bg">
-        <div className="container">
-          <div className="section-title text-center">
-            <span className="wow fadeInUp">crispy, every bite taste</span>
-            <h2 className="wow fadeInUp" data-wow-delay=".3s">
-              RELATED PRODUCTS
-            </h2>
-          </div>
-          <div className="row">
-            <div
-              className="col-xl-3 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 text-center">
-                <div className="icon">
-                  <Link href="shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/beef-ruti.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="shop-single">ruti with beef slice</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 active text-center">
-                <div className="icon">
-                  <a href="shop-cart">
-                    <i className="far fa-heart" />
-                  </a>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/burger-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <a href="shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </a>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="shop-single">Whopper Burger King</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 text-center">
-                <div className="icon">
-                  <a href="shop-cart">
-                    <i className="far fa-heart" />
-                  </a>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pasta-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <a href="shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </a>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="shop-single">Chiness pasta</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 text-center">
-                <div className="icon">
-                  <a href="shop-cart">
-                    <i className="far fa-heart" />
-                  </a>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pizza-3.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <a href="shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </a>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
       <Cta />
     </FoodKingLayout>
   );
