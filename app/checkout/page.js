@@ -21,13 +21,23 @@ import { useAppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import { PostOrderRequest } from "@/context/OrderDTO";
 import OrderService from "@/api/order";
+import PaymentService from "@/api/payment";
 
 const USER_ID = env.USER_ID;
+const STRIPE_ERR_MSG =
+  "We're really sorry, there is a problem in creating an online payment for you...";
 
-const ParentPayment = ({ amount, userId }) => {
+const ParentPayment = ({
+  amount,
+  userId,
+  handlePaymentIntent,
+  handleSetStripeErr,
+  cart,
+}) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
   const [clientSecret, setClientSecret] = useState(null);
+  const [orderId, setOrderId] = useState(undefined);
 
   const appearance = {
     theme: "stripe",
@@ -41,20 +51,39 @@ const ParentPayment = ({ amount, userId }) => {
 
   const loader = "auto";
 
+  const sendOrderAsOnlinePayment = async (userId, cart, amount) => {
+    const postOrderReq = new PostOrderRequest(
+      userId,
+      cart,
+      env.PAYMENT_TYPE.ONLINE,
+      amount
+    );
+    await OrderService.createOrder(postOrderReq)
+      .then((order) => {
+        if (!order?.oderId) {
+          handleSetStripeErr(STRIPE_ERR_MSG);
+        } else {
+          setOrderId(order.orderId);
+          //since this is an online payment, this should have stripeDetails.
+          setClientSecret(order.stripeDetails?.clientSecret);
+          handlePaymentIntent(order.stripeDetails?.paymentIntentId);
+        }
+      })
+      .catch((_) => {
+        handleSetStripeErr(STRIPE_ERR_MSG);
+      });
+
+    setTimeout(() => {
+      handleSetStripeErr(undefined);
+    }, 8000);
+  };
+
   useEffect(() => {
     if (clientSecret === null) {
-      fetch(`${env.API_URL_STRIPE}/api/create-payment-intent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amount * 100, userId: userId }),
-      })
-        .then((response) => response.json())
-        .then((json) => setClientSecret(json.clientSecret))
-        .catch((error) =>
-          console.error("Error fetching payment intent:", error)
-        );
+      sendOrderAsOnlinePayment(userId, cart, amount);
     }
-  }, [clientSecret]);
+  }, []);
+
   return (
     <div>
       {clientSecret && (
@@ -62,7 +91,12 @@ const ParentPayment = ({ amount, userId }) => {
           stripe={stripePromise}
           options={{ clientSecret, appearance, loader }}
         >
-          <PaymentForm clientSecret={clientSecret} amount={amount} />
+          <PaymentForm
+            clientSecret={clientSecret}
+            amount={amount}
+            handleSetStripeErr={handleSetStripeErr}
+            orderId={orderId}
+          />
         </Elements>
       )}
       {!clientSecret && <p className="mb-0">Please wait...</p>}
@@ -70,7 +104,7 @@ const ParentPayment = ({ amount, userId }) => {
   );
 };
 
-const PaymentForm = ({ amount }) => {
+const PaymentForm = ({ amount, handleSetStripeErr, orderId }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -92,15 +126,41 @@ const PaymentForm = ({ amount }) => {
     });
 
     if (result.error) {
-      console.log(result.error.message);
+      handleSetStripeErr(
+        "Hmm.. Something went wrong! Please check your card details..."
+      );
+      //TODO :: what if payment fails ?
+      setTimeout(() => {
+        handleSetStripeErr(undefined);
+      }, 8000);
     } else {
-      await fetch(`${env.API_URL_STRIPE}/api/confirm-payment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ paymentIntentId: result?.paymentIntent.id }),
-      });
+      PaymentService.confirmPayment({
+        paymentIntentId: result?.paymentIntent.id,
+        orderID: orderId,
+      })
+        .then((confRes) => {
+          if (!confRes?.orderId) {
+            handleSetStripeErr(
+              `Oops.. we are really sorry, You have completed your payment successfully... but there was an error from ourside, please inform about this at our store, Your Order ID is ${orderId.substring(
+                0,
+                6
+              )}`
+            );
+          } else {
+            router.push(`/orders?success=true&orderId=${confRes.orderId}`);
+          }
+        })
+        .catch((err) => {
+          handleSetStripeErr(
+            `Oops.. we are really sorry, You have completed your payment successfully... but there was an error from ourside, please inform about this at our store, Your Order ID is ${orderId.substring(
+              0,
+              6
+            )}`
+          );
+        });
 
-      alert("Payment successful! Your order is being processed.");
+      if (confRes?.order)
+        alert("Payment successful! Your order is being processed.");
     }
   };
 
@@ -159,6 +219,10 @@ const page = () => {
 
   const [showError, setShowError] = useState(false);
 
+  const [stripeError, setStripeError] = useState(undefined);
+
+  const [paymentIntentId, setPaymentIntentId] = useState(undefined);
+
   useEffect(() => {
     if (!user?.userId) {
       console.warn("There is no userId");
@@ -166,21 +230,38 @@ const page = () => {
     }
   }, []);
 
+  const handlePaymentIntent = (paymentIntentId) => {
+    setPaymentIntentId(paymentIntentId);
+  };
+
+  const handleSetStripeErr = (stripeErr) => {
+    setStripeError(stripeErr);
+  };
+
   useEffect(() => {
     setAmount(getTotalPrice().toFixed(2));
   }, [getTotalPrice]);
 
-  const sendOrderAsCounterPayment = async (userId, cart, totalAmount) => {
-    console.log(cart);
+  const sendOrderAsCounterPayment = async (
+    userId,
+    cart,
+    totalAmount,
+    paymentIntentId
+  ) => {
     const postOrderReq = new PostOrderRequest(
       userId,
       cart,
       env.PAYMENT_TYPE.COUNTER,
-      totalAmount
+      totalAmount,
+      paymentIntentId
     );
     await OrderService.createOrder(postOrderReq)
       .then((order) => {
-        router.push(`/orders?success=true&orderId=${order.orderId}`);
+        if (!order?.oderId) {
+          setShowError(true);
+        } else {
+          router.push(`/orders?success=true&orderId=${order.orderId}`);
+        }
       })
       .catch((_) => {
         setShowError(true);
@@ -200,9 +281,14 @@ const page = () => {
             <div className="row">
               <div className="col-12">
                 <ul className="list-group px-4">
-                  {showError && <p className="p-4 error-dial">
-                    There is something wrong with the Order, Please try again.
-                  </p>}
+                  {showError && (
+                    <p className="p-4 error-dial">
+                      There is something wrong with the Order, Please try again.
+                    </p>
+                  )}
+                  {stripeError && (
+                    <p className="p-4 error-dial">{stripeError}</p>
+                  )}
                   {/* Pay at Counter Option */}
                   <li className="list-group-item">
                     <div className="custom-control cash-radio custom-radio d-flex gap-3">
@@ -260,6 +346,9 @@ const page = () => {
                         <ParentPayment
                           amount={amount}
                           userId={user.userId}
+                          handlePaymentIntent={handlePaymentIntent}
+                          handleSetStripeErr={handleSetStripeErr}
+                          cart={cart}
                         ></ParentPayment>
                       </div>
                     )}
@@ -268,7 +357,12 @@ const page = () => {
                   {selectedCash === "counter" && (
                     <button
                       onClick={() =>
-                        sendOrderAsCounterPayment(user.userId, cart, amount)
+                        sendOrderAsCounterPayment(
+                          user.userId,
+                          cart,
+                          amount,
+                          paymentIntentId
+                        )
                       }
                       id="submit"
                       className="mt-3 btn btn-warning text-white fw-bold w-100"

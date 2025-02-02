@@ -15,12 +15,12 @@ export class CartItem {
       return this.price * this.quantity;
     }
 
-    increaseQuantity() {
-      this.quantity += 1;
+    increaseQuantity(size = 1) {
+      this.quantity += size;
     }
 
-    decreaseQuantity() {
-      if (this.quantity > 1) this.quantity -= 1;
+    decreaseQuantity(size = 1) {
+      if (this.quantity > size) this.quantity -= size;
     }
   }
   

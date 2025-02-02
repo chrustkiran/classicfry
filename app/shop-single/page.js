@@ -127,7 +127,7 @@ const page = () => {
   }, [item, deal]);
 
   const addToCart = () => {
-    if (itemType == 'item') {
+    if (itemType === 'item') {
       addItemToCart(
         fetchedItem.itemId,
         fetchedItem.name,
@@ -145,7 +145,7 @@ const page = () => {
         fetchedDeal.image,
         portionSize ? portionSize : env.DEFAULT,
         quantity,
-        env.ITEM_TYPE.ITEM
+        env.ITEM_TYPE.DEAL
       );
     }
     

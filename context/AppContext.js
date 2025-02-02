@@ -23,19 +23,19 @@ export const AppProvider = ({ children }) => {
     );
   }
 
-  const addItemToCart = (itemId, name, price, image, size, quantity) => {
+  const addItemToCart = (itemId, name, price, image, size, quantity, type) => {
     // Check if the item already exists in the cart
     const existingItemIndex = findIndexByItem(itemId, size);
 
     if (existingItemIndex !== -1) {
       // If the item exists, increase its quantity
       const updatedCart = [...cart];
-      updatedCart[existingItemIndex].increaseQuantity();
+      updatedCart[existingItemIndex].increaseQuantity(quantity);
       setCart(updatedCart);
       localStorage.setItem(cartName, JSON.stringify(updatedCart));
     } else {
       // If the item does not exist, add it to the cart
-      const newItem = new CartItem(itemId, name, price, image, size, quantity);
+      const newItem = new CartItem(itemId, name, price, image, size, quantity, type);
       const updatedCart = [...cart, newItem];
       setCart(updatedCart);
       localStorage.setItem(cartName, JSON.stringify(updatedCart));

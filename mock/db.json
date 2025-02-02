@@ -283,7 +283,169 @@
         "image": "https://example.com/images/grilled_wrap.jpg",
         "price": 9.99
       }
+    ],
+    "orders": [
+      {
+        "orderId": "7a3b2c1d-4e5f-6789-0a1b-2c3d4e5f6g7h",
+        "userId": "9a8b7c6d-5e4f-3g2h-1i0j-2k3l4m5n6o7p",
+        "createdTime": "2025-02-02T12:30:15.235Z",
+        "updatedTime": "2025-02-02T12:45:10.500Z",
+        "completedTime": null,
+        "orderItems": [
+          {
+            "orderItemId": "0a1b2c3d-4e5f-6789-0123-4g5h6i7j8k9l",
+            "quantity": 3,
+            "portionSize": "LARGE",
+            "customization": [
+              {
+                "customizationId": "123e4567-e89b-12d3-a456-426614174003",
+                "name": "No Onions",
+                "value": "Yes"
+              }
+            ],
+            "item": {
+              "itemId": "a1b2c3d4-e5f6-7890-1234-5g6h7i8j9k0l",
+              "name": "Beef Burger",
+              "description": "Juicy beef burger with special sauce",
+              "price": 12.50
+            },
+            "deal": null
+          },
+          {
+            "orderItemId": "1a2b3c4d-5e6f-7890-1234-5g6h7i8j9k0l",
+            "quantity": 2,
+            "portionSize": "MEDIUM",
+            "customization": [],
+            "item": {
+              "itemId": "b2c3d4e5-f6g7-8901-2345-6h7i8j9k0l1m",
+              "name": "Fries",
+              "description": "Crispy golden fries",
+              "price": 4.99
+            },
+            "deal": null
+          }
+        ],
+        "deliveryMethod": "DELIVERY",
+        "orderStatus": "IN_PROGRESS",
+        "payment": {
+          "paymentID": "c3d4e5f6-7890-1234-5678-9g0h1i2j3k4l",
+          "type": "PAYPAL",
+          "status": "COMPLETED",
+          "amount": 34.99,
+          "orderId": "7a3b2c1d-4e5f-6789-0a1b-2c3d4e5f6g7h",
+          "currency": "AUD"
+        },
+        "additionalInstructions": "Ring the doorbell upon arrival.",
+        "rating": 4,
+        "feedback": "Delicious food, but delivery took a while.",
+        "version": 1
+      },
+      {
+        "orderId": "1a2b3c4d-5e6f-7890-1234-5g6h7i8j9k0l",
+        "userId": "3c4d5e6f-7g8h-9012-3456-7i8j9k0l1m2n",
+        "createdTime": "2025-02-02T14:10:05.200Z",
+        "updatedTime": "2025-02-02T14:25:30.600Z",
+        "completedTime": null,
+        "orderItems": [
+          {
+            "orderItemId": "2b3c4d5e-6f7g-8901-2345-6h7i8j9k0l1m",
+            "quantity": 1,
+            "portionSize": "LARGE",
+            "customization": [],
+            "item": null,
+            "deal": {
+              "dealId": "4d5e6f7g-8901-2345-6789-0h1i2j3k4l5m",
+              "dealName": "Family Meal Combo",
+              "dealPrice": 29.99
+            }
+          }
+        ],
+        "deliveryMethod": "PICKUP",
+        "orderStatus": "READY_FOR_PICKUP",
+        "payment": {
+          "paymentID": "5e6f7g8h-9012-3456-7890-1i2j3k4l5m6n",
+          "type": "CREDIT_CARD",
+          "status": "PAID",
+          "amount": 29.99,
+          "orderId": "1a2b3c4d-5e6f-7890-1234-5g6h7i8j9k0l",
+          "currency": "USD"
+        },
+        "additionalInstructions": "Extra napkins, please.",
+        "rating": 5,
+        "feedback": "Great deal for the family!",
+        "version": 2
+      },
+      {
+        "orderId": "2d3e4f5g-6789-0123-4567-8h9i0j1k2l3m",
+        "userId": "4f5g6h7i-8901-2345-6789-0j1k2l3m4n5o",
+        "createdTime": "2025-02-02T18:20:50.100Z",
+        "updatedTime": "2025-02-02T18:35:40.700Z",
+        "completedTime": null,
+        "orderItems": [
+          {
+            "orderItemId": "5g6h7i8j-9012-3456-7890-1k2l3m4n5o6p",
+            "quantity": 5,
+            "portionSize": "LARGE",
+            "customization": [],
+            "item": null,
+            "deal": {
+              "dealId": "6h7i8j9k-0123-4567-8901-2l3m4n5o6p7q",
+              "dealName": "Mega Party Pack",
+              "dealPrice": 49.99
+            }
+          }
+        ],
+        "deliveryMethod": "DELIVERY",
+        "orderStatus": "COMPLETED",
+        "payment": {
+          "paymentID": "7i8j9k0l-1234-5678-9012-3m4n5o6p7q8r",
+          "type": "CREDIT_CARD",
+          "status": "SUCCESS",
+          "amount": 49.99,
+          "orderId": "2d3e4f5g-6789-0123-4567-8h9i0j1k2l3m",
+          "currency": "USD"
+        },
+        "additionalInstructions": "Delivered to the back entrance.",
+        "rating": 5,
+        "feedback": "Amazing food and quick delivery!",
+        "version": 4
+      },
+      {
+        "orderId": "2d3e4f5g-6789-0123-4567-8h270j1k2l3m",
+        "userId": "4f5g6h7i-8901-2345-6789-0j1k2l3m4n5o",
+        "createdTime": "2025-02-02T18:20:50.100Z",
+        "updatedTime": "2025-02-02T18:35:40.700Z",
+        "completedTime": null,
+        "orderItems": [
+          {
+            "orderItemId": "5g6h7i8j-9012-3456-7890-1k2l3m4n5o6p",
+            "quantity": 5,
+            "portionSize": "LARGE",
+            "customization": [],
+            "item": null,
+            "deal": {
+              "dealId": "6h7i8j9k-0123-4567-8901-2l3m4n5o6p7q",
+              "dealName": "Mega Party Pack",
+              "dealPrice": 49.99
+            }
+          }
+        ],
+        "deliveryMethod": "DELIVERY",
+        "orderStatus": "PLACED_WITH_PAYMENT",
+        "payment": {
+          "paymentID": "7i8j9k0l-1234-5678-9012-3m4n5o6p7q8r",
+          "type": "CREDIT_CARD",
+          "status": "SUCCESS",
+          "amount": 49.99,
+          "orderId": "2d3e4f5g-6789-0123-4567-8h9i0j1k2l3m",
+          "currency": "USD"
+        },
+        "additionalInstructions": "Delivered to the back entrance.",
+        "rating": 5,
+        "feedback": "Amazing food and quick delivery!",
+        "version": 4
+      }
+      
     ]
-    
   }
   

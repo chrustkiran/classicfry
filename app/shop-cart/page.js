@@ -60,7 +60,7 @@ const page = () => {
   const [formData, setFormData] = useState({
     firstName: "chris",
     lastName: "sathiya",
-    phoneNumber: "03833939",
+    phoneNumber: "038339395",
   });
 
   const [errors, setErrors] = useState({
@@ -126,7 +126,7 @@ const page = () => {
             userId: user.userId,
             firstName: user.firstName,
             lastName: user.lastName,
-            phoneNumber: user.contact?.phoneNumber
+            phoneNumber: user.contact?.phoneNumber,
           })
         );
       });
@@ -358,12 +358,7 @@ const page = () => {
                         className="theme-btn d-flex justify-content-between align-items-center w-100"
                       >
                         Checkout
-                        <span>
-                          £
-                          {(
-                            calculateCartTotal() + (cart.length > 0 ? 10 : 0)
-                          ).toFixed(2)}
-                        </span>
+                        <span>£{calculateCartTotal().toFixed(2)}</span>
                       </button>
                     </div>
                   </form>
