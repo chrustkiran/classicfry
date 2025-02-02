@@ -1,10 +1,12 @@
 "use client";
+import UserService from "@/api/user";
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import { useAppContext } from "@/context/AppContext";
 import env from "@/env";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 const page = () => {
   // const [cart, setcart] = useState([
@@ -56,15 +58,15 @@ const page = () => {
   };
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    mobileNumber: "",
+    firstName: "chris",
+    lastName: "sathiya",
+    phoneNumber: "03833939",
   });
 
   const [errors, setErrors] = useState({
     firstName: "",
     lastName: "",
-    mobileNumber: "",
+    phoneNumber: "",
   });
 
   const handleInputChange = (e) => {
@@ -77,7 +79,7 @@ const page = () => {
 
   const validateForm = () => {
     let isValid = true;
-    let newErrors = { firstName: "", lastName: "", mobileNumber: "" };
+    let newErrors = { firstName: "", lastName: "", phoneNumber: "" };
 
     if (!formData.firstName) {
       newErrors.firstName = "First name is required";
@@ -89,8 +91,8 @@ const page = () => {
       isValid = false;
     }
 
-    if (!formData.mobileNumber) {
-      newErrors.mobileNumber = "Mobile number is required";
+    if (!formData.phoneNumber) {
+      newErrors.phoneNumber = "Mobile number is required";
       isValid = false;
     }
 
@@ -98,20 +100,37 @@ const page = () => {
     return isValid;
   };
 
+  const route = useRouter();
+
+  const dummyAddress = {
+    number: "456",
+    streetAddress: "Collins Street",
+    streetAddress2: "Suite 12A",
+    town: "Melbourne",
+    county: "Victoria",
+    postCode: "3000",
+    country: "Australia",
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      fetch(`${env.API_URL_STRIPE}/api/create-payment-intent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amount * 100, userId: userId }),
-      })
-        .then((response) => response.json())
-        .then((json) => setClientSecret(json.clientSecret))
-        .catch((error) =>
-          console.error("Error fetching payment intent:", error)
+      await UserService.createUser({
+        ...formData,
+        isGuestUser: true,
+        address: dummyAddress,
+      }).then((user) => {
+        localStorage.setItem(
+          env.USER,
+          JSON.stringify({
+            userId: user.userId,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phoneNumber: user.contact?.phoneNumber
+          })
         );
-    }
+      });
+      route.push("/checkout");
     } else {
       console.log(
         "Form submission failed. Please fill in all required fields."
@@ -312,21 +331,21 @@ const page = () => {
                         </li>
                         <li className="justify-content-between">
                           <span>
-                            <label htmlFor="mobileNumber">Mobile Number</label>
+                            <label htmlFor="phoneNumber">Mobile Number</label>
                           </span>
                           <span className="col-7">
                             <input
                               type="text"
                               className="form-control"
-                              id="mobileNumber"
+                              id="phoneNumber"
                               placeholder="Enter your mobile number"
-                              value={formData.mobileNumber}
+                              value={formData.phoneNumber}
                               onChange={handleInputChange}
                               required
                             />
-                            {errors.mobileNumber && (
+                            {errors.phoneNumber && (
                               <small className="text-danger">
-                                {errors.mobileNumber}
+                                {errors.phoneNumber}
                               </small>
                             )}
                           </span>

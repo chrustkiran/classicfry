@@ -18,16 +18,17 @@ import {
 import { useState, useEffect, useRef } from "react";
 import env from "@/env";
 import { useAppContext } from "@/context/AppContext";
-import axios from "axios";
+import { useRouter } from "next/navigation";
+import { PostOrderRequest } from "@/context/OrderDTO";
+import OrderService from "@/api/order";
 
-const USER_ID = "classic-fry-user-id";
+const USER_ID = env.USER_ID;
 
 const ParentPayment = ({ amount, userId }) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
   const [clientSecret, setClientSecret] = useState(null);
 
-  
   const appearance = {
     theme: "stripe",
     variables: {
@@ -147,109 +148,145 @@ const PaymentForm = ({ amount }) => {
 };
 
 const page = () => {
-  const { getTotalPrice } = useAppContext();
+  const { getTotalPrice, cart } = useAppContext();
+  const router = useRouter();
 
   const [amount, setAmount] = useState(0);
 
-  const [userId, setUserId] = useState(localStorage.getItem(USER_ID));
-
-  useEffect(() => {
-    if (!userId) {
-      axios.post(`${env.API_URL_STRIPE}/api/create-user-id`).then((res) => {
-        localStorage.setItem(USER_ID, res.data);
-        setUserId(res.data);
-      });
-    }
-  }, []);
+  const user = JSON.parse(localStorage.getItem(env.USER));
 
   const [selectedCash, setSelectedCash] = useState("counter");
 
-  useEffect(() => {
-    setAmount(getTotalPrice());
-  }, [userId, getTotalPrice]);
+  const [showError, setShowError] = useState(false);
 
+  useEffect(() => {
+    if (!user?.userId) {
+      console.warn("There is no userId");
+      router.back();
+    }
+  }, []);
+
+  useEffect(() => {
+    setAmount(getTotalPrice().toFixed(2));
+  }, [getTotalPrice]);
+
+  const sendOrderAsCounterPayment = async (userId, cart, totalAmount) => {
+    console.log(cart);
+    const postOrderReq = new PostOrderRequest(
+      userId,
+      cart,
+      env.PAYMENT_TYPE.COUNTER,
+      totalAmount
+    );
+    await OrderService.createOrder(postOrderReq)
+      .then((order) => {
+        router.push(`/orders?success=true&orderId=${order.orderId}`);
+      })
+      .catch((_) => {
+        setShowError(true);
+      });
+
+    setTimeout(() => {
+      setShowError(false);
+    }, 8000);
+  };
 
   return (
     <FoodKingLayout>
       <PageBanner pageName={"CHECKOUT"} />
-      {userId && <section className="checkout-section fix section-padding border-bottom">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <ul className="list-group px-4">
-                {/* Pay at Counter Option */}
-                <li className="list-group-item">
-                  <div className="custom-control cash-radio custom-radio d-flex gap-3">
-                    <input
-                      type="radio"
-                      id="cashRadioCounter"
-                      name="cashRadio"
-                      className="custom-control-input"
-                      checked={selectedCash === "counter"}
-                      onChange={() => setSelectedCash("counter")}
-                    />
-                    <label
-                      className="custom-control-label"
-                      htmlFor="cashRadioCounter"
-                    >
-                      <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;
-                      I want to pay at the counter
-                    </label>
-                  </div>
+      {user.userId && (
+        <section className="checkout-section fix section-padding border-bottom">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <ul className="list-group px-4">
+                  {showError && <p className="p-4 error-dial">
+                    There is something wrong with the Order, Please try again.
+                  </p>}
+                  {/* Pay at Counter Option */}
+                  <li className="list-group-item">
+                    <div className="custom-control cash-radio custom-radio d-flex gap-3">
+                      <input
+                        type="radio"
+                        id="cashRadioCounter"
+                        name="cashRadio"
+                        className="custom-control-input"
+                        checked={selectedCash === "counter"}
+                        onChange={() => setSelectedCash("counter")}
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="cashRadioCounter"
+                      >
+                        <i className="fas fa-chalkboard-teacher"></i>
+                        &nbsp;&nbsp; I want to pay at the counter
+                      </label>
+                    </div>
+                    {selectedCash === "counter" && (
+                      <div className="mt-3 p-3 border rounded bg-light">
+                        <p className="mb-0">
+                          You have selected to pay at the counter. Please make
+                          sure to pay <strong>£{amount}</strong> by using card
+                          or cash.
+                        </p>
+                      </div>
+                    )}
+                  </li>
+
+                  {/* Pay Online Option */}
+                  <li className="list-group-item">
+                    <div className="custom-control cash-radio custom-radio d-flex gap-3">
+                      <input
+                        type="radio"
+                        id="cashRadioOnline"
+                        name="cashRadio"
+                        className="custom-control-input"
+                        checked={selectedCash === "online"}
+                        onChange={() => setSelectedCash("online")}
+                      />
+
+                      <label
+                        className="form-check-label"
+                        htmlFor="cashRadioOnline"
+                      >
+                        <i className="fas fa-computer-classic"></i>&nbsp;&nbsp;
+                        I can pay online
+                      </label>
+                    </div>
+
+                    {/* Expandable Div when "Pay Online" is selected */}
+                    {selectedCash === "online" && (
+                      <div className="mt-3 p-3 border rounded bg-light">
+                        <ParentPayment
+                          amount={amount}
+                          userId={user.userId}
+                        ></ParentPayment>
+                      </div>
+                    )}
+                  </li>
+
                   {selectedCash === "counter" && (
-                    <div className="mt-3 p-3 border rounded bg-light">
-                       <p className="mb-0">You have selected to pay at the counter. Please make sure to pay <strong>£{amount}</strong>
-                        {" "}by using card or cash.</p>
-                    </div>
-                  )}
-                </li>
-
-                {/* Pay Online Option */}
-                <li className="list-group-item">
-                  <div className="custom-control cash-radio custom-radio d-flex gap-3">
-                    <input
-                      type="radio"
-                      id="cashRadioOnline"
-                      name="cashRadio"
-                      className="custom-control-input"
-                      checked={selectedCash === "online"}
-                      onChange={() => setSelectedCash("online")}
-                    />
-
-                    <label
-                      className="form-check-label"
-                      htmlFor="cashRadioOnline"
+                    <button
+                      onClick={() =>
+                        sendOrderAsCounterPayment(user.userId, cart, amount)
+                      }
+                      id="submit"
+                      className="mt-3 btn btn-warning text-white fw-bold w-100"
+                      style={{
+                        borderRadius: "4px",
+                        padding: "12px 16px",
+                        fontSize: "16px",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                        boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
+                      }}
                     >
-                      <i className="fas fa-computer-classic"></i>&nbsp;&nbsp; I
-                      can pay online
-                    </label>
-                  </div>
-
-                  {/* Expandable Div when "Pay Online" is selected */}
-                  {selectedCash === "online" && (
-                    <div className="mt-3 p-3 border rounded bg-light">
-                      <ParentPayment amount={amount} userId={userId}></ParentPayment>
-                    </div>
+                      <span id="button-text">Confirm your order</span>
+                    </button>
                   )}
-                </li>
+                </ul>
 
-                {selectedCash === "counter" && <button
-                  id="submit"
-                  className="mt-3 btn btn-warning text-white fw-bold w-100"
-                  style={{
-                    borderRadius: "4px",
-                    padding: "12px 16px",
-                    fontSize: "16px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
-                  }}
-                >
-                  <span id="button-text">Confirm your order</span>
-                </button>}
-              </ul>
-
-              {/* <form action="#" method="post">
+                {/* <form action="#" method="post">
                 <div className="row g-4">
                   <div className="col-md-5 col-lg-4 col-xl-3">
                     <div className="checkout-radio">
@@ -465,11 +502,12 @@ const page = () => {
                   </div>
                 </div>
               </form> */}
+              </div>
             </div>
           </div>
-        </div>
-      </section>}
-      {!userId && <p>Loading...</p>}
+        </section>
+      )}
+      {!user.userId && <p>Loading...</p>}
       <Cta />
     </FoodKingLayout>
   );

@@ -11640,3 +11640,10 @@ span.size-badge {
   font-weight: bold;
   color: black; 
 }
+
+
+p.error-dial {
+  border: 2px solid var(--theme2) ;
+  color: var(--theme2);
+  margin-bottom: 4px;
+}

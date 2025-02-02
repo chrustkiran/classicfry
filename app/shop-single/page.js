@@ -135,7 +135,7 @@ const page = () => {
         fetchedItem.image,
         portionSize ? portionSize : env.DEFAULT,
         quantity,
-        'ITEM'
+        env.ITEM_TYPE.ITEM
       );
     } else {
       addItemToCart(
@@ -145,7 +145,7 @@ const page = () => {
         fetchedDeal.image,
         portionSize ? portionSize : env.DEFAULT,
         quantity,
-        'DEAL'
+        env.ITEM_TYPE.ITEM
       );
     }
     
