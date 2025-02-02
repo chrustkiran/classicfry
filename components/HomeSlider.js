@@ -108,7 +108,7 @@ const HomeSlider = () => {
                       </h1>
                       <div className="hero-button">
                         <Link
-                          href="/shop-single"
+                          href="/shop-list"
                           className="theme-btn"
                           data-animation="fadeInUp"
                           data-duration={duration}
@@ -552,7 +552,7 @@ export const HomeSlider2 = () => {
                       </div>
                       <div className="hero-button">
                         <Link
-                          href="/shop-single"
+                          href="/shop-list"
                           className="theme-btn"
                           data-animation="fadeInUp"
                           data-duration={duration}
@@ -1157,7 +1157,7 @@ export const HomeSlider3 = () => {
                       </h4>
                       <div className="hero-button">
                         <Link
-                          href="/shop-single"
+                          href="/shop-list"
                           className="theme-btn bg-yellow border-radius-none"
                           data-animation="fadeInUp"
                           data-duration={duration}
@@ -1261,7 +1261,7 @@ export const HomeSlider3 = () => {
                       </h4>
                       <div className="hero-button">
                         <Link
-                          href="/shop-single"
+                          href="/shop-list"
                           className="theme-btn bg-yellow border-radius-none"
                           data-animation="fadeInUp"
                           data-duration={duration}

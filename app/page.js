@@ -131,7 +131,7 @@ const page = () => {
                     className="grilled-button wow fadeInUp"
                     data-wow-delay=".7s"
                   >
-                    <Link href="/shop-single" className="theme-btn">
+                    <Link href="/shop-list" className="theme-btn">
                       <span className="button-content-wrapper d-flex align-items-center">
                         <span className="button-icon">
                           <i className="flaticon-delivery" />
@@ -727,7 +727,7 @@ const page = () => {
                     </li>
                   </ul>
                   <Link
-                    href="/shop-single"
+                    href="/shop-list"
                     className="theme-btn mt-5 wow fadeInUp"
                     data-wow-delay=".8s"
                   >
