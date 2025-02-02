@@ -9,7 +9,7 @@ const cartName = 'classic-fry-cart';
 export const AppProvider = ({ children }) => {
 
   const getCartFromLocalStorage = () => {
-    const savedCart = localStorage.getItem(cartName); // Use your cart name here
+    const savedCart = global?.window?.localStorage.getItem(cartName); // Use your cart name here
     return savedCart ? JSON.parse(savedCart).map(item => 
         new CartItem(item.itemId, item.name, item.price, item.image, item.size, item.quantity, item.type)
     ) : [];
@@ -32,13 +32,13 @@ export const AppProvider = ({ children }) => {
       const updatedCart = [...cart];
       updatedCart[existingItemIndex].increaseQuantity(quantity);
       setCart(updatedCart);
-      localStorage.setItem(cartName, JSON.stringify(updatedCart));
+      global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
     } else {
       // If the item does not exist, add it to the cart
       const newItem = new CartItem(itemId, name, price, image, size, quantity, type);
       const updatedCart = [...cart, newItem];
       setCart(updatedCart);
-      localStorage.setItem(cartName, JSON.stringify(updatedCart));
+      global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
     }
   };
 
@@ -47,7 +47,7 @@ export const AppProvider = ({ children }) => {
     const index = findIndexByItem(itemId, size);
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
-    localStorage.setItem(cartName, JSON.stringify(updatedCart));
+    global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
   // Method to decrease the quantity of an item
@@ -56,7 +56,7 @@ export const AppProvider = ({ children }) => {
     const updatedCart = [...cart];
     updatedCart[index].decreaseQuantity();
     setCart(updatedCart);
-    localStorage.setItem(cartName, JSON.stringify(updatedCart));
+    global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
   const increaseQuantity = (itemId, size) => {
@@ -64,7 +64,7 @@ export const AppProvider = ({ children }) => {
     const updatedCart = [...cart];
     updatedCart[index].increaseQuantity();
     setCart(updatedCart);
-    localStorage.setItem(cartName, JSON.stringify(updatedCart));
+    global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
   // Method to calculate the total price of all items in the cart

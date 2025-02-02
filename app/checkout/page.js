@@ -213,7 +213,7 @@ const page = () => {
 
   const [amount, setAmount] = useState(0);
 
-  const user = JSON.parse(localStorage.getItem(env.USER));
+  const user = global?.window?.localStorage.getItem(env.USER) ? JSON.parse(global?.window?.localStorage.getItem(env.USER)): undefined;
 
   const [selectedCash, setSelectedCash] = useState("counter");
 
@@ -275,7 +275,7 @@ const page = () => {
   return (
     <FoodKingLayout>
       <PageBanner pageName={"CHECKOUT"} />
-      {user.userId && (
+      {user?.userId && (
         <section className="checkout-section fix section-padding border-bottom">
           <div className="container">
             <div className="row">
@@ -345,7 +345,7 @@ const page = () => {
                       <div className="mt-3 p-3 border rounded bg-light">
                         <ParentPayment
                           amount={amount}
-                          userId={user.userId}
+                          userId={user?.userId}
                           handlePaymentIntent={handlePaymentIntent}
                           handleSetStripeErr={handleSetStripeErr}
                           cart={cart}
@@ -358,7 +358,7 @@ const page = () => {
                     <button
                       onClick={() =>
                         sendOrderAsCounterPayment(
-                          user.userId,
+                          user?.userId,
                           cart,
                           amount,
                           paymentIntentId
@@ -601,7 +601,7 @@ const page = () => {
           </div>
         </section>
       )}
-      {!user.userId && <p>Loading...</p>}
+      {!user?.userId && <p>Loading...</p>}
       <Cta />
     </FoodKingLayout>
   );

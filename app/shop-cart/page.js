@@ -120,7 +120,7 @@ const page = () => {
         isGuestUser: true,
         address: dummyAddress,
       }).then((user) => {
-        localStorage.setItem(
+        global?.window?.localStorage.setItem(
           env.USER,
           JSON.stringify({
             userId: user.userId,
