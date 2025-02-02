@@ -580,7 +580,7 @@ const MobileMenu = () => {
         <nav className="mean-nav">
           <ul>
             <li className="has-dropdown active">
-              <Link href="/shop">
+              <Link href="/shop-list">
                 Menu
               </Link>
             </li>

@@ -355,7 +355,7 @@
             "item": null,
             "deal": {
               "dealId": "4d5e6f7g-8901-2345-6789-0h1i2j3k4l5m",
-              "dealName": "Family Meal Combo",
+              "name": "Family Meal Combo",
               "dealPrice": 29.99
             }
           }
@@ -390,7 +390,7 @@
             "item": null,
             "deal": {
               "dealId": "6h7i8j9k-0123-4567-8901-2l3m4n5o6p7q",
-              "dealName": "Mega Party Pack",
+              "name": "Mega Party Pack",
               "dealPrice": 49.99
             }
           }

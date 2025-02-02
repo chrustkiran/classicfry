@@ -18,23 +18,29 @@ const Preloader = () => {
           <span data-text-preloader="L" className="letters-loading">
             L
           </span>
-          <span data-text-preloader={0} className="letters-loading">
-            O
+          <span data-text-preloader="A" className="letters-loading">
+            A
           </span>
-          <span data-text-preloader="D" className="letters-loading">
-            D
+          <span data-text-preloader="S" className="letters-loading">
+            S
           </span>
-          <span data-text-preloader="K" className="letters-loading">
-            K
+          <span data-text-preloader="S" className="letters-loading">
+            S
           </span>
           <span data-text-preloader="I" className="letters-loading">
             I
           </span>
-          <span data-text-preloader="N" className="letters-loading">
-            N
+          <span data-text-preloader="C" className="letters-loading">
+            C
           </span>
-          <span data-text-preloader="G" className="letters-loading">
-            G
+          <span data-text-preloader="F" className="letters-loading">
+            F
+          </span>
+          <span data-text-preloader="R" className="letters-loading">
+            R
+          </span>
+          <span data-text-preloader="Y" className="letters-loading">
+            Y
           </span>
         </div>
         <p className="text-center">Loading</p>

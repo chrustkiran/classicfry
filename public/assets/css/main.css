@@ -11647,3 +11647,7 @@ p.error-dial {
   color: var(--theme2);
   margin-bottom: 4px;
 }
+
+p.order-confirm {
+  color: var(--base)
+}

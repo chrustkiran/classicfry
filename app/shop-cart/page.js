@@ -58,9 +58,9 @@ const page = () => {
   };
 
   const [formData, setFormData] = useState({
-    firstName: "chris",
-    lastName: "sathiya",
-    phoneNumber: "038339395",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
   });
 
   const [errors, setErrors] = useState({

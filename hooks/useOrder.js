@@ -20,7 +20,7 @@ const OrderStatusMapper = (status) => {
 
 const base_url = env.API_URL;
 const useOrder = () => {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({'active': [], 'completed': []});
 
   const fetchOrders = () => {
     axios.get(base_url + "orders").then((res) => {
