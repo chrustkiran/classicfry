@@ -31,7 +31,7 @@ const useOrder = () => {
       // Categorize orders into active and completed
       const categorizedOrders = orders.reduce(
         (acc, order) => {
-          if (order.orderStatus === "Completed") {
+          if (order.orderStatus === "COMPLETED") {
             acc.completed.push({
               ...order,
               orderStatus: OrderStatusMapper(order.orderStatus),
@@ -47,7 +47,7 @@ const useOrder = () => {
         { active: [], completed: [] }
       );
 
-      setOrders(categorizedOrders); // Set the categorized orders object
+      setOrders(categorizedOrders);
     });
   };
 

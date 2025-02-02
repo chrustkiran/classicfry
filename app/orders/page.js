@@ -3,126 +3,127 @@
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
+import useOrder from "@/hooks/useOrder";
 
-const orders = {
-  active: [
-    {
-      id: "A1231",
-      date: "2025-01-30",
-      time: "10:30 AM",
-      totalPayment: "50.00",
-      status: "Processing",
-      items: [
-        {
-          name: "Chicken Burger",
-          quantity: 2,
-          unitPrice: "$10.00",
-          image: "https://via.placeholder.com/50",
-        },
-        {
-          name: "Fries",
-          quantity: 1,
-          unitPrice: "$5.00",
-          image: "https://via.placeholder.com/50",
-        },
-      ],
-    },
-    {
-      id: "A1232",
-      date: "2025-01-30",
-      time: "10:30 AM",
-      totalPayment: "50.00",
-      status: "Processing",
-      items: [
-        {
-          name: "Chicken Burger",
-          quantity: 2,
-          unitPrice: "$10.00",
-          image: "https://via.placeholder.com/50",
-        },
-        {
-          name: "Fries",
-          quantity: 1,
-          unitPrice: "$5.00",
-          image: "https://via.placeholder.com/50",
-        },
-      ],
-    },
-    {
-      id: "A1233",
-      date: "2025-01-30",
-      time: "10:30 AM",
-      totalPayment: "50.00",
-      status: "Processing",
-      items: [
-        {
-          name: "Chicken Burger",
-          quantity: 2,
-          unitPrice: "$10.00",
-          image: "https://via.placeholder.com/50",
-        },
-        {
-          name: "Fries",
-          quantity: 1,
-          unitPrice: "$5.00",
-          image: "https://via.placeholder.com/50",
-        },
-      ],
-    },
-    {
-      id: "A1234",
-      date: "2025-01-30",
-      time: "10:30 AM",
-      totalPayment: "50.00",
-      status: "Processing",
-      items: [
-        {
-          name: "Chicken Burger",
-          quantity: 2,
-          unitPrice: "$10.00",
-          image: "https://via.placeholder.com/50",
-        },
-        {
-          name: "Fries",
-          quantity: 1,
-          unitPrice: "$5.00",
-          image: "https://via.placeholder.com/50",
-        },
-      ],
-    },
-  ],
-  completed: [
-    {
-      id: "E2342",
-      date: "2025-01-29",
-      time: "9:15 AM",
-      totalPayment: "25.00",
-      status: "Delivered",
-      items: [
-        {
-          name: "Coke",
-          quantity: 1,
-          unitPrice: "$3.00",
-          image: "https://via.placeholder.com/50",
-        },
-        {
-          name: "Pizza",
-          quantity: 1,
-          unitPrice: "$20.00",
-          image: "https://via.placeholder.com/50",
-        },
-      ],
-    },
-  ],
-};
+// const orders = {
+//   active: [
+//     {
+//       id: "A1231",
+//       date: "2025-01-30",
+//       time: "10:30 AM",
+//       totalPayment: "50.00",
+//       status: "Processing",
+//       items: [
+//         {
+//           name: "Chicken Burger",
+//           quantity: 2,
+//           unitPrice: "$10.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//         {
+//           name: "Fries",
+//           quantity: 1,
+//           unitPrice: "$5.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//       ],
+//     },
+//     {
+//       id: "A1232",
+//       date: "2025-01-30",
+//       time: "10:30 AM",
+//       totalPayment: "50.00",
+//       status: "Processing",
+//       items: [
+//         {
+//           name: "Chicken Burger",
+//           quantity: 2,
+//           unitPrice: "$10.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//         {
+//           name: "Fries",
+//           quantity: 1,
+//           unitPrice: "$5.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//       ],
+//     },
+//     {
+//       id: "A1233",
+//       date: "2025-01-30",
+//       time: "10:30 AM",
+//       totalPayment: "50.00",
+//       status: "Processing",
+//       items: [
+//         {
+//           name: "Chicken Burger",
+//           quantity: 2,
+//           unitPrice: "$10.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//         {
+//           name: "Fries",
+//           quantity: 1,
+//           unitPrice: "$5.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//       ],
+//     },
+//     {
+//       id: "A1234",
+//       date: "2025-01-30",
+//       time: "10:30 AM",
+//       totalPayment: "50.00",
+//       status: "Processing",
+//       items: [
+//         {
+//           name: "Chicken Burger",
+//           quantity: 2,
+//           unitPrice: "$10.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//         {
+//           name: "Fries",
+//           quantity: 1,
+//           unitPrice: "$5.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//       ],
+//     },
+//   ],
+//   completed: [
+//     {
+//       id: "E2342",
+//       date: "2025-01-29",
+//       time: "9:15 AM",
+//       totalPayment: "25.00",
+//       status: "Delivered",
+//       items: [
+//         {
+//           name: "Coke",
+//           quantity: 1,
+//           unitPrice: "$3.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//         {
+//           name: "Pizza",
+//           quantity: 1,
+//           unitPrice: "$20.00",
+//           image: "https://via.placeholder.com/50",
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 
 const OrderPage = () => {
   const searchParams = useSearchParams();
-
+  const [orders, fetchOrders] = useOrder();
   const [activeTab, setActiveTab] = useState("active");
   const [expandedOrder, setExpandedOrder] = useState(null);
 
@@ -135,6 +136,10 @@ const OrderPage = () => {
     setExpandedOrder(null); // Reset expanded orders when switching tabs
   };
 
+  useEffect(() => {
+    fetchOrders();
+  }, [])
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
@@ -142,6 +147,7 @@ const OrderPage = () => {
         <div className="container">
           <div style={{paddingLeft: '300px', paddingRight: '300px'}} className="row g-5 pr-5 pl-5 order-section">
               {/* Tabs */}
+              <div className="mr-2">Refresh</div>
               <ul className="nav nav-tabs d-flex  order-tab">
                 <li className="nav-item">
                   <button
@@ -180,28 +186,28 @@ const OrderPage = () => {
                           <div>
                             {" "}
                             <small>ORDER ID</small>{" "}
-                            <h3 className="card-title">{order.id}</h3>
+                            <h3 className="card-title">{order.orderId.substring(0, 6)}</h3>
                           </div>
                           <div>
                             <span className="badge bg-success">
-                              {order.status}
+                              {order.orderStatus}
                             </span>
                           </div>
                         </div>
                         <div className="d-flex column justify-content-between mt-3">
                           <div>
-                            <strong>Total:</strong> £{order.totalPayment}
+                            <strong>Total:</strong> £{order.payment?.amount}
                           </div>
                           <br></br>
                           <div>
                             <strong>
                               <i className="fas flaticon-calendar"> </i>
                             </strong>{" "}
-                            {order.date} <br></br>
+                            {new Date(order.createdTime).toLocaleDateString()} <br></br>
                             <strong>
                               <i className="fas fa-clock"></i>{" "}
                             </strong>{" "}
-                            {order.time}
+                            {new Date(order.createdTime).toLocaleTimeString()}
                           </div>
                         </div>
 
@@ -224,7 +230,9 @@ const OrderPage = () => {
                         <div className="card-body">
                           <h6>Order Items</h6>
                           <ul className="list-group">
-                            {order.items.map((item, index) => (
+                            {order.orderItems.map((orderItem, index) => {
+                              const item = orderItem.item ? orderItem.deal : orderItem.item;
+                              return(
                               <li
                                 key={index}
                                 className="list-group-item d-flex align-items-center"
@@ -237,11 +245,10 @@ const OrderPage = () => {
                                   height="50"
                                 />
                                 <div>
-                                  <strong>{item.name}</strong> ({item.quantity}{" "}
-                                  x {item.unitPrice})
+                                  <strong>{item.name}</strong> ({orderItem.quantity})
                                 </div>
                               </li>
-                            ))}
+                            )})}
                           </ul>
                         </div>
                       </div>
