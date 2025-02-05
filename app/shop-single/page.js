@@ -119,6 +119,7 @@ const page = () => {
   };
 
   useEffect(() => {
+    console.log(item);
     if (item) {
       validateItem(item, setFetchedItem, "item");
     } else if (deal) {

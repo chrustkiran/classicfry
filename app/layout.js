@@ -17,6 +17,7 @@ export const metadata = {
   description: "ClassicFry Restaurant in UK",
 };
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

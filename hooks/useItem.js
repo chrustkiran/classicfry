@@ -55,7 +55,8 @@ const useItem = () => {
   };
 
   const fetchItem = (itemId) => {
-    axios.get(base_url + `items?itemId=${itemId}`).then((res) => {
+    axios.get(base_url + `items/${itemId}`).then((res) => {
+      res.data = [res.data]
       setItem(res.data.map(item => ({...item, category: categoryMapper(item.category)})));
     });
   };

@@ -109,7 +109,7 @@ const Deal = ({ deal, key }) => {
               </div>
               <div className="card-body">
                 <ul className="list-group">
-                  {deal.dealItems.map((dealItem, index) => (
+                  {deal?.dealItems?.map((dealItem, index) => (
                     <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                       {dealItem.name}<span class="badge bg-danger rounded-pill">{dealItem.quantity}</span>
                     </li>
@@ -157,7 +157,7 @@ const ShopPage = () => {
     if (deals.length > 0) {
       setConsDeals(
         deals
-          .filter((deal) => deal.isAvailable)
+          //.filter((deal) => deal.isAvailable)
           .reduce((obj, deal) => {
             if (!obj[deal.dealType]) {
               obj[deal.dealType] = [];
@@ -173,7 +173,7 @@ const ShopPage = () => {
     if (items.length > 0) {
       setConsItems(
         items
-          .filter((item) => item.isAvailable)
+          //.filter((item) => item.isAvailable)
           .reduce((obj, item) => {
             if (!obj[item.category]) {
               obj[item.category] = [];

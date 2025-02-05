@@ -9,7 +9,6 @@ import useItem from "@/hooks/useItem";
 const FoodSlider = () => {
   const { categories, fetchCategories } = useItem();
   useEffect(() => {
-    console.log('hello');
     fetchCategories();
   }, []);
   return (
