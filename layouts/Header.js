@@ -2,7 +2,7 @@
 import { useAppContext } from "@/context/AppContext";
 import env from "@/env";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const Header = ({ header }) => {
   switch (header) {
@@ -32,6 +32,15 @@ const Menus = () => {
 const Header1 = () => {
   const [toggle, setToggle] = useState(false);
   const { cart, getTotalCartItem, getTotalPrice } = useAppContext();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
   return (
     <Fragment>
       <header className="section-bg">
@@ -63,7 +72,6 @@ const Header1 = () => {
                   <div className="menu-cart">
                     <div className="cart-box">
                       <ul>
-                        <li></li>
                         {cart.map((item, index) => (
                           <li key={index}>
                             <img src={item.image} alt="image" />

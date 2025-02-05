@@ -353,8 +353,8 @@ const page = () => {
                     <div className="description-items">
                       <div className="row">
                         <div className="list-group">
-                          {fetchedDeal?.dealItems?.length > 0 &&
-                            fetchedDeal.dealItems.map((dealItem, index) => (
+                          {fetchedDeal?.dealItemViews?.length > 0 &&
+                            fetchedDeal.dealItemViews.map((dealItem, index) => (
                               <DealItem
                                 key={index}
                                 dealItem={dealItem}

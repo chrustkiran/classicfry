@@ -11,7 +11,7 @@ const UserService = {
         .then((response) => resolve(response.json()))
         .catch((error) => {
           console.error("Error fetching create user:", error);
-          reject(error);
+          //reject(error);
         });
     });
   },

@@ -109,7 +109,7 @@ const Deal = ({ deal, key }) => {
               </div>
               <div className="card-body">
                 <ul className="list-group">
-                  {deal?.dealItems?.map((dealItem, index) => (
+                  {deal?.dealItemViews?.map((dealItem, index) => (
                     <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                       {dealItem.name}<span class="badge bg-danger rounded-pill">{dealItem.quantity}</span>
                     </li>

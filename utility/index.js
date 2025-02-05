@@ -9,9 +9,9 @@ export const foodkingUtility = {
     const header = document.getElementById("header-sticky");
     window.addEventListener("scroll", function () {
       if (window.scrollY > 250) {
-        header.classList.add("sticky");
+        header?.classList.add("sticky");
       } else {
-        header.classList.remove("sticky");
+        header?.classList.remove("sticky");
       }
     });
   },
