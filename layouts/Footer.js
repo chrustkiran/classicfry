@@ -124,14 +124,10 @@ const Footer1 = () => {
                 </div>
                 <div className="footer-address-text">
                   <h6>
-                    570 8th Ave, New York,NY <span>10018</span>
-                    United States
+                  Shop Address 100 Chessington Road  West Ewell , KT19 9UR
                   </h6>
-                  <h5>Hours:</h5>
-                  <h6>
-                    9.30am – 6.30pm <br />
-                    Monday to Friday
-                  </h6>
+                  <h5>Mobile:</h5>
+                  <h6>07477427927</h6>
                 </div>
               </div>
             </div>

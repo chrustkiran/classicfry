@@ -63,9 +63,6 @@ const page = () => {
     fetchItems();
   }, []);
 
-  useEffect(() => {
-    console.log(consItems);
-  }, [consItems]);
 
   useEffect(() => {
     if (items.length > 0) {

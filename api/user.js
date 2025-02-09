@@ -3,7 +3,7 @@ import env from "@/env";
 const UserService = {
   createUser: (createUserReq) => {
     return new Promise((resolve, reject) => {
-      fetch(`${env.API_URL_STRIPE}/api/v1/users`, {
+      fetch(`${env.API_URL_STRIPE}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(createUserReq),

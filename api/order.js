@@ -3,7 +3,7 @@ import env from "@/env";
 const OrderService = {
   createOrder: (createOrderReq) => {
     return new Promise((resolve, reject) => {
-      fetch(`${env.API_URL_STRIPE}/api/v1/orders`, {
+      fetch(`${env.API_URL_STRIPE}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(createOrderReq),

@@ -705,7 +705,7 @@ const page = () => {
                   <p className="mt-3 mt-lg-0 wow fadeInUp" data-wow-delay=".5s">
                   Emphasizes the crispiness and the delicious wrap format.
                   </p>
-                  <ul
+                  {/* <ul
                     className="countdown-items wow fadeInUp"
                     data-wow-delay=".7s"
                   >
@@ -725,7 +725,7 @@ const page = () => {
                       <span id="Seconds">22</span>
                       <p>Sec</p>
                     </li>
-                  </ul>
+                  </ul> */}
                   <Link
                     href="/shop-list"
                     className="theme-btn mt-5 wow fadeInUp"

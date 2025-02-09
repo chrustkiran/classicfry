@@ -6,20 +6,20 @@ const page = () => {
     {
       icon: "location.svg",
       title: "address line",
-      content: "Bowery St, New York, 37 USA\nNY 10013,USA",
+      content: "100 Chessington Road  West Ewell , KT19 9UR",
       delay: ".3s",
     },
     {
       icon: "phone.svg",
       title: "Phone Number",
-      content: "+1255 - 568 - 6523 4374-221\n+1255 - 568 - 6523",
+      content: "07477427927",
       delay: ".5s",
       active: true,
     },
     {
       icon: "email.svg",
       title: "Mail Adress",
-      content: "email@example.com\ninfo@yourdomain.com",
+      content: "contact@classicfry.co.uk",
       delay: ".7s",
     },
   ];
@@ -66,18 +66,21 @@ const page = () => {
                     {" "}
                     Get in touch
                   </h3>
-                  <p className="wow fadeInUp" data-wow-delay=".5s">
+                  {/*<p className="wow fadeInUp" data-wow-delay=".5s">
                     Lorem ipsum dolor sit amet consectetur adipiscing elit
                     mattis <br />
                     faucibus odio feugiat arc dolor.
-                  </p>
+                  </p> */}
                   <div className="google-map wow fadeInUp" data-wow-delay=".7s">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6678.7619084840835!2d144.9618311901502!3d-37.81450084255415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642b4758afc1d%3A0x3119cc820fdfc62e!2sEnvato!5e0!3m2!1sen!2sbd!4v1641984054261!5m2!1sen!2sbd"
-                      style={{ border: 0 }}
-                      allowFullScreen
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2491.8853228032785!2d-0.2634778230425654!3d51.35001932218793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487609e104b44b03%3A0x5222269f170e871f!2s100%20Chessington%20Rd%2C%20Ewell%2C%20Epsom%20KT19%209UR%2C%20UK!5e0!3m2!1sen!2sau!4v1738853912059!5m2!1sen!2sau"
+                      width="600"
+                      height="450"
+                      style={{border: '0'}}
+                      allowfullscreen=""
                       loading="lazy"
-                    />
+                      referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
                   </div>
                 </div>
               </div>

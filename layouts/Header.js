@@ -102,12 +102,9 @@ const Header1 = () => {
                       <div className="shopping-items d-flex align-items-center justify-content-between">
                         <span>Total : £{getTotalPrice().toFixed(2)}</span>
                       </div>
-                      <div className="cart-button d-flex justify-content-between mb-4">
+                      <div className="cart-button d-flex flex-row-reverse mb-4">
                         <Link href="shop-cart" className="theme-btn">
                           View Cart
-                        </Link>
-                        <Link href="checkout" className="theme-btn bg-red-2">
-                          Checkout
                         </Link>
                       </div>
                     </div>
@@ -206,7 +203,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                     </div>
                     <div className="offcanvas__contact-text">
                       <a target="_blank" href="#">
-                        Main Street, Melbourne, Australia
+                      100 Chessington Road West Ewell , KT19 9UR
                       </a>
                     </div>
                   </li>
@@ -215,9 +212,9 @@ const Sidebar = ({ toggle, setToggle }) => {
                       <i className="fal fa-envelope" />
                     </div>
                     <div className="offcanvas__contact-text">
-                      <a href="tel:+013-003-003-9993">
-                        <span className="mailto:info@enofik.com">
-                          info@foodking.com
+                      <a href="tel:07477427927">
+                        <span className="mailto:contact@classicfry.co.uk">
+                        contact@classicfry.co.uk
                         </span>
                       </a>
                     </div>

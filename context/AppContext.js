@@ -1,6 +1,7 @@
 "use client"
 import { createContext, useState, useContext } from "react";
 import { CartItem } from "./CartItemDTO";
+import env from "@/env";
 
 const AppContext = createContext();
 
@@ -76,8 +77,33 @@ export const AppProvider = ({ children }) => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   }
 
+  const clearItems = () => {
+    global?.window?.localStorage.removeItem(cartName)
+  }
+
+  const setUser = (user) => {
+    global?.window?.localStorage.setItem(
+      env.USER,
+      JSON.stringify({
+        userId: user.userId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.contact?.phoneNumber,
+      })
+    );
+  }
+
+  const getUser = () => {
+    return global?.window?.localStorage.getItem(env.USER) ? JSON.parse(global?.window?.localStorage.getItem(env.USER)): undefined;
+  }
+
+  const isValidUser = () => {
+    const user = getUser();
+    return (user?.userId)
+  }
+
   const contextValue = {
-    cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem, increaseQuantity
+    cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem, increaseQuantity, clearItems, setUser, getUser, isValidUser
   }
   return (
     <AppContext.Provider value={contextValue}>

@@ -225,6 +225,7 @@ const ShopPage = () => {
             </ul>
           </div>
           {activeTab == "items" && (
+            Object.keys(consItems).length > 0 ? 
             <div className="row g-5">
               <ProductSidebar
                 activeTab={activeTab}
@@ -264,10 +265,11 @@ const ShopPage = () => {
                     })}
                 </div>
               </div>
-            </div>
+            </div> : <p className="d-flex justify-content-center align-items-center">No Items</p>
           )}
 
           {activeTab == "deals" && (
+            Object.keys(consDeals).length > 0 ?
             <div className="row g-5">
               <ProductSidebar
                 activeTab={activeTab}
@@ -307,7 +309,7 @@ const ShopPage = () => {
                     })}
                 </div>
               </div>
-            </div>
+            </div> : <p className="d-flex justify-content-center align-items-center">No Deals</p>
           )}
           {/* <div className="page-nav-wrap mt-5 text-center">
                 <ul>

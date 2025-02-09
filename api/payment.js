@@ -3,7 +3,7 @@ import env from "@/env";
 const PaymentService = {
   confirmPayment: (confirmPaymentReq) => {
     return new Promise((resolve, reject) => {
-      fetch(`${env.API_URL_STRIPE}/api/v1/payment/confirm-payment`, {
+      fetch(`${env.API_URL_STRIPE}/payment/confirm-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(confirmPaymentReq),

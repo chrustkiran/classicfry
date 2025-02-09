@@ -39,6 +39,9 @@ const page = () => {
     removeItemFromCart,
     getTotalPrice,
     increaseQuantity,
+    setUser,
+    getUser,
+    isValidUser
   } = useAppContext();
 
   const calculateCartTotal = () => {
@@ -58,9 +61,9 @@ const page = () => {
   };
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
+    firstName: isValidUser() ? getUser().firstName : "",
+    lastName: isValidUser() ? getUser().lastName : "",
+    phoneNumber: isValidUser() ? getUser().phoneNumber : ""
   });
 
   const [errors, setErrors] = useState({
@@ -120,15 +123,7 @@ const page = () => {
         isGuestUser: true,
         address: dummyAddress,
       }).then((user) => {
-        global?.window?.localStorage.setItem(
-          env.USER,
-          JSON.stringify({
-            userId: user.userId,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            phoneNumber: user.contact?.phoneNumber,
-          })
-        );
+        setUser(user);
       });
       route.push("/checkout");
     } else {

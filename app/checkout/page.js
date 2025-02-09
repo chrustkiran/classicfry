@@ -33,6 +33,7 @@ const ParentPayment = ({
   handlePaymentIntent,
   handleSetStripeErr,
   cart,
+  clearItems
 }) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
@@ -60,7 +61,7 @@ const ParentPayment = ({
     );
     await OrderService.createOrder(postOrderReq)
       .then((order) => {
-        if (!order?.oderId) {
+        if (!order?.orderId) {
           handleSetStripeErr(STRIPE_ERR_MSG);
         } else {
           setOrderId(order.orderId);
@@ -96,6 +97,7 @@ const ParentPayment = ({
             amount={amount}
             handleSetStripeErr={handleSetStripeErr}
             orderId={orderId}
+            clearItems = {clearItems}
           />
         </Elements>
       )}
@@ -104,9 +106,10 @@ const ParentPayment = ({
   );
 };
 
-const PaymentForm = ({ amount, handleSetStripeErr, orderId }) => {
+const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const router  = useRouter();
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -147,6 +150,7 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId }) => {
               )}`
             );
           } else {
+            clearItems();
             router.push(`/orders?success=true&orderId=${confRes.orderId}`);
           }
         })
@@ -166,7 +170,7 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId }) => {
 
   return (
     <div className="p-4">
-      <form onSubmit={handleSubmit}>
+      {(!isLoading && stripe && elements) ? <form onSubmit={handleSubmit}>
         <PaymentElement
           options={{
             layout: "accordion",
@@ -200,7 +204,7 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId }) => {
             )}
           </span>
         </button>
-      </form>
+      </form> :  <div className="spinner" id="spinner"></div>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>Payment successful!</p>}
     </div>
@@ -208,12 +212,12 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId }) => {
 };
 
 const page = () => {
-  const { getTotalPrice, cart } = useAppContext();
+  const { getTotalPrice, cart, clearItems, getUser } = useAppContext();
   const router = useRouter();
 
   const [amount, setAmount] = useState(0);
 
-  const user = global?.window?.localStorage.getItem(env.USER) ? JSON.parse(global?.window?.localStorage.getItem(env.USER)): undefined;
+  const user = getUser();
 
   const [selectedCash, setSelectedCash] = useState("counter");
 
@@ -246,7 +250,8 @@ const page = () => {
     userId,
     cart,
     totalAmount,
-    paymentIntentId
+    paymentIntentId,
+    clearItems
   ) => {
     const postOrderReq = new PostOrderRequest(
       userId,
@@ -260,6 +265,7 @@ const page = () => {
         if (!order?.oderId) {
           setShowError(true);
         } else {
+          clearItems()
           router.push(`/orders?success=true&orderId=${order.orderId}`);
         }
       })
@@ -349,6 +355,7 @@ const page = () => {
                           handlePaymentIntent={handlePaymentIntent}
                           handleSetStripeErr={handleSetStripeErr}
                           cart={cart}
+                          clearItems = {clearItems}
                         ></ParentPayment>
                       </div>
                     )}
@@ -361,7 +368,8 @@ const page = () => {
                           user?.userId,
                           cart,
                           amount,
-                          paymentIntentId
+                          paymentIntentId,
+                          clearItems
                         )
                       }
                       id="submit"

@@ -128,13 +128,13 @@ const OrderPage = () => {
   const [expandedOrder, setExpandedOrder] = useState(null);
 
   const checkOrderExist = (orderId) => {
-    return orders.active.some((order) => order.orderId === orderId);
+    return orders.active.some((order) => {return order.orderId === orderId});
   };
   const [showSuccessOrder, setShowSuccessOrder] = useState(false);
 
   useEffect(() => {
     if (
-      searchParams.get("success") == true &&
+      searchParams.get("success") === "true" &&
       checkOrderExist(searchParams.get("orderId"))
     ) {
       setShowSuccessOrder(true);
@@ -165,7 +165,7 @@ const OrderPage = () => {
                 style={{ border: "2px solid green" }}
                 className="shadow-sm p-4 order-confirm"
               >
-                Your order is <strong>confirmed!</strong> Get ready for a{" "}
+                Your order  <strong>{searchParams.get("orderId").substring(0,6).toLocaleUpperCase()}</strong> isconfirmed! Get ready for a{" "}
                 <strong>crunch-tastic</strong> meal! 🍗😋
               </p>
             )}
@@ -244,7 +244,7 @@ const OrderPage = () => {
                           style={{ border: "1px solid black", color: "black" }}
                           className="badge bg-light"
                         >
-                          {order.payment.type} payment
+                          {order?.payment?.type} payment
                         </span>
                       </div>
 
@@ -277,18 +277,18 @@ const OrderPage = () => {
                                 className="list-group-item d-flex align-items-center"
                               >
                                 <img
-                                  src={item.image}
-                                  alt={item.name}
+                                  src={item?.image}
+                                  alt={item?.name}
                                   className="me-3"
                                   width="50"
                                   height="50"
                                 />
                                 <div>
-                                  <strong>{item.name}</strong> (
-                                  {orderItem.quantity}){" "}
+                                  <strong>{item?.name}</strong> (
+                                  {orderItem?.quantity}){" "}
                                   <span className="badge bg-warning">
-                                    {orderItem.portionSize !== env.DEFAULT &&
-                                      orderItem.portionSize}
+                                    {orderItem?.portionSize !== env.DEFAULT &&
+                                      orderItem?.portionSize}
                                   </span>
                                 </div>
                               </li>
