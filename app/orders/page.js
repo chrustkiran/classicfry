@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useOrder from "@/hooks/useOrder";
 import env from "@/env";
+import { useAppContext } from "@/context/AppContext";
 
 // const orders = {
 //   active: [
@@ -126,9 +127,12 @@ const OrderPage = () => {
   const { orders, fetchOrders } = useOrder();
   const [activeTab, setActiveTab] = useState("active");
   const [expandedOrder, setExpandedOrder] = useState(null);
+  const { clearItems } = useAppContext();
 
   const checkOrderExist = (orderId) => {
-    return orders.active.some((order) => {return order.orderId === orderId});
+    return orders.active.some((order) => {
+      return order.orderId === orderId;
+    });
   };
   const [showSuccessOrder, setShowSuccessOrder] = useState(false);
 
@@ -138,6 +142,7 @@ const OrderPage = () => {
       checkOrderExist(searchParams.get("orderId"))
     ) {
       setShowSuccessOrder(true);
+      clearItems();
     }
   }, [orders]);
 
@@ -165,8 +170,15 @@ const OrderPage = () => {
                 style={{ border: "2px solid green" }}
                 className="shadow-sm p-4 order-confirm"
               >
-                Your order  <strong>{searchParams.get("orderId").substring(0,6).toLocaleUpperCase()}</strong> isconfirmed! Get ready for a{" "}
-                <strong>crunch-tastic</strong> meal! 🍗😋
+                Your order{" "}
+                <strong>
+                  {searchParams
+                    .get("orderId")
+                    .substring(0, 6)
+                    .toLocaleUpperCase()}
+                </strong>{" "}
+                is confirmed! Get ready for a <strong>crunch-tastic</strong>{" "}
+                meal! 🍗😋
               </p>
             )}
             {/* Tabs */}

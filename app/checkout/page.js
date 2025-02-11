@@ -262,7 +262,7 @@ const page = () => {
     );
     await OrderService.createOrder(postOrderReq)
       .then((order) => {
-        if (!order?.oderId) {
+        if (!order?.orderId) {
           setShowError(true);
         } else {
           clearItems()

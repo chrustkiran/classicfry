@@ -124,7 +124,7 @@ const Footer1 = () => {
                 </div>
                 <div className="footer-address-text">
                   <h6>
-                  Shop Address 100 Chessington Road  West Ewell , KT19 9UR
+                  100 Chessington Road  West Ewell , KT19 9UR
                   </h6>
                   <h5>Mobile:</h5>
                   <h6>07477427927</h6>

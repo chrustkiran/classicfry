@@ -18,9 +18,7 @@ const Menus = () => {
   return (
     <ul>
       <li className="has-dropdown">
-        <Link href="shop-list">
-          Menu
-        </Link>
+        <Link href="shop-list">Menu</Link>
       </li>
       <li className="has-dropdown active">
         <Link href="/orders">Orders</Link>
@@ -44,22 +42,19 @@ const Header1 = () => {
   return (
     <Fragment>
       <header className="section-bg">
-       
         <div id="header-sticky" className="header-1">
           <div className="container">
             <div className="mega-menu-wrapper">
               <div className="header-main">
                 <div className="logo">
                   <Link href="/" className="header-logo">
-                    {/* <img src="assets/img/logo/logo.svg" alt="logo-img" /> */}
-                    <h3>ClassicFry</h3>
+                    <img style={{width: '150px'}} src="assets/img/logo/logo.png" alt="logo-img" />
+                    {/* <h3>ClassicFry</h3> */}
                   </Link>
                 </div>
                 <div className="heder-left">
                   <div className="mean__menu-wrapper d-none d-lg-block">
-                    <div className="main-menu">
-                     
-                    </div>
+                    <div className="main-menu"></div>
                   </div>
                 </div>
                 <div className="header-right d-flex justify-content-end align-items-center">
@@ -76,23 +71,30 @@ const Header1 = () => {
                           <li key={index}>
                             <img src={item.image} alt="image" />
                             <div className="cart-product">
-                              <div>{item.size !== env.DEFAULT && (
-                                    <span
-                                      style={{
-                                        fontSize: "10px",
-                                        width: "20px",
-                                      }}
-                                      className="badge bg-warning"
-                                    >
-                                      {item.size.substring(0, 1)}
-                                    </span>
-                                  )}{item.name}</div>
+                              <div>
+                                {item.size !== env.DEFAULT && (
+                                  <span
+                                    style={{
+                                      fontSize: "10px",
+                                      width: "20px",
+                                    }}
+                                    className="badge bg-warning"
+                                  >
+                                    {item.size.substring(0, 1)}
+                                  </span>
+                                )}
+                                {item.name}
+                              </div>
                               <div className="d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
-                                  <span>{item.quantity} <small className="fw-light fs-6">x</small> &nbsp;£{item.price}</span>
+                                  <span>
+                                    {item.quantity}{" "}
+                                    <small className="fw-light fs-6">x</small>{" "}
+                                    &nbsp;£{item.price}
+                                  </span>
                                 </div>
                                 <span className="fw-bold">
-                                 £{(item.quantity * item.price).toFixed(2)}
+                                  £{(item.quantity * item.price).toFixed(2)}
                                 </span>
                               </div>
                             </div>
@@ -103,20 +105,30 @@ const Header1 = () => {
                         <span>Total : £{getTotalPrice().toFixed(2)}</span>
                       </div>
                       <div className="cart-button d-flex flex-row-reverse mb-4">
-                        <Link href="shop-cart" className="theme-btn">
+                        <Link
+                          style={{
+                            fontSize: '12px',
+                            lineHeight: '1',
+                            padding: '10px 28px',
+                            textAlign: 'center',
+                            borderRadius: '6px',
+                            letterSpacing: '0.5px'
+                          }}
+                          href="shop-cart"
+                          className="theme-btn"
+                        >
                           View Cart
                         </Link>
                       </div>
                     </div>
                     <div className="cart-icon">
-                      <Link href={'/shop-cart'}>
-                      <i className="far fa-lg fa-drumstick"></i>
-                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                        {getTotalCartItem()}
-                      </span>
+                      <Link href={"/shop-cart"}>
+                        <i className="far fa-lg fa-drumstick"></i>
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                          {getTotalCartItem()}
+                        </span>
                       </Link>
                     </div>
-
                   </div>
                   <div className="header-button">
                     <Link href="contact" className="theme-btn bg-red-2">
@@ -162,8 +174,6 @@ const Header1 = () => {
   );
 };
 
-
-
 const Sidebar = ({ toggle, setToggle }) => {
   return (
     <Fragment>
@@ -192,7 +202,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                   alt="gallery-img"
                 />
               </div>
-              
+
               <MobileMenu />
               <div className="offcanvas__contact">
                 <h4>Contact Info</h4>
@@ -203,7 +213,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                     </div>
                     <div className="offcanvas__contact-text">
                       <a target="_blank" href="#">
-                      100 Chessington Road West Ewell , KT19 9UR
+                        100 Chessington Road West Ewell , KT19 9UR
                       </a>
                     </div>
                   </li>
@@ -214,7 +224,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                     <div className="offcanvas__contact-text">
                       <a href="tel:07477427927">
                         <span className="mailto:contact@classicfry.co.uk">
-                        contact@classicfry.co.uk
+                          contact@classicfry.co.uk
                         </span>
                       </a>
                     </div>
@@ -292,9 +302,7 @@ const MobileMenu = () => {
         <nav className="mean-nav">
           <ul>
             <li className="has-dropdown active">
-              <Link href="/shop-list">
-                Menu
-              </Link>
+              <Link href="/shop-list">Menu</Link>
             </li>
             <li className="mean-last">
               <Link href="/orders">Orders</Link>

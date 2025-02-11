@@ -24,9 +24,9 @@ const FoodSlider = () => {
           <div className="col-md-7 col-9">
             <div className="section-title">
               <span className="wow fadeInUp">crispy, every bite taste</span>
-              <h2 className="wow fadeInUp" data-wow-delay=".3s">
+              {/* <h2 className="wow fadeInUp" data-wow-delay=".3s">
                 Available Categories
-              </h2>
+              </h2> */}
             </div>
           </div>
           <div
