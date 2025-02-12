@@ -23,10 +23,7 @@ const Footer1 = () => {
       <div className="container ">
         <div className="footer-widgets-wrapper ">
           <div className="flex-row d-flex justify-content-evenly">
-            <div
-              className="wow fadeInUp"
-              data-wow-delay=".2s"
-            >
+            <div className="wow fadeInUp" data-wow-delay=".2s">
               <div className="single-footer-widget">
                 <div className="widget-head">
                   <Link href="/">
@@ -41,7 +38,7 @@ const Footer1 = () => {
                   </p>
                   <span>Any additional queries</span> <br />
                   <a href="mailto:contact@classicfry.co.uk" className="link">
-                  contact@classicfry.co.uk
+                    contact@classicfry.co.uk
                   </a>
                   <div className="social-icon d-flex align-items-center">
                     <a href="#">
@@ -114,20 +111,19 @@ const Footer1 = () => {
                 </ul>
               </div>
             </div> */}
-            <div
-              className="wow fadeInUp"
-              data-wow-delay=".8s"
-            >
+            <div className="wow fadeInUp" data-wow-delay=".8s">
               <div className="single-footer-widget">
-                <div className="widget-head">
+                <div className="">
                   <h4>Address:</h4>
                 </div>
-                <div className="footer-address-text">
-                  <h6>
-                  100 Chessington Road  West Ewell , KT19 9UR
-                  </h6>
-                  <h5>Mobile:</h5>
-                  <h6>07477427927</h6>
+                <div className="footer-address-text mt-2">
+                  <h6>100</h6>
+                  <h6>Chessington Road West Ewell, </h6>
+                  <h6>KT19 9UR</h6>
+                  <div className="mt-4">
+                    <h4>Mobile:</h4>
+                  </div>
+                  <h6 className="mt-2">07477427927</h6>
                 </div>
               </div>
             </div>

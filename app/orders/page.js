@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 import useOrder from "@/hooks/useOrder";
 import env from "@/env";
 import { useAppContext } from "@/context/AppContext";
+import Link from "next/link";
 
 // const orders = {
 //   active: [
@@ -127,7 +128,7 @@ const OrderPage = () => {
   const { orders, fetchOrders } = useOrder();
   const [activeTab, setActiveTab] = useState("active");
   const [expandedOrder, setExpandedOrder] = useState(null);
-  const { clearItems } = useAppContext();
+  const { clearItems, isValidUser } = useAppContext();
 
   const checkOrderExist = (orderId) => {
     return orders.active.some((order) => {
@@ -163,158 +164,178 @@ const OrderPage = () => {
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
       <section className="food-category-section fix section-padding section-bg">
-        <div className="container px-3 px-md-5 px-lg-5 px-xl-5">
-          <div className="row g-5 pr-5 pl-5 order-section px-3 px-md-5 px-lg-5 px-xl-5">
-            {showSuccessOrder && (
-              <p
-                style={{ border: "2px solid green" }}
-                className="shadow-sm p-4 order-confirm"
-              >
-                Your order{" "}
-                <strong>
-                  {searchParams
-                    .get("orderId")
-                    .substring(0, 6)
-                    .toLocaleUpperCase()}
-                </strong>{" "}
-                is confirmed! Get ready for a <strong>crunch-tastic</strong>{" "}
-                meal! 🍗😋
-              </p>
-            )}
-            {/* Tabs */}
-
-            <ul className="nav nav-tabs d-flex  order-tab">
-              <li className="nav-item">
-                <button
-                  className={`nav-link ${
-                    activeTab === "active" ? "active" : ""
-                  }`}
-                  onClick={() => handleTabChange("active")}
+        {isValidUser && (
+          <div className="container d-flex flex-column align-items-center justify-content-center text-center ">
+          <h4 className="mb-4">
+            Looks like you're new here or haven't placed an order yet!
+          </h4>
+          <h4>
+            <Link href="/shop-list" className="theme-btn">
+              Order Now
+            </Link>{" "}
+            <br></br>
+           <div className="mt-4">to enjoy our crispy, mouthwatering chicken fries!</div> 
+          </h4>
+        </div>
+        
+        )}
+        {!isValidUser && (
+          <div className="container px-3 px-md-5 px-lg-5 px-xl-5">
+            <div className="row g-5 pr-5 pl-5 order-section px-3 px-md-5 px-lg-5 px-xl-5">
+              {showSuccessOrder && (
+                <p
+                  style={{ border: "2px solid green" }}
+                  className="shadow-sm p-4 order-confirm"
                 >
-                  Active Orders
-                </button>
-              </li>
-              <li className="nav-item">
-                <button
-                  className={`nav-link ${
-                    activeTab === "completed" ? "active" : ""
-                  }`}
-                  onClick={() => handleTabChange("completed")}
-                >
-                  Completed Orders
-                </button>
-              </li>
-              <li>
-                <div onClick={fetchOrders} className="btn mr-0">
-                  <i className="fas fa-redo"></i>
-                </div>
-              </li>
-            </ul>
+                  Your order{" "}
+                  <strong>
+                    {searchParams
+                      .get("orderId")
+                      .substring(0, 6)
+                      .toLocaleUpperCase()}
+                  </strong>{" "}
+                  is confirmed! Get ready for a <strong>crunch-tastic</strong>{" "}
+                  meal! 🍗😋
+                </p>
+              )}
+              {/* Tabs */}
 
-            {/* Order List */}
-            <div className="row row-cols-1 mt-3 g-1">
-              {orders[activeTab].length === 0 ? (
-                <p className="text-muted text-center">No orders available.</p>
-              ) : (
-                orders[activeTab].map((order) => (
-                  <div key={order.id} className="card">
-                    <div className="card-body col">
-                      <div className="d-flex column justify-content-between">
-                        <div>
-                          {" "}
-                          <small>ORDER ID</small>{" "}
-                          <h3 className="card-title">
-                            {order.orderId.substring(0, 6)}
-                          </h3>
+              <ul className="nav nav-tabs d-flex  order-tab">
+                <li className="nav-item">
+                  <button
+                    className={`nav-link ${
+                      activeTab === "active" ? "active" : ""
+                    }`}
+                    onClick={() => handleTabChange("active")}
+                  >
+                    Active Orders
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={`nav-link ${
+                      activeTab === "completed" ? "active" : ""
+                    }`}
+                    onClick={() => handleTabChange("completed")}
+                  >
+                    Completed Orders
+                  </button>
+                </li>
+                <li>
+                  <div onClick={fetchOrders} className="btn mr-0">
+                    <i className="fas fa-redo"></i>
+                  </div>
+                </li>
+              </ul>
+
+              {/* Order List */}
+              <div className="row row-cols-1 mt-3 g-1">
+                {orders[activeTab].length === 0 ? (
+                  <p className="text-muted text-center">No orders available.</p>
+                ) : (
+                  orders[activeTab].map((order) => (
+                    <div key={order.id} className="card">
+                      <div className="card-body col">
+                        <div className="d-flex column justify-content-between">
+                          <div>
+                            {" "}
+                            <small>ORDER ID</small>{" "}
+                            <h3 className="card-title">
+                              {order.orderId.substring(0, 6)}
+                            </h3>
+                          </div>
+                          <div>
+                            <span className="badge bg-success">
+                              {order.orderStatus}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex column justify-content-between mt-3">
+                          <div>
+                            <strong>Total:</strong> £{order.payment?.amount}
+                          </div>
+                          <br></br>
+
+                          <div>
+                            <strong>
+                              <i className="fas flaticon-calendar"> </i>
+                            </strong>{" "}
+                            {new Date(order.createdTime).toLocaleDateString()}{" "}
+                            <br></br>
+                            <strong>
+                              <i className="fas fa-clock"></i>{" "}
+                            </strong>{" "}
+                            {new Date(order.createdTime).toLocaleTimeString()}
+                          </div>
                         </div>
                         <div>
-                          <span className="badge bg-success">
-                            {order.orderStatus}
+                          <span
+                            style={{
+                              border: "1px solid black",
+                              color: "black",
+                            }}
+                            className="badge bg-light"
+                          >
+                            {order?.payment?.type} payment
                           </span>
                         </div>
-                      </div>
-                      <div className="d-flex column justify-content-between mt-3">
-                        <div>
-                          <strong>Total:</strong> £{order.payment?.amount}
-                        </div>
-                        <br></br>
 
-                        <div>
-                          <strong>
-                            <i className="fas flaticon-calendar"> </i>
-                          </strong>{" "}
-                          {new Date(order.createdTime).toLocaleDateString()}{" "}
-                          <br></br>
-                          <strong>
-                            <i className="fas fa-clock"></i>{" "}
-                          </strong>{" "}
-                          {new Date(order.createdTime).toLocaleTimeString()}
-                        </div>
-                      </div>
-                      <div>
-                        <span
-                          style={{ border: "1px solid black", color: "black" }}
-                          className="badge bg-light"
+                        <button
+                          className="btn btn-warning btn-sm mt-4 w-100"
+                          onClick={() => toggleOrder(order.id)}
                         >
-                          {order?.payment?.type} payment
-                        </span>
+                          {expandedOrder === order.id
+                            ? "Hide Details"
+                            : "View Details"}
+                        </button>
                       </div>
 
-                      <button
-                        className="btn btn-warning btn-sm mt-4 w-100"
-                        onClick={() => toggleOrder(order.id)}
+                      {/* Expandable Order Details */}
+                      <div
+                        className={`collapse ${
+                          expandedOrder === order.id ? "show" : ""
+                        }`}
                       >
-                        {expandedOrder === order.id
-                          ? "Hide Details"
-                          : "View Details"}
-                      </button>
-                    </div>
-
-                    {/* Expandable Order Details */}
-                    <div
-                      className={`collapse ${
-                        expandedOrder === order.id ? "show" : ""
-                      }`}
-                    >
-                      <div className="card-body">
-                        <h6>Order Items</h6>
-                        <ul className="list-group">
-                          {order.orderItems.map((orderItem, index) => {
-                            const item = orderItem.item
-                              ? orderItem.item
-                              : orderItem.deal;
-                            return (
-                              <li
-                                key={index}
-                                className="list-group-item d-flex align-items-center"
-                              >
-                                <img
-                                  src={item?.image}
-                                  alt={item?.name}
-                                  className="me-3"
-                                  width="50"
-                                  height="50"
-                                />
-                                <div>
-                                  <strong>{item?.name}</strong> (
-                                  {orderItem?.quantity}){" "}
-                                  <span className="badge bg-warning">
-                                    {orderItem?.portionSize !== env.DEFAULT &&
-                                      orderItem?.portionSize}
-                                  </span>
-                                </div>
-                              </li>
-                            );
-                          })}
-                        </ul>
+                        <div className="card-body">
+                          <h6>Order Items</h6>
+                          <ul className="list-group">
+                            {order.orderItems.map((orderItem, index) => {
+                              const item = orderItem.item
+                                ? orderItem.item
+                                : orderItem.deal;
+                              return (
+                                <li
+                                  key={index}
+                                  className="list-group-item d-flex align-items-center"
+                                >
+                                  <img
+                                    src={item?.image}
+                                    alt={item?.name}
+                                    className="me-3"
+                                    width="50"
+                                    height="50"
+                                  />
+                                  <div>
+                                    <strong>{item?.name}</strong> (
+                                    {orderItem?.quantity}){" "}
+                                    <span className="badge bg-warning">
+                                      {orderItem?.portionSize !== env.DEFAULT &&
+                                        orderItem?.portionSize}
+                                    </span>
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
-              )}
+                  ))
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
       <Cta />
     </FoodKingLayout>
