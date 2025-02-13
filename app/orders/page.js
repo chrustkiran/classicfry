@@ -234,7 +234,7 @@ const OrderPage = () => {
                   <p className="text-muted text-center">No orders available.</p>
                 ) : (
                   orders[activeTab].map((order) => (
-                    <div key={order.id} className="card">
+                    <div key={order.orderId} className="card">
                       <div className="card-body col">
                         <div className="d-flex column justify-content-between">
                           <div>
@@ -282,9 +282,9 @@ const OrderPage = () => {
 
                         <button
                           className="btn btn-warning btn-sm mt-4 w-100"
-                          onClick={() => toggleOrder(order.id)}
+                          onClick={() => toggleOrder(order.orderId)}
                         >
-                          {expandedOrder === order.id
+                          {expandedOrder === order.orderId
                             ? "Hide Details"
                             : "View Details"}
                         </button>
@@ -293,7 +293,7 @@ const OrderPage = () => {
                       {/* Expandable Order Details */}
                       <div
                         className={`collapse ${
-                          expandedOrder === order.id ? "show" : ""
+                          expandedOrder === order.orderId ? "show" : ""
                         }`}
                       >
                         <div className="card-body">
