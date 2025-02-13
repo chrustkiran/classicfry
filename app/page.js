@@ -131,7 +131,7 @@ const page = () => {
                     className="grilled-button wow fadeInUp"
                     data-wow-delay=".7s"
                   >
-                    <Link href="/shop-list" className="theme-btn">
+                    <Link href="/shop-list?category=Burger" className="theme-btn">
                       <span className="button-content-wrapper d-flex align-items-center">
                         <span className="button-icon">
                           <i className="flaticon-delivery" />
@@ -202,28 +202,7 @@ const page = () => {
                   </div>
 
                   <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button
-                      className="nav-link wow fadeInUp"
-                      data-wow-delay=".3s"
-                      id="nav-home-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-home"
-                      type="button"
-                      role="tab"
-                      aria-controls="nav-home"
-                      aria-selected="true"
-                    >
-                      <span className="food-comboo-list">
-                        <span className="offer-image">
-                          <img src="assets/img/offer/chicken.png" alt="img" />
-                        </span>
-                        <span className="comboo-title">
-                        <Link href={'/shop-list'}>
-                          Your Perfect Bite, Every Time.
-                          </Link>
-                        </span>
-                      </span>
-                    </button>
+                   
                     <button
                       className="nav-link active wow fadeInUp"
                       data-wow-delay=".5s"
@@ -236,40 +215,15 @@ const page = () => {
                       aria-selected="false"
                     >
                       <span className="food-comboo-list">
-                        <span className="offer-image">
-                          <img src="assets/img/offer/pizza.png" alt="img" />
-                        </span>
-                        
                         <span className="comboo-title">
                         <span className="button-icon">
                           <i className="flaticon-delivery" />
                         </span> &nbsp;
-                          <Link href={'/shop-list'}> Order Now & Bite into Happiness!</Link>
+                          <Link href={'/shop-list?category=Peri+Peri'}>Order Now</Link>
                         </span>
                       </span>
                     </button>
-                    <button
-                      className="nav-link wow fadeInUp"
-                      data-wow-delay=".7s"
-                      id="nav-contact-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-contact"
-                      type="button"
-                      role="tab"
-                      aria-controls="nav-contact"
-                      aria-selected="false"
-                    >
-                      <span className="food-comboo-list">
-                        <span className="offer-image">
-                          <img src="assets/img/offer/burger.png" alt="img" />
-                        </span>
-                        <span className="comboo-title">
-                          <Link href={'/shop-list'}>
-                         Explore our combos
-                         </Link>
-                        </span>
-                      </span>
-                    </button>
+                    
                   </div>
                 </div>
               </div>
@@ -727,7 +681,7 @@ const page = () => {
                     </li>
                   </ul> */}
                   <Link
-                    href="/shop-list"
+                    href="/shop-list?category=Wraps"
                     className="theme-btn mt-5 wow fadeInUp"
                     data-wow-delay=".8s"
                   >

@@ -128,7 +128,7 @@ const OrderPage = () => {
   const { orders, fetchOrders } = useOrder();
   const [activeTab, setActiveTab] = useState("active");
   const [expandedOrder, setExpandedOrder] = useState(null);
-  const { clearItems, isValidUser } = useAppContext();
+  const { clearItems, isValidUser, getUser } = useAppContext();
 
   const checkOrderExist = (orderId) => {
     return orders.active.some((order) => {
@@ -157,14 +157,14 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
+    fetchOrders(getUser()?.userId);
   }, []);
 
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
       <section className="food-category-section fix section-padding section-bg">
-        {isValidUser && (
+        {!isValidUser && (
           <div className="container d-flex flex-column align-items-center justify-content-center text-center ">
           <h4 className="mb-4">
             Looks like you're new here or haven't placed an order yet!
@@ -179,7 +179,7 @@ const OrderPage = () => {
         </div>
         
         )}
-        {!isValidUser && (
+        {isValidUser && (
           <div className="container px-3 px-md-5 px-lg-5 px-xl-5">
             <div className="row g-5 pr-5 pl-5 order-section px-3 px-md-5 px-lg-5 px-xl-5">
               {showSuccessOrder && (
@@ -208,7 +208,7 @@ const OrderPage = () => {
                     }`}
                     onClick={() => handleTabChange("active")}
                   >
-                    Active Orders
+                    Active Orders ({orders['active']? orders['active'].length : 0})
                   </button>
                 </li>
                 <li className="nav-item">
@@ -218,11 +218,11 @@ const OrderPage = () => {
                     }`}
                     onClick={() => handleTabChange("completed")}
                   >
-                    Completed Orders
+                    Completed Orders ({orders['completed']? orders['completed'].length : 0})
                   </button>
                 </li>
                 <li>
-                  <div onClick={fetchOrders} className="btn mr-0">
+                  <div onClick={() => fetchOrders(getUser()?.userId)} className="btn mr-0">
                     <i className="fas fa-redo"></i>
                   </div>
                 </li>

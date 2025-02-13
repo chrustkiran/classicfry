@@ -58,7 +58,7 @@ const useItem = () => {
     axios.get(base_url + `items/${itemId}`).then((res) => {
       res.data = [res.data]
       setItem(res.data.map(item => ({...item, category: categoryMapper(item.category)})));
-    });
+    }).catch(_ => {setItem("errored")});
   };
 
   return { items, fetchItems, categories, fetchCategories, fetchItem, item };

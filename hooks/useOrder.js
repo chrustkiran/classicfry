@@ -7,7 +7,7 @@ const OrderStatus = {
   PLACED_WITH_PAYMENT: "Placed",
   PLACED_WITHOUT_PAYMENT: "Placed",
   IN_PROGRESS: "In Progess",
-  READY_FOR_PICKUP: "Ready",
+  READY_FOR_PICKUP: "Completed",
   COMPLETED: "Completed",
 };
 
@@ -22,8 +22,8 @@ const base_url = env.API_URL;
 const useOrder = () => {
   const [orders, setOrders] = useState({'active': [], 'completed': []});
 
-  const fetchOrders = () => {
-    axios.get(base_url + "orders").then((res) => {
+  const fetchOrders = (userId) => {
+    axios.get(base_url + `orders/userId/${userId}`).then((res) => {
       const orders = res.data.filter(
         (order) => order.orderStatus in OrderStatus
       );
@@ -31,7 +31,7 @@ const useOrder = () => {
       // Categorize orders into active and completed
       const categorizedOrders = orders.reduce(
         (acc, order) => {
-          if (order.orderStatus === "COMPLETED") {
+          if (order.orderStatus === Object.keys(OrderStatus)[3] || order.orderStatus === Object.keys(OrderStatus)[4]) {
             acc.completed.push({
               ...order,
               orderStatus: OrderStatusMapper(order.orderStatus),

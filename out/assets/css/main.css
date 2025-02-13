@@ -11115,7 +11115,7 @@ p.sticky-label {
 }
 
 .footer-widgets-wrapper {
-  padding: 90px 0 120px;
+  padding: 9px 0 50px;
   position: relative;
   z-index: 9;
 }
@@ -11235,7 +11235,7 @@ p.sticky-label {
 .footer-widgets-wrapper .single-footer-widget .footer-address-text h6 {
   font-weight: 400;
   color: var(--text);
-  line-height: 150%;
+  /* line-height: 150%; */
   font-size: 20px;
   text-transform: capitalize;
 }
@@ -11243,7 +11243,7 @@ p.sticky-label {
   color: var(--theme2);
 }
 .footer-widgets-wrapper .single-footer-widget .footer-address-text h5 {
-  padding: 20px 0;
+  padding: 0 0;
   text-transform: capitalize;
 }
 .footer-widgets-wrapper .single-footer-widget .footer-apps-items h5 {

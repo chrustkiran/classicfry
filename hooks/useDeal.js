@@ -50,7 +50,7 @@ const useDeal = () => {
     axios.get(base_url + `deals/${dealId}`).then((res) => {
       res.data = [res.data]
       setDeal(res.data.map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
-    });
+    }).catch(_ => {setDeal("errored")});
   };
 
   return {
