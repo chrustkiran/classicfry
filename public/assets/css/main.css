@@ -350,6 +350,7 @@ body {
   color: var(--text);
   background-color: var(--white);
   padding: 0;
+  padding-top: 60px;
   margin: 0;
   overflow-x: hidden;
 }
@@ -1619,9 +1620,15 @@ input.main-search-input::placeholder {
 }
 
 .header-1 {
-  position: relative;
-  z-index: 99;
-  overflow-x: clip;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 199;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border2);
+  padding: 0 60px;
+  margin-bottom: 1400px;
 }
 
 .header-2 {
