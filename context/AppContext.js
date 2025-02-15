@@ -10,7 +10,7 @@ const cartName = 'classic-fry-cart';
 export const AppProvider = ({ children }) => {
 
   const getCartFromLocalStorage = () => {
-    const savedCart = global?.window?.localStorage.getItem(cartName); // Use your cart name here
+    const savedCart = global?.window?.localStorage.getItem(cartName);
     return savedCart ? JSON.parse(savedCart).map(item => 
         new CartItem(item.itemId, item.name, item.price, item.image, item.size, item.quantity, item.type)
     ) : [];
@@ -78,7 +78,8 @@ export const AppProvider = ({ children }) => {
   }
 
   const clearItems = () => {
-    global?.window?.localStorage.removeItem(cartName)
+    global?.window?.localStorage.removeItem(cartName);
+    setCart([]);
   }
 
   const setUser = (user) => {
