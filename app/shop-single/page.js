@@ -310,6 +310,7 @@ const page = () => {
                       </div>
                       <div className="mb-3  d-flex align-items-center w-100">
                         <Toast
+                          autohide
                           show={showCartToast}
                           delay={3000}
                           className="w-100 cart-toast"
@@ -323,12 +324,12 @@ const page = () => {
                             />
                             <strong className="me-auto">
                               Successfully added to the cart &nbsp;
-                              <a href="/shop-cart">
+                              <Link href="shop-cart">
                               <i className="far fa-lg fa-drumstick p-2"></i>
                               <span className="text-dark translate-middle badge rounded-pill bg-warning">
                                 {getTotalCartItem()}
                               </span>
-                              </a>
+                              </Link>
                             </strong>
                           </Toast.Header>
                         </Toast>

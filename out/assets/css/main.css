@@ -1622,6 +1622,7 @@ input.main-search-input::placeholder {
   position: relative;
   z-index: 99;
   overflow-x: clip;
+
 }
 
 .header-2 {
@@ -11650,4 +11651,8 @@ p.error-dial {
 
 p.order-confirm {
   color: var(--base)
+}
+
+.cart-toast {
+  background-color: green;
 }
