@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
 import { useAppContext } from "@/context/AppContext";
 import env from "@/env";
+import Toast from "react-bootstrap/Toast";
 import useDeal from "@/hooks/useDeal";
 
 const Ingredient = ({ ingredient }) => {
@@ -68,8 +69,9 @@ const page = () => {
   const searchParams = useSearchParams();
   const [addTab, setAddTab] = useState("Ingredients");
   const [showScrollUp, setShowCrollup] = useState(false);
+  const [showCartToast, setShowCartToast] = useState(false);
 
-  const { addItemToCart } = useAppContext();
+  const { addItemToCart, getTotalCartItem } = useAppContext();
 
   const dealItemRef = useRef();
 
@@ -148,6 +150,7 @@ const page = () => {
         env.ITEM_TYPE.DEAL
       );
     }
+    setShowCartToast(true);
   };
 
   const handlePrice = (fetchedItem) => {
@@ -304,6 +307,31 @@ const page = () => {
                             +
                           </button>
                         </div>
+                      </div>
+                      <div className="mb-3  d-flex align-items-center w-100">
+                        <Toast
+                          show={showCartToast}
+                          delay={3000}
+                          className="w-100 cart-toast"
+                          onClose={() => setShowCartToast(false)}
+                        >
+                          <Toast.Header>
+                            <img
+                              src="holder.js/20x20?text=%20"
+                              className="rounded me-2"
+                              alt=""
+                            />
+                            <strong className="me-auto">
+                              Successfully added to the cart &nbsp;
+                              <a href="/shop-cart">
+                              <i className="far fa-lg fa-drumstick p-2"></i>
+                              <span className="text-dark translate-middle badge rounded-pill bg-warning">
+                                {getTotalCartItem()}
+                              </span>
+                              </a>
+                            </strong>
+                          </Toast.Header>
+                        </Toast>
                       </div>
                       <div className="shop-button d-flex align-items-center responsive-cnt">
                         <button
