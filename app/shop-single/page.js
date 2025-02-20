@@ -71,7 +71,7 @@ const page = () => {
   const [showScrollUp, setShowCrollup] = useState(false);
   const [showCartToast, setShowCartToast] = useState(false);
 
-  const { addItemToCart, getTotalCartItem } = useAppContext();
+  const { addItemToCart, getTotalCartItem, getPortionSize } = useAppContext();
 
   const dealItemRef = useRef();
 
@@ -273,7 +273,7 @@ const page = () => {
                             }`}
                             style={{ width: "40px", height: "40px" }}
                           >
-                            {size.portionSize.substring(0, 1)}
+                            {getPortionSize(size.portionSize)}
                           </button>
                         ))}
                     </div>

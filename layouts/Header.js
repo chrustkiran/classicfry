@@ -29,7 +29,7 @@ const Menus = () => {
 
 const Header1 = () => {
   const [toggle, setToggle] = useState(false);
-  const { cart, getTotalCartItem, getTotalPrice } = useAppContext();
+  const { cart, getTotalCartItem, getTotalPrice, getPortionSize } = useAppContext();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const Header1 = () => {
                                     }}
                                     className="badge bg-warning"
                                   >
-                                    {item.size.substring(0, 1)}
+                                    {getPortionSize(item.size)}
                                   </span>
                                 )}
                                 {item.name}

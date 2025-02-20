@@ -41,7 +41,8 @@ const page = () => {
     increaseQuantity,
     setUser,
     getUser,
-    isValidUser
+    isValidUser,
+    getPortionSize
   } = useAppContext();
 
   const calculateCartTotal = () => {
@@ -171,7 +172,7 @@ const page = () => {
                                 <span>{item.name}</span>
                                 {item.size !== env.DEFAULT && (
                                   <span className="badge size-badge badge-warning px-0">
-                                    {item.size.substring(0, 1)}
+                                    {getPortionSize(item.size)}
                                   </span>
                                 )}
                               </div>

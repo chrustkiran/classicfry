@@ -106,6 +106,16 @@ export const AppProvider = ({ children }) => {
   const contextValue = {
     cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem, increaseQuantity, clearItems, setUser, getUser, isValidUser
   }
+
+
+  const getPortionSize = (portionSize) => {
+    const numbers = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE']
+    if (numbers.includes(portionSize)) {
+      return numbers.indexOf(portionSize) + 1;
+    }
+    return portionSize.substring(0,1);
+  }
+
   return (
     <AppContext.Provider value={contextValue}>
       {children}
