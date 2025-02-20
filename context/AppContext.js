@@ -103,11 +103,6 @@ export const AppProvider = ({ children }) => {
     return (user?.userId)
   }
 
-  const contextValue = {
-    cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem, increaseQuantity, clearItems, setUser, getUser, isValidUser
-  }
-
-
   const getPortionSize = (portionSize) => {
     const numbers = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE']
     if (numbers.includes(portionSize)) {
@@ -115,6 +110,11 @@ export const AppProvider = ({ children }) => {
     }
     return portionSize.substring(0,1);
   }
+
+  const contextValue = {
+    cart, addItemToCart, removeItemFromCart, decreaseQuantity, getTotalPrice, getTotalCartItem, increaseQuantity, clearItems, setUser, getUser, isValidUser, getPortionSize
+  }
+
 
   return (
     <AppContext.Provider value={contextValue}>
