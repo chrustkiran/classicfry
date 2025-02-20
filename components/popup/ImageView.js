@@ -38,7 +38,7 @@ const ImageView = () => {
 
     const setupImageLinks = () => {
       document
-        .querySelectorAll('a[href*="assets/img"]:not([download])')
+        .querySelectorAll('a[href*="/assets/img"]:not([download])')
         .forEach((a) => {
           a.addEventListener("click", handleImageClick);
         });

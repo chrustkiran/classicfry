@@ -3,14 +3,14 @@ const Cta = () => {
     <section
       className="main-cta-banner-2 section-padding bg-cover"
       style={{
-        backgroundImage: 'url("assets/img/hero/hero-bg.jpg")',
+        backgroundImage: 'url("/assets/img/hero/hero-bg.jpg")',
       }}
     >
       <div className="tomato-shape-left float-bob-y">
-        <img src="assets/img/tomato.png" alt="shape-img" />
+        <img src="/assets/img/tomato.png" alt="shape-img" />
       </div>
       <div className="chili-shape-right float-bob-y">
-        <img src="assets/img/chilli.png" alt="shape-img" />
+        <img src="/assets/img/chilli.png" alt="shape-img" />
       </div>
       <div className="container">
         <div className="main-cta-banner-wrapper-2 d-flex align-items-center justify-content-between">
@@ -34,7 +34,7 @@ const Cta = () => {
             </a>
           </Link> */}
           <div className="delivery-man">
-            <img src="assets/img/delivery-man-2.png" alt="img" />
+            <img src="/assets/img/delivery-man-2.png" alt="img" />
           </div>
         </div>
       </div>

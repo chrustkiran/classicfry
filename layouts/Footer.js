@@ -15,10 +15,10 @@ const Footer1 = () => {
   return (
     <footer className="footer-section fix section-bg">
       <div className="burger-shape">
-        <img src="assets/img/shape/burger-shape-3.png" alt="burger-shape" />
+        <img src="/assets/img/shape/burger-shape-3.png" alt="burger-shape" />
       </div>
       <div className="fry-shape">
-        <img src="assets/img/shape/fry-shape-2.png" alt="burger-shape" />
+        <img src="/assets/img/shape/fry-shape-2.png" alt="burger-shape" />
       </div>
       <div className="container ">
         <div className="footer-widgets-wrapper ">
@@ -175,10 +175,10 @@ const Footer2 = () => {
   return (
     <footer className="footer-section section-bg-3 fix">
       <div className="footer-shape">
-        <img src="assets/img/shape/footer-shape.png" alt="shape-img" />
+        <img src="/assets/img/shape/footer-shape.png" alt="shape-img" />
       </div>
       <div className="footer-shape-2">
-        <img src="assets/img/shape/footer-shape-2.png" alt="shape-img" />
+        <img src="/assets/img/shape/footer-shape-2.png" alt="shape-img" />
       </div>
       <div className="container">
         <div className="footer-widgets-wrapper style-2">
@@ -190,7 +190,7 @@ const Footer2 = () => {
               <div className="single-footer-widget pe-md-5 border-right">
                 <div className="widget-head">
                   <Link href="/">
-                    <img src="assets/img/logo/logo-2.svg" alt="logo-img" />
+                    <img src="/assets/img/logo/logo-2.svg" alt="logo-img" />
                   </Link>
                 </div>
                 <div className="footer-content">
@@ -301,7 +301,7 @@ const Footer2 = () => {
         <div
           id="scrollUp"
           className="scroll-icon bg-cover"
-          style={{ backgroundImage: 'url("assets/img/shop-food/box.png")' }}
+          style={{ backgroundImage: 'url("/assets/img/shop-food/box.png")' }}
         >
           <i className="fas fa-arrow-alt-up" />
         </div>

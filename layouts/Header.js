@@ -18,7 +18,7 @@ const Menus = () => {
   return (
     <ul>
       <li className="has-dropdown">
-        <Link href="shop-list">Menu</Link>
+        <Link href="/shop-list">Menu</Link>
       </li>
       <li className="has-dropdown active">
         <Link href="/orders">Orders</Link>
@@ -48,7 +48,7 @@ const Header1 = () => {
               <div className="header-main">
                 <div className="logo">
                   <Link href="/" className="header-logo">
-                    <img style={{width: '150px'}} src="assets/img/logo/logo.png" alt="logo-img" />
+                    <img style={{width: '150px'}} src="/assets/img/logo/logo.png" alt="logo-img" />
                     {/* <h3>ClassicFry</h3> */}
                   </Link>
                 </div>
@@ -114,7 +114,7 @@ const Header1 = () => {
                             borderRadius: '6px',
                             letterSpacing: '0.5px'
                           }}
-                          href="shop-cart"
+                          href="/shop-cart"
                           className="theme-btn"
                         >
                           View Cart
@@ -131,7 +131,7 @@ const Header1 = () => {
                     </div>
                   </div>
                   <div className="header-button">
-                    <Link href="contact" className="theme-btn bg-red-2">
+                    <Link href="/contact" className="theme-btn bg-red-2">
                       contact us
                     </Link>
                   </div>
@@ -198,7 +198,7 @@ const Sidebar = ({ toggle, setToggle }) => {
               <div className="offcanvas-image img-popup">
                 <img
                   width={"100%"}
-                  src="assets/img/header/fry.png"
+                  src="/assets/img/header/fry.png"
                   alt="gallery-img"
                 />
               </div>
@@ -249,7 +249,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                   </li>
                 </ul>
                 <div className="header-button mt-4">
-                  <Link href="shop-single" className="theme-btn">
+                  <Link href="/shop-single" className="theme-btn">
                     <span className="button-content-wrapper d-flex align-items-center justify-content-center">
                       <span className="button-icon">
                         <i className="flaticon-delivery" />

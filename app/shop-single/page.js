@@ -324,7 +324,7 @@ const page = () => {
                             />
                             <strong className="me-auto">
                               Successfully added to the cart &nbsp;
-                              <Link href="shop-cart">
+                              <Link href="/shop-cart">
                               <i className="far fa-lg fa-drumstick p-2"></i>
                               <span className="text-dark translate-middle badge rounded-pill bg-warning">
                                 {getTotalCartItem()}
