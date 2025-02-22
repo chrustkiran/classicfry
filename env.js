@@ -1,5 +1,5 @@
 const host_test = 'https://2bbuprb2vf.execute-api.eu-west-2.amazonaws.com/dev'
-const host_local = 'http://192.168.1.192:8080'
+const host_local = 'http://localhost:8080'
 const host = host_local
 const env = {
     API_URL: `${host}/api/v1/`,
