@@ -14,7 +14,7 @@ const FoodItemContainer = () => {
 
   return (
     <div className="row">
-      {items.slice(0, 9).map((item, index) => (
+      {items.slice(0, 8).map((item, index) => (
         <FoodItem key={index} fooditem={item}></FoodItem>
       ))}
     </div>
@@ -32,10 +32,10 @@ const FoodItem = ({ fooditem }) => {
           <div className="catagory-product-image">
             <img
               style={{
-                width: "220px", // Set a fixed width
-                height: "200px", // Set a fixed height
-                objectFit: "cover", // Ensures the image covers the area without distortion
-                borderRadius: "4px", // Optional: Add rounded corners
+                width: "220px", 
+                height: "200px", 
+                objectFit: "cover", 
+                borderRadius: "4px",
               }}
               src={fooditem.image}
               alt="product-img"

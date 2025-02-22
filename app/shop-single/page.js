@@ -310,7 +310,6 @@ const page = () => {
                       </div>
                       <div className="mb-3  d-flex align-items-center w-100">
                         <Toast
-                          autohide
                           show={showCartToast}
                           delay={3000}
                           className="w-100 cart-toast"

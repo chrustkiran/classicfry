@@ -2609,7 +2609,7 @@ input.main-search-input::placeholder {
 }
 @media (max-width: 767px) {
   .hero-1 .main-top-img {
-    width: 500px;
+    width: 600px;
     scale: 90%;
     top: 40%;
     text-align: center;
@@ -2619,7 +2619,7 @@ input.main-search-input::placeholder {
 
 @media (max-width: 557px) {
   .hero-1 .main-top-img {
-    width: 380px;
+    width: 450px;
     top: 40%;
     text-align: center;
     margin: 0 auto;
@@ -3397,17 +3397,13 @@ input.main-search-input::placeholder {
   top: 0;
   left: 0;
   width: 100%;
-  height: 65%;
+  height: 100%;
   border-radius: 14px;
   background-color: var(--white);
   -webkit-transition: all 0.35s ease-in-out;
   transition: all 0.35s ease-in-out;
 }
-@media (max-width: 575px) {
-  .catagory-product-card-2::before {
-    height: 60%;
-  }
-}
+
 .catagory-product-card-2 .catagory-product-image {
   position: relative;
   z-index: 1;
@@ -3419,10 +3415,10 @@ input.main-search-input::placeholder {
 }
 
 .category-product-main-image {
-  width: 100%; /* Ensures the image fills its container's width */
-  height: 100%; /* Ensures the image fills its container's height */
-  object-fit: cover; /* Crops the image while maintaining its aspect ratio */
-  object-position: center; /* Ensures the image is centered within the container */
+  width: 100%;
+  height: 100%; 
+  object-fit: cover; 
+  object-position: center; 
 }
 
 .catagory-product-card-2 .catagory-product-content {
@@ -3930,7 +3926,7 @@ input.main-search-input::placeholder {
     padding: 25px;
   }
 }
-.about-wrapper-2 .pizza-image .quate-content::before {
+/* .about-wrapper-2 .pizza-image .quate-content::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -3941,7 +3937,7 @@ input.main-search-input::placeholder {
   height: 100%;
   background-position: center;
   background-image: url(../../assets/img/about/food-shape.png);
-}
+} */
 .about-wrapper-2 .pizza-image .quate-content h3 {
   font-size: 28px;
   position: relative;
@@ -11159,12 +11155,11 @@ p.sticky-label {
   font-size: 20px;
   font-weight: 700;
   color: var(--theme);
-  margin-top: 15px;
   display: inline-block;
 }
 @media (max-width: 575px) {
   .footer-widgets-wrapper .single-footer-widget .footer-content .link {
-    margin-top: 10px;
+    font-size: 18px;
   }
 }
 .footer-widgets-wrapper .single-footer-widget .footer-content .social-icon {

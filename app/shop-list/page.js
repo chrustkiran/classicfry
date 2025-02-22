@@ -21,25 +21,7 @@ const Item = ({ item, key }) => {
         </div>
         <div className="shop-content">
           <div className="star pb-4">
-            <span>{(item.tag).replace("_", " ")}</span>
-            {/*<Link href="#">
-              {" "}
-              <i className="fas fa-star" />
-            </Link>
-            <Link href="#">
-              <i className="fas fa-star" />
-            </Link>
-            <Link href="#">
-              {" "}
-              <i className="fas fa-star" />
-            </Link>
-            <Link href="#">
-              <i className="fas fa-star" />
-            </Link>
-            <Link href="#" className="color-bg">
-              {" "}
-              <i className="fas fa-star" />
-            </Link>*/}
+            <span>{item.tag.replace("_", " ")}</span>
           </div>
           <h3>
             <Link href="shop-single">{item.name}</Link>
@@ -78,7 +60,7 @@ const Deal = ({ deal, key }) => {
         <div className="d-flex">
           <div className="shop-content col-6">
             <div className="star pb-4">
-              <span>{(deal.tag).replace("_", " ")}</span>
+              <span>{deal.tag.replace("_", " ")}</span>
             </div>
             <h3>
               <Link href="shop-single">{deal.name}</Link>
@@ -110,8 +92,14 @@ const Deal = ({ deal, key }) => {
               <div className="card-body">
                 <ul className="list-group">
                   {deal?.dealItemViews?.map((dealItem, index) => (
-                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                      {dealItem.name}<span class="badge bg-danger rounded-pill">{dealItem.quantity}</span>
+                    <li
+                      key={index}
+                      className="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                      {dealItem.name}
+                      <span class="badge bg-danger rounded-pill">
+                        {dealItem.quantity}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -125,8 +113,8 @@ const Deal = ({ deal, key }) => {
 };
 
 const ShopPage = () => {
-  const { items, fetchItems } = useItem();
-  const { deals, fetchDeals } = useDeal();
+  const { items, fetchItems, itemLoading } = useItem();
+  const { deals, fetchDeals, dealLoading } = useDeal();
 
   const [consItems, setConsItems] = useState({});
   const [consDeals, setConsDeals] = useState({});
@@ -224,127 +212,113 @@ const ShopPage = () => {
               </li>
             </ul>
           </div>
-          {activeTab == "items" && (
-            Object.keys(consItems).length > 0 ? 
-            <div className="row g-5">
-              <ProductSidebar
-                activeTab={activeTab}
-                item={consItems}
-                filter={addFilter}
-                selectedCategoryProp={selectedCategory}
-                priceValue={priceFilter}
-              />
-              <div className="col-xl-9 col-lg-8 order-1 order-md-2">
-                {/* <ProductTopBar mb0={true} /> */}
-                <div className="row gap-3">
-                  {Object.keys(consItems)
-                    .filter((category) =>
-                      selectedCategory ? selectedCategory === category : true
-                    )
-                    .map((category) => {
-                      const filteredItems = consItems[category].filter(
-                        (item) =>
-                          item.basePrice > priceFilter[0] &&
-                          item.basePrice < priceFilter[1]
-                      );
+          {activeTab == "items" &&
+            (Object.keys(consItems).length > 0 ? (
+              <div className="row g-5">
+                <ProductSidebar
+                  activeTab={activeTab}
+                  item={consItems}
+                  filter={addFilter}
+                  selectedCategoryProp={selectedCategory}
+                  priceValue={priceFilter}
+                />
+                <div className="col-xl-9 col-lg-8 order-1 order-md-2">
+                  {/* <ProductTopBar mb0={true} /> */}
+                  <div className="row gap-3">
+                    {Object.keys(consItems)
+                      .filter((category) =>
+                        selectedCategory ? selectedCategory === category : true
+                      )
+                      .map((category) => {
+                        const filteredItems = consItems[category].filter(
+                          (item) =>
+                            item.basePrice > priceFilter[0] &&
+                            item.basePrice < priceFilter[1]
+                        );
 
-                      return (
-                        <div key={category}>
-                          <h3>{category}</h3>
-                          <div className="row d-flex">
-                            {filteredItems.length > 0 ? (
-                              filteredItems.map((item) => (
-                                <Item key={item.id} item={item} />
-                              ))
-                            ) : (
-                              <h4 className="mt-3 fw-normal">No Items</h4>
-                            )}
+                        return (
+                          <div key={category}>
+                            <h3>{category}</h3>
+                            <div className="row d-flex">
+                              {filteredItems.length > 0 ? (
+                                filteredItems.map((item) => (
+                                  <Item key={item.id} item={item} />
+                                ))
+                              ) : (
+                                <h4 className="mt-3 fw-normal">No Items</h4>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
-            </div> : <p className="d-flex justify-content-center align-items-center">No Items</p>
-          )}
+            ) : (
+              <p className="d-flex justify-content-center align-items-center">
+                {itemLoading ? (
+                  <div className="spinner-border text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  "No Items"
+                )}
+              </p>
+            ))}
 
-          {activeTab == "deals" && (
-            Object.keys(consDeals).length > 0 ?
-            <div className="row g-5">
-              <ProductSidebar
-                activeTab={activeTab}
-                item={consDeals}
-                filter={addFilter}
-                selectedCategoryProp={selectedCategory}
-                priceValue={priceFilter}
-              />
-              <div className="col-xl-9 col-lg-8 order-1 order-md-2">
-                {/* <ProductTopBar mb0={true} /> */}
-                <div className="row gap-3">
-                  {Object.keys(consDeals)
-                    .filter((category) =>
-                      selectedCategory ? selectedCategory === category : true
-                    )
-                    .map((category, index) => {
-                      const filteredItems = consDeals[category].filter(
-                        (item) =>
-                          item.basePrice > priceFilter[0] &&
-                          item.basePrice < priceFilter[1]
-                      );
+          {activeTab == "deals" &&
+            (Object.keys(consDeals).length > 0 ? (
+              <div className="row g-5">
+                <ProductSidebar
+                  activeTab={activeTab}
+                  item={consDeals}
+                  filter={addFilter}
+                  selectedCategoryProp={selectedCategory}
+                  priceValue={priceFilter}
+                />
+                <div className="col-xl-9 col-lg-8 order-1 order-md-2">
+                  {/* <ProductTopBar mb0={true} /> */}
+                  <div className="row gap-3">
+                    {Object.keys(consDeals)
+                      .filter((category) =>
+                        selectedCategory ? selectedCategory === category : true
+                      )
+                      .map((category, index) => {
+                        const filteredItems = consDeals[category].filter(
+                          (item) =>
+                            item.basePrice > priceFilter[0] &&
+                            item.basePrice < priceFilter[1]
+                        );
 
-                      return (
-                        <div key={index}>
-                          <h3>{category}</h3>
-                          <div className="row d-flex">
-                            {filteredItems.length > 0 ? (
-                              filteredItems.map((item, index) => (
-                                <Deal key={index} deal={item} />
-                              ))
-                            ) : (
-                              <h4 className="mt-3 fw-normal">No Items</h4>
-                            )}
+                        return (
+                          <div key={index}>
+                            <h3>{category}</h3>
+                            <div className="row d-flex">
+                              {filteredItems.length > 0 ? (
+                                filteredItems.map((item, index) => (
+                                  <Deal key={index} deal={item} />
+                                ))
+                              ) : (
+                                <h4 className="mt-3 fw-normal">No Items</h4>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
-            </div> : <p className="d-flex justify-content-center align-items-center">No Deals</p>
-          )}
-          {/* <div className="page-nav-wrap mt-5 text-center">
-                <ul>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      <i className="fal fa-long-arrow-left" />
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      4
-                    </a>
-                  </li>
-                  <li>
-                    <a className="page-numbers" href="#">
-                      <i className="fal fa-long-arrow-right" />
-                    </a>
-                  </li>
-                </ul>
-              </div> */}
+            ) : (
+              <p className="d-flex justify-content-center align-items-center">
+                {dealLoading ? (
+                  <div className="spinner-border text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  "No Deals"
+                )}
+              </p>
+            ))}
         </div>
       </section>
       <Cta />

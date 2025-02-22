@@ -193,7 +193,7 @@ const OrderPage = () => {
                   <strong>
                     {searchParams
                       .get("orderId")
-                      .substring(0, 6)
+                      ?.substring(0, 6)
                       .toLocaleUpperCase()}
                   </strong>{" "}
                   is confirmed! Get ready for a <strong>crunch-tastic</strong>{" "}

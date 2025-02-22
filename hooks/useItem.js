@@ -23,8 +23,10 @@ const useItem = () => {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const [item, setItem] = useState(undefined);
+  const [itemLoading, setItemLoading] = useState(false);
 
   const fetchItems = () => {
+    setItemLoading(true);
     axios.get(base_url + "items").then((res) => {
       setItems(
         res.data.map((item) => {
@@ -34,7 +36,8 @@ const useItem = () => {
           return { ...item, basePrice: basePrice, category: categoryMapper(item.category) };
         })
       );
-    });
+      setItemLoading(false);
+    }).catch(_ => setItemLoading(false));
   };
 
   const fetchCategories = () => {
@@ -61,7 +64,7 @@ const useItem = () => {
     }).catch(_ => {setItem("errored")});
   };
 
-  return { items, fetchItems, categories, fetchCategories, fetchItem, item };
+  return { items, fetchItems, categories, fetchCategories, fetchItem, item, itemLoading };
 };
 
 export default useItem;

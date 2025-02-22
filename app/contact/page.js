@@ -43,7 +43,7 @@ const page = () => {
                   } text-center`}
                 >
                   <div className="icon">
-                    <img src={`assets/img/icon/${item.icon}`} alt="icon-img" />
+                    <img src={`/assets/img/icon/${item.icon}`} alt="icon-img" />
                   </div>
                   <div className="content">
                     <h3>{item.title}</h3>
@@ -59,12 +59,12 @@ const page = () => {
       <section className="contact-section section-padding pt-0 section-bg">
         <div className="container">
           <div className="contact-area">
-            <div className="row justify-content-between">
-              <div className="col-xl-6 col-lg-6">
+            <div className="row">
+              <div className="flex justify-center">
                 <div className="map-content-area">
                   <h3 className="wow fadeInUp" data-wow-delay=".3s">
                     {" "}
-                    Get in touch
+                    Where to Find Us
                   </h3>
                   {/*<p className="wow fadeInUp" data-wow-delay=".5s">
                     Lorem ipsum dolor sit amet consectetur adipiscing elit
@@ -84,7 +84,7 @@ const page = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-xl-5 col-lg-5 mt-5 mt-lg-0">
+              {/* <div className="col-xl-5 col-lg-5 mt-5 mt-lg-0">
                 <div className="contact-form-items">
                   <div className="contact-title">
                     <h3 className="wow fadeInUp" data-wow-delay=".3s">
@@ -161,7 +161,7 @@ const page = () => {
                     </div>
                   </form>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

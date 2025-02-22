@@ -25,11 +25,15 @@ const useDeal = () => {
   const [deals, setDeals] = useState([]);
   const [dealCategories, setDealCategories] = useState([]);
   const [deal, setDeal] = useState(undefined);
+  const [dealLoading, setDealLoading] = useState(false);
+
 
   const fetchDeals = () => {
+    setDealLoading(true);
     axios.get(base_url + "deals").then((res) => {
       setDeals(res.data.map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
-    });
+      setDealLoading(false);
+    }).catch(_ => setDealLoading(false));
   };
 
   const fetchCategories = () => {
@@ -60,6 +64,7 @@ const useDeal = () => {
     fetchCategories,
     fetchDeal,
     deal,
+    dealLoading
   };
 };
 

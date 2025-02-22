@@ -22,24 +22,25 @@ const Footer1 = () => {
       </div>
       <div className="container ">
         <div className="footer-widgets-wrapper ">
-          <div className="flex-row d-flex justify-content-evenly">
+          <div className="flex-row d-flex justify-content-evenly gap-3">
             <div className="wow fadeInUp" data-wow-delay=".2s">
               <div className="single-footer-widget">
                 <div className="widget-head">
                   <Link href="/">
-                    {/* <img src="assets/img/logo/logo.svg" alt="logo-img" /> */}
-                    <h3>classicfry</h3>
+                    <img width={'150px'} src="/assets/img/logo/logo.png" alt="logo-img" />
+                    {/* <h3>classicfry</h3> */}
                   </Link>
                 </div>
                 <div className="footer-content">
                   <p>
-                    We believe you would enjoy tasting <br />
-                    our crispy chickens
+                    Savor the crunch—our crispy chicken is made to delight!
                   </p>
-                  <span>Any additional queries</span> <br />
+                  <p className="mt-2">
+                    Contact Us <br/>
                   <a href="mailto:contact@classicfry.co.uk" className="link">
                     contact@classicfry.co.uk
                   </a>
+                  </p> 
                   <div className="social-icon d-flex align-items-center">
                     <a href="#">
                       <i className="fab fa-facebook-f" />
@@ -57,62 +58,8 @@ const Footer1 = () => {
                 </div>
               </div>
             </div>
-            {/* <div
-              className="col-xl-2 ps-lg-5 col-sm-6 col-md-3 col-lg-3 wow fadeInUp"
-              data-wow-delay=".4s"
-            >
-              <div className="single-footer-widget">
-                <div className="widget-head">
-                  <h4>Quick Links</h4>
-                </div>
-                <ul className="list-items">
-                  <li>
-                    <Link href="/about">Services</Link>
-                  </li>
-                  <li>
-                    <Link href="/about">About company</Link>
-                  </li>
-                  <li>
-                    <Link href="/news-details">latest news</Link>
-                  </li>
-                  <li>
-                    <Link href="/team">team member</Link>
-                  </li>
-                  <li>
-                    <Link href="/testimonial">testimonials</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div
-              className="col-xl-2 ps-lg-4 col-sm-6 col-md-3 col-lg-3 wow fadeInUp"
-              data-wow-delay=".6s"
-            >
-              <div className="single-footer-widget">
-                <div className="widget-head">
-                  <h4>My account</h4>
-                </div>
-                <ul className="list-items">
-                  <li>
-                    <Link href="/shop-single">My Profile</Link>
-                  </li>
-                  <li>
-                    <Link href="/shop-single">My Order History</Link>
-                  </li>
-                  <li>
-                    <Link href="/shop-single">My Wish List</Link>
-                  </li>
-                  <li>
-                    <Link href="/shop-single">Order Tracking</Link>
-                  </li>
-                  <li>
-                    <Link href="/shop-cart">Shopping Cart</Link>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
             <div className="wow fadeInUp" data-wow-delay=".8s">
-              <div className="single-footer-widget">
+              <div className="single-footer-widget ">
                 <div className="">
                   <h4>Address:</h4>
                 </div>
@@ -127,33 +74,6 @@ const Footer1 = () => {
                 </div>
               </div>
             </div>
-            {/* <div
-              className="col-xl-3 ps-xl-5 col-sm-6 col-md-6 col-lg-4 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="single-footer-widget">
-                <div className="widget-head">
-                  <h4>Install app</h4>
-                </div>
-                <div className="footer-apps-items">
-                  <h5>From App Store or Google Play</h5>
-                  <div className="apps-image d-flex align-items-center">
-                    <a href="#">
-                      <img src="assets/img/app-store.png" alt="store-img" />
-                    </a>
-                    <a href="#">
-                      <img src="assets/img/google-play.png" alt="store-img" />
-                    </a>
-                  </div>
-                  <div className="support-text">
-                    <h5>24/7 Support center</h5>
-                    <h3>
-                      <a href="tel:+1718-904-4450">+1718-904-4450</a>
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
