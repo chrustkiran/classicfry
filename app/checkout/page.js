@@ -163,8 +163,8 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
           );
         });
 
-      if (confRes?.order)
-        alert("Payment successful! Your order is being processed.");
+      // if (confRes?.order)
+      //   alert("Payment successful! Your order is being processed.");
     }
   };
 
