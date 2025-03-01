@@ -231,20 +231,10 @@ const Sidebar = ({ toggle, setToggle }) => {
                   </li>
                   <li className="d-flex align-items-center">
                     <div className="offcanvas__contact-icon mr-15">
-                      <i className="fal fa-clock" />
-                    </div>
-                    <div className="offcanvas__contact-text">
-                      <a target="_blank" href="#">
-                        Mod-friday, 09am -05pm
-                      </a>
-                    </div>
-                  </li>
-                  <li className="d-flex align-items-center">
-                    <div className="offcanvas__contact-icon mr-15">
                       <i className="far fa-phone" />
                     </div>
                     <div className="offcanvas__contact-text">
-                      <a href="tel:+11002345909">+11002345909</a>
+                      <a href="tel:07477427927">07477427927</a>
                     </div>
                   </li>
                 </ul>
