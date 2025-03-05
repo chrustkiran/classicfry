@@ -5142,6 +5142,7 @@ input.main-search-input::placeholder {
 .food-icon-wrapper .single-food-icon .content h4 {
   color: var(--white);
   margin-bottom: 10px;
+  font-size: 15px;
 }
 .food-icon-wrapper .single-food-icon .content p {
   color: var(--white);
@@ -11677,4 +11678,11 @@ p.order-confirm {
 
 .checkout-toast {
   background-color: red;
+}
+
+.delivery-detail label {
+  color: var(--header);
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 500;
 }

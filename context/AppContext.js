@@ -27,7 +27,12 @@ export const AppProvider = ({ children }) => {
   };
 
   const [cart, setCart] = useState(getCartFromLocalStorage);
+
+  //These fields are for passing infor to checkout page from shopcart
   const [deliveryMethod, setDeliveryMethod] = useState(undefined);
+  const [selectedSuburb, setSelectedSuburb] = useState(null);
+  const [address, setAddress] = useState("");
+  const [additionalInstructions, setAdditionalInstructions] = useState("");
 
   const findIndexByItem = (itemId, size) => {
     return cart.findIndex(
@@ -168,6 +173,12 @@ export const AppProvider = ({ children }) => {
     getPortionSize,
     deliveryMethod,
     setDeliveryMethod,
+    selectedSuburb,
+    setSelectedSuburb,
+    address,
+    setAddress,
+    additionalInstructions,
+    setAdditionalInstructions,
   };
 
   return (

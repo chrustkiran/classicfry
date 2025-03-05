@@ -33,7 +33,7 @@ const ParentPayment = ({
   handlePaymentIntent,
   handleSetStripeErr,
   cart,
-  clearItems
+  clearItems,
 }) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
@@ -97,7 +97,7 @@ const ParentPayment = ({
             amount={amount}
             handleSetStripeErr={handleSetStripeErr}
             orderId={orderId}
-            clearItems = {clearItems}
+            clearItems={clearItems}
           />
         </Elements>
       )}
@@ -109,7 +109,7 @@ const ParentPayment = ({
 const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const router  = useRouter();
+  const router = useRouter();
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -170,41 +170,45 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
 
   return (
     <div className="p-4">
-      {(!isLoading && stripe && elements) ? <form onSubmit={handleSubmit}>
-        <PaymentElement
-          options={{
-            layout: "accordion",
-          }}
-        ></PaymentElement>
-        <button
-          disabled={isLoading || !stripe || !elements}
-          id="submit"
-          className="mt-3"
-          style={{
-            background: "#ffb936",
-            fontFamily: "Arial, sans-serif",
-            color: "#ffffff",
-            borderRadius: "4px",
-            border: 0,
-            padding: "12px 16px",
-            fontSize: "16px",
-            fontWeight: 600,
-            cursor: "PointerEvent",
-            display: "block",
-            transition: "all 0.2s ease",
-            boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
-            width: "100%",
-          }}
-        >
-          <span id="button-text">
-            {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : (
-              `Pay £${amount} now`
-            )}
-          </span>
-        </button>
-      </form> :  <div className="spinner" id="spinner"></div>}
+      {!isLoading && stripe && elements ? (
+        <form onSubmit={handleSubmit}>
+          <PaymentElement
+            options={{
+              layout: "accordion",
+            }}
+          ></PaymentElement>
+          <button
+            disabled={isLoading || !stripe || !elements}
+            id="submit"
+            className="mt-3"
+            style={{
+              background: "#ffb936",
+              fontFamily: "Arial, sans-serif",
+              color: "#ffffff",
+              borderRadius: "4px",
+              border: 0,
+              padding: "12px 16px",
+              fontSize: "16px",
+              fontWeight: 600,
+              cursor: "PointerEvent",
+              display: "block",
+              transition: "all 0.2s ease",
+              boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
+              width: "100%",
+            }}
+          >
+            <span id="button-text">
+              {isLoading ? (
+                <div className="spinner" id="spinner"></div>
+              ) : (
+                `Pay £${amount} now`
+              )}
+            </span>
+          </button>
+        </form>
+      ) : (
+        <div className="spinner" id="spinner"></div>
+      )}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>Payment successful!</p>}
     </div>
@@ -212,14 +216,23 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
 };
 
 const page = () => {
-  const { getTotalPrice, cart, clearItems, getUser } = useAppContext();
+  const {
+    getTotalPrice,
+    cart,
+    clearItems,
+    getUser,
+    deliveryMethod,
+    selectedSuburb,
+    address,
+    additionalInstructions,
+  } = useAppContext();
   const router = useRouter();
 
   const [amount, setAmount] = useState(0);
 
   const user = getUser();
 
-  const [selectedCash, setSelectedCash] = useState("counter");
+  const [selectedCash, setSelectedCash] = useState(undefined);
 
   const [showError, setShowError] = useState(false);
 
@@ -233,6 +246,8 @@ const page = () => {
       router.back();
     }
   }, []);
+
+  useEffect(() => {deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? setSelectedCash("online") : setSelectedCash("counter")}, [])
 
   const handlePaymentIntent = (paymentIntentId) => {
     setPaymentIntentId(paymentIntentId);
@@ -265,7 +280,7 @@ const page = () => {
         if (!order?.orderId) {
           setShowError(true);
         } else {
-          clearItems()
+          clearItems();
           router.push(`/orders?success=true&orderId=${order.orderId}`);
         }
       })
@@ -296,70 +311,75 @@ const page = () => {
                     <p className="p-4 error-dial">{stripeError}</p>
                   )}
                   {/* Pay at Counter Option */}
-                  <li className="list-group-item">
-                    <div className="custom-control cash-radio custom-radio d-flex gap-3">
-                      <input
-                        type="radio"
-                        id="cashRadioCounter"
-                        name="cashRadio"
-                        className="custom-control-input"
-                        checked={selectedCash === "counter"}
-                        onChange={() => setSelectedCash("counter")}
-                      />
-                      <label
-                        className="custom-control-label"
-                        htmlFor="cashRadioCounter"
-                      >
-                        <i className="fas fa-chalkboard-teacher"></i>
-                        &nbsp;&nbsp; I want to pay at the counter
-                      </label>
-                    </div>
-                    {selectedCash === "counter" && (
-                      <div className="mt-3 p-3 border rounded bg-light">
-                        <p className="mb-0">
-                          You have selected to pay at the counter. Please make
-                          sure to pay <strong>£{amount}</strong> by using card
-                          or cash.
-                        </p>
+
+                  {deliveryMethod === env.DELIVERY_METHOD.PICKUP && (
+                    <li className="list-group-item">
+                      <div className="custom-control cash-radio custom-radio d-flex gap-3">
+                        <input
+                          type="radio"
+                          id="cashRadioCounter"
+                          name="cashRadio"
+                          className="custom-control-input"
+                          checked={selectedCash === "counter"}
+                          onChange={() => setSelectedCash("counter")}
+                        />
+                        <label
+                          className="custom-control-label"
+                          htmlFor="cashRadioCounter"
+                        >
+                          <i className="fas fa-chalkboard-teacher"></i>
+                          &nbsp;&nbsp; I want to pay at the counter
+                        </label>
                       </div>
-                    )}
-                  </li>
+                      {selectedCash === "counter" && (
+                        <div className="mt-3 p-3 border rounded bg-light">
+                          <p className="mb-0">
+                            You have selected to pay at the counter. Please make
+                            sure to pay <strong>£{amount}</strong> by using card
+                            or cash.
+                          </p>
+                        </div>
+                      )}
+                    </li>
+                  )}
 
                   {/* Pay Online Option */}
-                  <li className="list-group-item">
-                    <div className="custom-control cash-radio custom-radio d-flex gap-3">
-                      <input
-                        type="radio"
-                        id="cashRadioOnline"
-                        name="cashRadio"
-                        className="custom-control-input"
-                        checked={selectedCash === "online"}
-                        onChange={() => setSelectedCash("online")}
-                      />
+                  {deliveryMethod === env.DELIVERY_METHOD.PICKUP && (
+                    <li className="list-group-item">
+                      <div className="custom-control cash-radio custom-radio d-flex gap-3">
+                        <input
+                          type="radio"
+                          id="cashRadioOnline"
+                          name="cashRadio"
+                          className="custom-control-input"
+                          checked={selectedCash === "online"}
+                          onChange={() => setSelectedCash("online")}
+                        />
 
-                      <label
-                        className="form-check-label"
-                        htmlFor="cashRadioOnline"
-                      >
-                        <i className="fas fa-computer-classic"></i>&nbsp;&nbsp;
-                        I can pay online
-                      </label>
-                    </div>
-
-                    {/* Expandable Div when "Pay Online" is selected */}
-                    {selectedCash === "online" && (
-                      <div className="mt-3 p-3 border rounded bg-light">
-                        <ParentPayment
-                          amount={amount}
-                          userId={user?.userId}
-                          handlePaymentIntent={handlePaymentIntent}
-                          handleSetStripeErr={handleSetStripeErr}
-                          cart={cart}
-                          clearItems = {clearItems}
-                        ></ParentPayment>
+                        <label
+                          className="form-check-label"
+                          htmlFor="cashRadioOnline"
+                        >
+                          <i className="fas fa-computer-classic"></i>
+                          &nbsp;&nbsp; I can pay online
+                        </label>
                       </div>
-                    )}
-                  </li>
+
+                      {/* Expandable Div when "Pay Online" is selected */}
+                      {selectedCash === "online" && (
+                        <div className="mt-3 p-3 border rounded bg-light">
+                          <ParentPayment
+                            amount={amount}
+                            userId={user?.userId}
+                            handlePaymentIntent={handlePaymentIntent}
+                            handleSetStripeErr={handleSetStripeErr}
+                            cart={cart}
+                            clearItems={clearItems}
+                          ></ParentPayment>
+                        </div>
+                      )}
+                    </li>
+                  )}
 
                   {selectedCash === "counter" && (
                     <button
@@ -385,6 +405,19 @@ const page = () => {
                     >
                       <span id="button-text">Confirm your order</span>
                     </button>
+                  )}
+
+                  {deliveryMethod === env.DELIVERY_METHOD.DELIVERY && (
+                    <div className="mt-3 p-3 border rounded bg-light">
+                      <ParentPayment
+                        amount={amount}
+                        userId={user?.userId}
+                        handlePaymentIntent={handlePaymentIntent}
+                        handleSetStripeErr={handleSetStripeErr}
+                        cart={cart}
+                        clearItems={clearItems}
+                      ></ParentPayment>
+                    </div>
                   )}
                 </ul>
 

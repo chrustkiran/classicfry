@@ -10,30 +10,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Toast } from "react-bootstrap";
 const page = () => {
-  // const [cart, setcart] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Deluxe Burger",
-  //     price: 12.99,
-  //     quantity: 2,
-  //     image: "assets/img/shop-food/s1.png",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Margherita Pizza",
-  //     price: 14.99,
-  //     quantity: 1,
-  //     image: "assets/img/shop-food/s2.png",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Caesar Salad",
-  //     price: 8.99,
-  //     quantity: 1,
-  //     image: "assets/img/shop-food/s3.png",
-  //   },
-  // ]);
-
   const {
     cart,
     decreaseQuantity,
@@ -46,6 +22,12 @@ const page = () => {
     getPortionSize,
     deliveryMethod,
     setDeliveryMethod,
+    additionalInstructions,
+    setAdditionalInstructions,
+    address,
+    setAddress,
+    selectedSuburb,
+    setSelectedSuburb,
   } = useAppContext();
 
   const calculateCartTotal = () => {
@@ -75,21 +57,15 @@ const page = () => {
 
   const [suburb, setSuburb] = useState("");
   const [filteredSuburbs, setFilteredSuburbs] = useState([]);
-  const [additionalInstructions, setAdditionalInstructions] = useState("");
-  const [address, setAddress] = useState("");
-  const [error, setError] = useState(false);
 
-  const validSuburbs = [
-    { name: "Sydney", postalCode: "2000" },
-    { name: "Melbourne", postalCode: "3000" },
-    { name: "Brisbane", postalCode: "4000" },
-    { name: "Perth", postalCode: "6000" },
-  ];
+  const validSuburbs = env.VALID_SUBURBS;
 
   const [errors, setErrors] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
+    suburb: "",
+    address: "",
   });
 
   const handleInputChange = (e) => {
@@ -107,14 +83,12 @@ const page = () => {
   const handleSuburbChange = (e) => {
     const input = e.target.value;
     setSuburb(input);
-    suburbPostalCodes = validSuburbs.map(v => `${v.name} (${v.postalCode})`)
-
     // Filter suburbs based on name or postal code
     const matches = validSuburbs.filter(
       (s) =>
-        input && !suburbPostalCodes.includes(input) && 
+        input &&
         (s.name.toLowerCase().includes(input.toLowerCase()) ||
-          s.postalCode.includes(input))
+          s.postalCode.toLowerCase().includes(input.toLowerCase()))
     );
 
     setFilteredSuburbs(matches);
@@ -145,6 +119,19 @@ const page = () => {
       isValid = false;
     }
 
+    if (!deliveryMethod) {
+      isValid = false;
+    }
+
+    if (deliveryMethod === env.DELIVERY_METHOD.DELIVERY && !address) {
+      newErrors.address = "* Address is required";
+      isValid = false;
+    }
+    if (deliveryMethod === env.DELIVERY_METHOD.DELIVERY && !selectedSuburb) {
+      newErrors.suburb = "* You must select a Town";
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -163,8 +150,10 @@ const page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setCheckoutWait(true);
     if (validateForm()) {
+      setCheckoutWait(true);
+      //TODO :: remove this
+      route.push("/checkout");
       await UserService.createUser({
         ...formData,
         isGuestUser: true,
@@ -318,7 +307,7 @@ const page = () => {
             <div className="d-flex flex-column flex-md-row justify-content-end gap-2">
               <div className="col-md-6 col-sm-12">
                 <div className="cart-pragh-box">
-                  <form className="cart-graph shadow-sm">
+                  <form className="cart-graph shadow-sm delivery-detail">
                     <h4>Delivery Details</h4>
                     <div
                       className={` p-2 custom-control ${
@@ -344,8 +333,12 @@ const page = () => {
                               id="deliveryOption"
                               name="deliveryMethod"
                               className="custom-control-input"
-                              checked={deliveryMethod === "delivery"}
-                              onChange={() => setDeliveryMethod("delivery")}
+                              checked={
+                                deliveryMethod === env.DELIVERY_METHOD.DELIVERY
+                              }
+                              onChange={() =>
+                                setDeliveryMethod(env.DELIVERY_METHOD.DELIVERY)
+                              }
                             />
                             <label
                               className="custom-control-label"
@@ -365,8 +358,12 @@ const page = () => {
                               id="pickupOption"
                               name="deliveryMethod"
                               className="custom-control-input"
-                              checked={deliveryMethod === "pickup"}
-                              onChange={() => setDeliveryMethod("pickup")}
+                              checked={
+                                deliveryMethod === env.DELIVERY_METHOD.PICKUP
+                              }
+                              onChange={() =>
+                                setDeliveryMethod(env.DELIVERY_METHOD.PICKUP)
+                              }
                             />
                             <label
                               className="custom-control-label"
@@ -381,15 +378,15 @@ const page = () => {
                     </div>
 
                     {/* Suburb Input (Only for Delivery) */}
-                    {deliveryMethod === "delivery" && (
+                    {deliveryMethod === env.DELIVERY_METHOD.DELIVERY && (
                       <div className="mt-1 position-relative">
-                        <label>Suburb</label>
+                        <label>Town</label>
                         <input
                           type="text"
                           className="form-control"
                           value={suburb}
                           onChange={handleSuburbChange}
-                          placeholder="Enter suburb name or postal code"
+                          placeholder="Enter a town name or postal code"
                         />
                         {/* Autocomplete Suggestions */}
                         {filteredSuburbs.length > 0 && (
@@ -406,6 +403,9 @@ const page = () => {
                             ))}
                           </ul>
                         )}
+                        {errors.suburb && (
+                          <small className="text-danger">{errors.suburb}</small>
+                        )}
                         <div
                           className="alert alert-warning d-flex align-items-center mt-1"
                           style={{ zIndex: "-1000" }}
@@ -415,16 +415,16 @@ const page = () => {
                             className="fst-italic"
                             style={{ fontSize: "16px" }}
                           >
-                            Suburb not on the list? That means we can’t reach
-                            you! 🚛 <br></br> Sadly, we can’t deliver, but
-                            pickup is always an option! 😉
+                            Town not on the list? That means we can’t reach you!
+                            🚛 <br></br> Sadly, we can’t deliver, but pickup is
+                            always an option! 😉
                           </span>
                         </div>
                       </div>
                     )}
 
                     {/* Address Input (Only if Suburb is Valid) */}
-                    {deliveryMethod === "delivery" &&
+                    {deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                       validSuburbs
                         .map((v) => `${v.name} (${v.postalCode})`)
                         .includes(suburb) && (
@@ -437,11 +437,16 @@ const page = () => {
                             onChange={(e) => setAddress(e.target.value)}
                             placeholder="Enter address"
                           />
+                          {errors.address && (
+                            <small className="text-danger">
+                              {errors.address}
+                            </small>
+                          )}
                         </div>
                       )}
 
-                    {(deliveryMethod === "pickup" ||
-                      (deliveryMethod === "delivery" &&
+                    {(deliveryMethod === env.DELIVERY_METHOD.PICKUP ||
+                      (deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                         validSuburbs
                           .map((v) => `${v.name} (${v.postalCode})`)
                           .includes(suburb))) && (
@@ -452,7 +457,7 @@ const page = () => {
                           rows="3"
                           value={additionalInstructions}
                           onChange={handleAdditionalInstructionsChange}
-                          placeholder="Enter any special delivery instructions or requests"
+                          placeholder="Enter any special delivery instructions or requests (This is an optional field)"
                         ></textarea>
                       </div>
                     )}
@@ -560,14 +565,16 @@ const page = () => {
                         className="theme-btn d-flex justify-content-between align-items-center w-100"
                       >
                         {checkoutWait ? (
-                          <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
+                          <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
                           </div>
                         ) : (
                           "Checkout"
                         )}
                         <span>£{calculateCartTotal().toFixed(2)}</span>
                       </button>
+                      {/* this is just to make the heights the smae */}
+                      <br></br>
                     </div>
                   </form>
                 </div>
