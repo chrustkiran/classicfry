@@ -20,9 +20,9 @@ const Item = ({ item, key }) => {
           <img src={item.image} alt="shop-img" />
         </div>
         <div className="shop-content">
-          <div className="star pb-4">
+          {/* <div className="star pb-4">
             <span>{item.tag.replace("_", " ")}</span>
-          </div>
+          </div> */}
           <h3>
             <Link href="shop-single">{item.name}</Link>
           </h3>
@@ -59,9 +59,9 @@ const Deal = ({ deal, key }) => {
         </div>
         <div className="d-flex">
           <div className="shop-content col-6">
-            <div className="star pb-4">
+            {/* <div className="star pb-4">
               <span>{deal.tag.replace("_", " ")}</span>
-            </div>
+            </div> */}
             <h3>
               <Link href="shop-single">{deal.name}</Link>
             </h3>

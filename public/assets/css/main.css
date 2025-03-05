@@ -389,88 +389,107 @@ h6 {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
-
 h1 {
-  font-size: 95px;
-  font-weight: 600;
-  line-height: 100%;
-}
-@media (max-width: 1399px) {
-  h1 {
-    font-size: 124px;
-  }
-}
-@media (max-width: 1199px) {
-  h1 {
-    font-size: 102px;
-  }
-}
-@media (max-width: 991px) {
-  h1 {
-    font-size: 64px;
-  }
-}
-@media (max-width: 575px) {
-  h1 {
-    font-size: 48px;
-  }
-}
-
-h2 {
-  font-size: 66px;
-  line-height: 110%;
+  font-size: 58px;
   font-weight: 700;
+  line-height: 110%;
 }
 @media (max-width: 1399px) {
-  h2 {
-    font-size: 54px;
+  h1 {
+    font-size: 52px;
   }
 }
 @media (max-width: 1199px) {
-  h2 {
-    font-size: 50px;
+  h1 {
+    font-size: 46px;
   }
 }
 @media (max-width: 991px) {
-  h2 {
+  h1 {
     font-size: 38px;
   }
 }
 @media (max-width: 575px) {
+  h1 {
+    font-size: 32px;
+  }
+}
+
+h2 {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 110%;
+}
+@media (max-width: 991px) {
   h2 {
-    font-size: 28px;
+    font-size: 34px;
+  }
+}
+@media (max-width: 575px) {
+  h2 {
+    font-size: 26px;
   }
 }
 
 h3 {
-  font-size: 40px;
+  font-size: 35px;
   font-weight: 700;
 }
-@media (max-width: 1399px) {
+@media (max-width: 991px) {
   h3 {
-    font-size: 24px;
+    font-size: 26px;
   }
 }
-@media (max-width: 991px) {
+@media (max-width: 575px) {
   h3 {
     font-size: 20px;
   }
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 28px;
   font-weight: 600;
+}
+@media (max-width: 991px) {
+  h4 {
+    font-size: 22px;
+  }
+}
+@media (max-width: 575px) {
+  h4 {
+    font-size: 18px;
+  }
 }
 
 h5 {
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 600;
+}
+@media (max-width: 991px) {
+  h5 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 575px) {
+  h5 {
+    font-size: 16px;
+  }
 }
 
 h6 {
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 145%;
+}
+@media (max-width: 991px) {
+  h6 {
+    font-size: 12px;
+  }
+}
+@media (max-width: 575px) {
+  h6 {
+    font-size: 10px;
+  }
 }
 
 a {
@@ -5680,7 +5699,6 @@ input.main-search-input::placeholder {
 }
 .main-cart-wrapper .cart-wrapper {
   border-radius: 5px;
-  padding: 40px 40px;
 }
 .main-cart-wrapper .cart-wrapper .cart-items-wrapper table {
   width: 100%;
@@ -11650,4 +11668,13 @@ p.order-confirm {
 
 .cart-toast {
   background-color: green;
+}
+
+.privacy-terms a {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.checkout-toast {
+  background-color: red;
 }

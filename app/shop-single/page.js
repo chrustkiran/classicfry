@@ -217,27 +217,6 @@ const page = () => {
                           )}
                         </span>
                       )}
-                      {/* <a href="#">
-                      {" "}
-                      <i className="fas fa-star" />
-                    </a>
-                    <a href="#">
-                      <i className="fas fa-star" />
-                    </a>
-                    <a href="#">
-                      {" "}
-                      <i className="fas fa-star" />
-                    </a>
-                    <a href="#">
-                      <i className="fas fa-star" />
-                    </a>
-                    <a href="#" className="color-bg">
-                      {" "}
-                      <i className="fas fa-star" />
-                    </a>
-                    <a href="#" className="text-color">
-                      ( 2 Reviews )
-                    </a> */}
                     </div>
                     <h3 className="pb-3 responsive-cnt">
                       {fetchedItem.name || fetchedDeal.name}
@@ -257,11 +236,9 @@ const page = () => {
                     </p>
                     <div className="price-list d-flex align-items-center responsive-cnt">
                       <span>£{itemPrice}</span>
-                      {/* <del>$4,600.00</del> */}
                     </div>
                     <div className="d-flex mt-4 size-btn-container">
                       {fetchedItem.portionPrices &&
-                        // fetchedItem.portionPrices.length > 0 &&
                         fetchedItem.portionPrices.map((size) => (
                           <button
                             onClick={() => selectSize(size)}
@@ -350,12 +327,6 @@ const page = () => {
                         </button>
                       </div>
                     </div>
-                    {/* <h6 className="shop-text">
-                    GROUND DELIVERY SURCHARGE: <span>$180.00</span>
-                  </h6> */}
-                    {/* <h6 className="details-info">
-                    <Link href={"#"}>SKU:</Link> <a href="shop-single">N/A</a>
-                  </h6> */}
                     <div className="responsive-cnt">
                       <div className="">
                         <span>Category:</span>{" "}
@@ -373,9 +344,6 @@ const page = () => {
                         </Link>
                       </div>
                     </div>
-                    {/* <h6 className="details-info">
-                    <span>Tags:</span> <Link href="#">{fetchItem.tag}</Link>
-                  </h6> */}
                   </div>
                 </div>
               </div>

@@ -1,4 +1,7 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
 
 const Footer = ({ footer }) => {
   switch (footer) {
@@ -12,6 +15,11 @@ const Footer = ({ footer }) => {
   }
 };
 const Footer1 = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <footer className="footer-section fix section-bg">
       <div className="burger-shape">
@@ -27,20 +35,22 @@ const Footer1 = () => {
               <div className="single-footer-widget">
                 <div className="widget-head">
                   <Link href="/">
-                    <img width={'150px'} src="/assets/img/logo/logo.png" alt="logo-img" />
+                    <img
+                      width={"150px"}
+                      src="/assets/img/logo/logo.png"
+                      alt="logo-img"
+                    />
                     {/* <h3>classicfry</h3> */}
                   </Link>
                 </div>
                 <div className="footer-content">
-                  <p>
-                    Savor the crunch—our crispy chicken is made to delight!
-                  </p>
+                  <p>Savor the crunch—our crispy chicken is made to delight!</p>
                   <p className="mt-2">
-                    Contact Us <br/>
-                  <a href="mailto:contact@classicfry.co.uk" className="link">
-                    contact@classicfry.co.uk
-                  </a>
-                  </p> 
+                    Contact Us <br />
+                    <a href="mailto:contact@classicfry.co.uk" className="link">
+                      contact@classicfry.co.uk
+                    </a>
+                  </p>
                   <div className="social-icon d-flex align-items-center">
                     <a href="#">
                       <i className="fab fa-facebook-f" />
@@ -71,9 +81,207 @@ const Footer1 = () => {
                     <h4>Mobile:</h4>
                   </div>
                   <h6 className="mt-2">07477427927</h6>
+                  <div className="mt-5 privacy-terms">
+                    <a
+                      id="privacy-terms"
+                      href="#privacy-terms"
+                      onClick={handleShow}
+                    >
+                      Privacy Policy & Terms and Conditions
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <h5 style={{ fontSize: "12px" }}>
+                  Privacy Policy & Terms and Conditions
+                </h5>
+              </Modal.Header>
+              <Modal.Body>
+                <p style={{ fontSize: "12px" }} className="text-dark">
+                  <h5 className="mb-2">Privacy Policy</h5>
+                  <p>
+                    <strong>Effective Date:</strong> 15.03.2025
+                  </p>
+                  <p>
+                    At Classic Fry, we are committed to protecting your privacy.
+                    This Privacy Policy outlines how we collect, use, and
+                    safeguard your personal information when you visit our
+                    website (
+                    <a href="https://classicfry.co.uk">classicfry.co.uk</a>) or
+                    use our services.
+                  </p>
+
+                  <strong>1. Information We Collect</strong>
+                  <ul>
+                    <li>Name, email address, and phone number</li>
+                    <li>Billing and delivery address</li>
+                    <li>
+                      Payment details (processed securely through third-party
+                      providers)
+                    </li>
+                    <li>Order history and preferences</li>
+                    <li>IP address and browser details</li>
+                    <li>Any other information you provide voluntarily</li>
+                  </ul>
+
+                  <strong>2. How We Use Your Information</strong>
+                  <ul>
+                    <li>Process and fulfill your orders</li>
+                    <li>Improve our website and services</li>
+                    <li>Provide customer support</li>
+                    <li>Send promotional offers (if consent is given)</li>
+                    <li>Comply with legal obligations</li>
+                  </ul>
+
+                  <strong>3. Data Protection & Security</strong>
+                  <p>
+                    We implement strict security measures to protect your data
+                    from unauthorized access, alteration, or disclosure. Payment
+                    details are encrypted and processed through secure
+                    third-party gateways.
+                  </p>
+
+                  <strong>4. Sharing Your Information</strong>
+                  <p>
+                    We do not sell or rent your data. However, we may share it
+                    with:
+                  </p>
+                  <ul>
+                    <li>Payment processors for transaction security</li>
+                    <li>Delivery services to fulfill orders</li>
+                    <li>Legal authorities if required by law</li>
+                  </ul>
+
+                  <strong>5. Your Rights</strong>
+                  <ul>
+                    <li>Access, update, or delete your personal data</li>
+                    <li>Opt-out of marketing communications</li>
+                    <li>Request data portability</li>
+                  </ul>
+                  <p>
+                    For requests, please contact us at{" "}
+                    <a href="mailto:contact@classicfry.co.uk">
+                      contact@classicfry.co.uk
+                    </a>
+                    .
+                  </p>
+
+                  <strong>6. Cookies</strong>
+                  <p>
+                    We use cookies to enhance user experience. You can manage
+                    cookie settings in your browser.
+                  </p>
+
+                  <strong>7. Changes to This Policy</strong>
+                  <p>
+                    We may update this policy from time to time. The latest
+                    version will always be available on our website.
+                  </p>
+
+                  <h5 className="mt-4 mb-2">Terms and Conditions</h5>
+                  <p>
+                    <strong>Effective Date:</strong> 15.03.2025
+                  </p>
+                  <p>
+                    Welcome to Classic Fry! By using our website (
+                    <a href="https://classicfry.co.uk">classicfry.co.uk</a>) and
+                    services, you agree to the following terms and conditions:
+                  </p>
+
+                  <strong>1. General Use</strong>
+                  <ul>
+                    <li>
+                      By placing an order, you confirm that you are at least 18
+                      years old or have parental consent.
+                    </li>
+                    <li>
+                      We reserve the right to refuse service at our discretion.
+                    </li>
+                  </ul>
+
+                  <strong>2. Orders & Payments</strong>
+                  <ul>
+                    <li>
+                      All prices listed are in GBP and include applicable taxes.
+                    </li>
+                    <li>Orders are confirmed only upon successful payment.</li>
+                    <li>
+                      Payment is processed securely via third-party providers.
+                    </li>
+                  </ul>
+
+                  <strong>3. Delivery & Collection</strong>
+                  <ul>
+                    <li>
+                      Estimated delivery times are provided but not guaranteed.
+                    </li>
+                    <li>Customers must provide accurate address details.</li>
+                    <li>
+                      If you are not available at the time of delivery,
+                      re-delivery charges may apply.
+                    </li>
+                  </ul>
+
+                  <strong>4. Refunds & Cancellations</strong>
+                  <ul>
+                    <li>
+                      Orders can be canceled within 10 minutes of placing them.
+                    </li>
+                    <li>
+                      Refunds are issued only in cases of incorrect or
+                      unsatisfactory orders.
+                    </li>
+                    <li>
+                      Any issues must be reported within 24 hours of order
+                      receipt.
+                    </li>
+                  </ul>
+
+                  <strong>5. User Conduct</strong>
+                  <ul>
+                    <li>Customers must not misuse our website.</li>
+                    <li>
+                      Reviews and comments should be respectful and
+                      non-offensive.
+                    </li>
+                  </ul>
+
+                  <strong>6. Liability & Disclaimer</strong>
+                  <ul>
+                    <li>
+                      Classic Fry is not liable for delays due to unforeseen
+                      circumstances.
+                    </li>
+                    <li>
+                      We are not responsible for any allergic reactions;
+                      customers must review ingredients before ordering.
+                    </li>
+                  </ul>
+
+                  <strong>7. Changes to Terms</strong>
+                  <p>
+                    We reserve the right to update these terms. Continued use of
+                    our website constitutes acceptance of any changes.
+                  </p>
+
+                  <p>
+                    For any queries, please contact us at{" "}
+                    <a href="mailto:contact@classicfry.co.uk">
+                      contact@classicfry.co.uk
+                    </a>
+                    .
+                  </p>
+
+                  <p>
+                    <strong>Thank you for choosing Classic Fry!</strong>
+                  </p>
+                </p>
+              </Modal.Body>
+            </Modal>
           </div>
         </div>
       </div>
