@@ -24,7 +24,14 @@ const Item = ({ item, key }) => {
             <span>{item.tag.replace("_", " ")}</span>
           </div> */}
           <h3>
-            <Link href="shop-single">{item.name}</Link>
+            <Link
+              href={{
+                pathname: "/shop-single",
+                query: { item: item.itemId },
+              }}
+            >
+              {item.name}
+            </Link>
           </h3>
           <p>{item.description}</p>
           <h5>£{item.basePrice}</h5>
@@ -236,12 +243,20 @@ const ShopPage = () => {
                             item.basePrice < priceFilter[1]
                         );
 
+                        const sortedFilteredItems = filteredItems.sort((i1, i2) => {
+                          if (i1.category?.toLowerCase() === 'pizza' && i2.category?.toLowerCase() === 'pizza') {
+                            if (i1.pizza?.isCustomPizza) return 1;
+                            else if (i2.pizza?.isCustomPizza) return -1;
+                          }
+                          return 1;
+                        })
+
                         return (
                           <div key={category}>
                             <h3>{category}</h3>
                             <div className="row d-flex">
-                              {filteredItems.length > 0 ? (
-                                filteredItems.map((item) => (
+                              {sortedFilteredItems.length > 0 ? (
+                                sortedFilteredItems.map((item) => (
                                   <Item key={item.id} item={item} />
                                 ))
                               ) : (

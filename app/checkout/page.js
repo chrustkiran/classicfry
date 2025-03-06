@@ -34,6 +34,7 @@ const ParentPayment = ({
   handleSetStripeErr,
   cart,
   clearItems,
+  checkoutDetails
 }) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
@@ -57,7 +58,8 @@ const ParentPayment = ({
       userId,
       cart,
       env.PAYMENT_TYPE.ONLINE,
-      amount
+      amount,
+      checkoutDetails
     );
     await OrderService.createOrder(postOrderReq)
       .then((order) => {
@@ -244,7 +246,8 @@ const page = () => {
     }
   }, []);
 
-  const deliveryMethod = getCheckoutValuesFromSession().deliveryMethod
+  const checkoutDetails = getCheckoutValuesFromSession();
+  const deliveryMethod = checkoutDetails.deliveryMethod
   useEffect(() => {deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? setSelectedCash("online") : setSelectedCash("counter")}, [])
 
   const handlePaymentIntent = (paymentIntentId) => {
@@ -264,13 +267,15 @@ const page = () => {
     cart,
     totalAmount,
     paymentIntentId,
-    clearItems
+    clearItems,
+    checkoutDetails
   ) => {
     const postOrderReq = new PostOrderRequest(
       userId,
       cart,
       env.PAYMENT_TYPE.COUNTER,
       totalAmount,
+      checkoutDetails,
       paymentIntentId
     );
     await OrderService.createOrder(postOrderReq)
@@ -373,6 +378,7 @@ const page = () => {
                             handleSetStripeErr={handleSetStripeErr}
                             cart={cart}
                             clearItems={clearItems}
+                            checkoutDetails={checkoutDetails}
                           ></ParentPayment>
                         </div>
                       )}
@@ -387,7 +393,8 @@ const page = () => {
                           cart,
                           amount,
                           paymentIntentId,
-                          clearItems
+                          clearItems,
+                          checkoutDetails
                         )
                       }
                       id="submit"
@@ -414,6 +421,7 @@ const page = () => {
                         handleSetStripeErr={handleSetStripeErr}
                         cart={cart}
                         clearItems={clearItems}
+                        checkoutDetails={checkoutDetails}
                       ></ParentPayment>
                     </div>
                   )}

@@ -237,22 +237,68 @@ const page = () => {
                     <div className="price-list d-flex align-items-center responsive-cnt">
                       <span>£{itemPrice}</span>
                     </div>
-                    <div className="d-flex mt-4 size-btn-container">
-                      {fetchedItem.portionPrices &&
-                        fetchedItem.portionPrices.map((size) => (
-                          <button
-                            onClick={() => selectSize(size)}
-                            key={size.portionPriceId}
-                            className={`btn btn-sm rounded-circle me-2 ${
-                              portionSize === size.portionSize
-                                ? "size-btn-selected"
-                                : "size-btn"
-                            }`}
-                            style={{ width: "40px", height: "40px" }}
-                          >
-                            {getPortionSize(size.portionSize)}
-                          </button>
-                        ))}
+                    <div className="d-flex mt-4 flex-column size-btn-container gap-4">
+                      <div>
+                        {fetchedItem.portionPrices &&
+                          fetchedItem.portionPrices.map((size) => (
+                            <button
+                              onClick={() => selectSize(size)}
+                              key={size.portionPriceId}
+                              className={`btn btn-sm rounded-circle me-2 ${
+                                portionSize === size.portionSize
+                                  ? "size-btn-selected"
+                                  : "size-btn"
+                              }`}
+                              style={{ width: "40px", height: "40px" }}
+                            >
+                              {getPortionSize(size.portionSize)}
+                            </button>
+                          ))}
+                      </div>
+                      {fetchedItem.pizzaConfig?.crusts?.length > 0 && (
+                        <div>
+                          <strong className="mb-2">
+                            What crust would you like to have?
+                          </strong>
+                          <br></br>
+                          {fetchedItem.pizzaConfig.crusts.map((crust) => (
+                            <button
+                              onClick={() => selectSize(crust)}
+                              key={crust}
+                              className={`btn btn-sm me-2 ${
+                                portionSize === crust
+                                  ? "size-btn-selected"
+                                  : "size-btn"
+                              }`}
+                              style={{ height: "40px", borderRadius: '50px' }}
+                            >
+                              {crust.replaceAll("_", " ")}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                      {fetchedItem.pizzaConfig?.toppings?.length > 0 && (
+                        <div>
+                          <strong className="mb-2">
+                            What toppings would you like to add?
+                          </strong>
+                          <br></br>
+                          {fetchedItem.pizzaConfig.toppings.map((topping) => (
+                            <button
+                              onClick={() => selectSize(toppings)}
+                              key={topping}
+                              className={`btn btn-sm me-2 ${
+                                portionSize === topping
+                                  ? "size-btn-selected"
+                                  : "size-btn"
+                              }`}
+                              style={{ height: "40px", borderRadius: '50px' }}
+                            >
+                              {topping.replaceAll("_", " ")}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <div className="cart-wrp responsive-cnt">
                       <div className="cart-quantity responsive-cnt responsive-qty">
@@ -301,10 +347,10 @@ const page = () => {
                             <strong className="me-auto">
                               Successfully added to the cart &nbsp;
                               <Link href="/shop-cart">
-                              <i className="far fa-lg fa-drumstick p-2"></i>
-                              <span className="text-dark translate-middle badge rounded-pill bg-warning">
-                                {getTotalCartItem()}
-                              </span>
+                                <i className="far fa-lg fa-drumstick p-2"></i>
+                                <span className="text-dark translate-middle badge rounded-pill bg-warning">
+                                  {getTotalCartItem()}
+                                </span>
                               </Link>
                             </strong>
                           </Toast.Header>
