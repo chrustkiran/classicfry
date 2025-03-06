@@ -128,7 +128,7 @@ const OrderPage = () => {
   const { orders, fetchOrders } = useOrder();
   const [activeTab, setActiveTab] = useState("active");
   const [expandedOrder, setExpandedOrder] = useState(null);
-  const { clearItems, isValidUser, getUser } = useAppContext();
+  const { clearItems, isValidUser, getUser, clearCheckoutValuesFromSession } = useAppContext();
 
   const checkOrderExist = (orderId) => {
     return orders.active.some((order) => {
@@ -144,6 +144,7 @@ const OrderPage = () => {
     ) {
       setShowSuccessOrder(true);
       clearItems();
+      clearCheckoutValuesFromSession();
     }
   }, [orders]);
 

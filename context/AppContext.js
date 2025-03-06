@@ -152,10 +152,46 @@ export const AppProvider = ({ children }) => {
       "ELEVEN",
       "TWELVE",
     ];
+
+    const pizza_sizes = {
+      "SEVEN_INCH": "7\"",
+      "NINE_INCH": "9\"",
+      "THIRTEEN_INCH": "13\"",
+      "FIFTEEN_INCH": "15\"",
+    };
     if (numbers.includes(portionSize)) {
       return numbers.indexOf(portionSize) + 1;
+    } else if(portionSize in pizza_sizes) {
+      return pizza_sizes[portionSize]
     }
     return portionSize.substring(0, 1);
+  };
+
+  const classicFryCheckoutFormData = "classicFryCheckoutFormData";
+  const storeCheckoutValuesInSession = () => {
+    const data = {
+      selectedSuburb,
+      address,
+      additionalInstructions,
+      deliveryMethod,
+    };
+    global?.window?.sessionStorage.setItem(classicFryCheckoutFormData, JSON.stringify(data));
+  };
+
+  // Retrieve the object directly from sessionStorage
+  const getCheckoutValuesFromSession = () => {
+    const item = global?.window?.sessionStorage.getItem(classicFryCheckoutFormData)
+    if (item) return JSON.parse(item);
+    return {}
+  };
+
+  // Clear the stored object from sessionStorage
+  const clearCheckoutValuesFromSession = () => {
+    global?.window?.sessionStorage.removeItem(classicFryCheckoutFormData);
+    setDeliveryMethod(undefined);
+    setSelectedSuburb(null);
+    setAddress("");
+    setAdditionalInstructions("");
   };
 
   const contextValue = {
@@ -179,6 +215,9 @@ export const AppProvider = ({ children }) => {
     setAddress,
     additionalInstructions,
     setAdditionalInstructions,
+    storeCheckoutValuesInSession,
+    getCheckoutValuesFromSession,
+    clearCheckoutValuesFromSession,
   };
 
   return (

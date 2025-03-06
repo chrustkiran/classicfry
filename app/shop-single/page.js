@@ -208,7 +208,7 @@ const page = () => {
                 </div>
                 <div className="col-lg-7 mt-5 mt-lg-0">
                   <div className="product-details-content">
-                    <div className="star pb-3">
+                    {/* <div className="star pb-3">
                       {(fetchedItem.tag || fetchedDeal.tag) && (
                         <span>
                           {(fetchedItem.tag || fetchedDeal.tag).replace(
@@ -217,7 +217,7 @@ const page = () => {
                           )}
                         </span>
                       )}
-                    </div>
+                    </div> */}
                     <h3 className="pb-3 responsive-cnt">
                       {fetchedItem.name || fetchedDeal.name}
                     </h3>
@@ -379,7 +379,7 @@ const page = () => {
                     </Tab>
                   )}
 
-                  {itemType === "item" && (
+                  {/* {itemType === "item" && (
                     <Tab eventKey="Ingredients" title="Ingredients">
                       <div className="description-items">
                         <div className="row">
@@ -397,7 +397,7 @@ const page = () => {
                         </div>
                       </div>
                     </Tab>
-                  )}
+                  )} */}
                 </Tabs>
               </div>
             </div>

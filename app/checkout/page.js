@@ -221,10 +221,7 @@ const page = () => {
     cart,
     clearItems,
     getUser,
-    deliveryMethod,
-    selectedSuburb,
-    address,
-    additionalInstructions,
+    getCheckoutValuesFromSession
   } = useAppContext();
   const router = useRouter();
 
@@ -247,6 +244,7 @@ const page = () => {
     }
   }, []);
 
+  const deliveryMethod = getCheckoutValuesFromSession().deliveryMethod
   useEffect(() => {deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? setSelectedCash("online") : setSelectedCash("counter")}, [])
 
   const handlePaymentIntent = (paymentIntentId) => {
@@ -407,7 +405,7 @@ const page = () => {
                     </button>
                   )}
 
-                  {deliveryMethod === env.DELIVERY_METHOD.DELIVERY && (
+                  {deliveryMethod === env.DELIVERY_METHOD.DELIVERY && amount > 0 && (
                     <div className="mt-3 p-3 border rounded bg-light">
                       <ParentPayment
                         amount={amount}

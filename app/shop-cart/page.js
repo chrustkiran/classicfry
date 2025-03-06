@@ -28,6 +28,7 @@ const page = () => {
     setAddress,
     selectedSuburb,
     setSelectedSuburb,
+    storeCheckoutValuesInSession
   } = useAppContext();
 
   const calculateCartTotal = () => {
@@ -151,9 +152,8 @@ const page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
+      storeCheckoutValuesInSession()
       setCheckoutWait(true);
-      //TODO :: remove this
-      route.push("/checkout");
       await UserService.createUser({
         ...formData,
         isGuestUser: true,
