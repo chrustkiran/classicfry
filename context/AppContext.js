@@ -34,15 +34,18 @@ export const AppProvider = ({ children }) => {
   const [address, setAddress] = useState("");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
 
-  const findIndexByItem = (itemId, size) => {
+  const findIndexByItem = (itemId, category, size, itemConfig) => {
+    if (category in itemConfig) {
+      
+    }
     return cart.findIndex(
       (item) => item.itemId === itemId && item.size === size
     );
   };
 
-  const addItemToCart = (itemId, name, price, image, size, quantity, type) => {
+  const addItemToCart = (itemId, name, price, image, size, quantity, type, itemConfig = {}) => {
     // Check if the item already exists in the cart
-    const existingItemIndex = findIndexByItem(itemId, size);
+    const existingItemIndex = findIndexByItem(itemId,size, itemConfig);
 
     if (existingItemIndex !== -1) {
       // If the item exists, increase its quantity
@@ -62,7 +65,8 @@ export const AppProvider = ({ children }) => {
         image,
         size,
         quantity,
-        type
+        type,
+        pizzaConfig
       );
       const updatedCart = [...cart, newItem];
       setCart(updatedCart);

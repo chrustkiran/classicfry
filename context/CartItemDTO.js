@@ -1,7 +1,7 @@
 import env from "@/env";
 
 export class CartItem {
-    constructor(itemId, name, price, image, size = env.DEFAULT, quantity = 1, type = 'ITEM') {
+    constructor(itemId, name, price, image, size = env.DEFAULT, quantity = 1, pizzaConfig, type = 'ITEM') {
       this.itemId = itemId;
       this.name = name;
       this.size = size; 
@@ -9,6 +9,7 @@ export class CartItem {
       this.quantity = quantity;
       this.image = image
       this.type = type;
+      this.pizzaConfig = pizzaConfig;
     }
   
     calculateTotalPrice = () => {

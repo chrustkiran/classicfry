@@ -60,6 +60,9 @@ const page = () => {
   const [itemPrice, setItemPrice] = useState(0);
   const [portionSize, setPortionSize] = useState(undefined);
 
+  const [selectedPizzaCrust, setPizzaCrust] = useState(undefined);
+  const [selectedPizzaToppings, setPizzaToppings] = useState([]);
+
   const [itemType, setItemType] = useState(undefined);
   const { item, fetchItem } = useItem();
   const { deal, fetchDeal } = useDeal();
@@ -137,7 +140,15 @@ const page = () => {
         fetchedItem.image,
         portionSize ? portionSize : env.DEFAULT,
         quantity,
-        env.ITEM_TYPE.ITEM
+        env.ITEM_TYPE.ITEM,
+        {
+          ...(fetchedItem.category?.toLowerCase() === "pizza" && {
+            pizza: {
+              crust: [selectedPizzaCrust],
+              toppings: [selectedPizzaToppings],
+            },
+          }),
+        }
       );
     } else {
       addItemToCart(
@@ -147,7 +158,8 @@ const page = () => {
         fetchedDeal.image,
         portionSize ? portionSize : env.DEFAULT,
         quantity,
-        env.ITEM_TYPE.DEAL
+        env.ITEM_TYPE.DEAL,
+        {}
       );
     }
     setShowCartToast(true);
@@ -163,6 +175,9 @@ const page = () => {
       );
       setItemPrice(portionPrices[0].price);
       setPortionSize(portionPrices[0].portionSize);
+      if (fetchedItem.category?.toLowerCase() === 'pizza') {
+        setPizzaCrust(fetchedItem.pizzaConfig?.crusts[0])
+      }
       setFetchedItem({ ...fetchedItem, portionPrices: portionPrices });
     }
   };
@@ -263,42 +278,49 @@ const page = () => {
                           <br></br>
                           {fetchedItem.pizzaConfig.crusts.map((crust) => (
                             <button
-                              onClick={() => selectSize(crust)}
+                              onClick={() => setPizzaCrust(crust)}
                               key={crust}
                               className={`btn btn-sm me-2 ${
-                                portionSize === crust
+                                selectedPizzaCrust === crust
                                   ? "size-btn-selected"
                                   : "size-btn"
                               }`}
-                              style={{ height: "40px", borderRadius: '50px' }}
+                              style={{ height: "40px", borderRadius: "50px" }}
                             >
                               {crust.replaceAll("_", " ")}
                             </button>
                           ))}
                         </div>
                       )}
-                      {fetchedItem.pizzaConfig?.toppings?.length > 0 && (
-                        <div>
-                          <strong className="mb-2">
-                            What toppings would you like to add?
-                          </strong>
-                          <br></br>
-                          {fetchedItem.pizzaConfig.toppings.map((topping) => (
-                            <button
-                              onClick={() => selectSize(toppings)}
-                              key={topping}
-                              className={`btn btn-sm me-2 ${
-                                portionSize === topping
-                                  ? "size-btn-selected"
-                                  : "size-btn"
-                              }`}
-                              style={{ height: "40px", borderRadius: '50px' }}
-                            >
-                              {topping.replaceAll("_", " ")}
-                            </button>
-                          ))}
-                        </div>
-                      )}
+                      {fetchedItem.pizzaConfig?.isCustomPizza &&
+                        fetchedItem.pizzaConfig?.toppings?.length > 0 && (
+                          <div>
+                            <strong className="mb-2">
+                              What toppings would you like to add?
+                            </strong>
+                            <br></br>
+                            {fetchedItem.pizzaConfig.toppings.map((topping) => (
+                              <button
+                                onClick={() =>
+                                  setPizzaToppings((exTopp) =>
+                                    exTopp.includes(topping)
+                                      ? exTopp.filter((t) => t !== topping) 
+                                      : [...exTopp, topping] 
+                                  )
+                                }
+                                key={topping}
+                                className={`btn btn-sm me-2 ${
+                                  selectedPizzaToppings.includes(topping)
+                                    ? "size-btn-selected"
+                                    : "size-btn"
+                                }`}
+                                style={{ height: "40px", borderRadius: "50px" }}
+                              >
+                                {topping.replaceAll("_", " ")}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                     </div>
                     <div className="cart-wrp responsive-cnt">
                       <div className="cart-quantity responsive-cnt responsive-qty">
@@ -373,7 +395,17 @@ const page = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="responsive-cnt">
+                    <div className="responsive-cnt d-flex gap-5">
+                      <div className="">
+                        <Link
+                          className="badge rounded-pill category-batch text-white"
+                          href="/shop-list"
+                        >
+                          <span>
+                            <i class="fa fa-chevron-left"></i> Jump back to Menu
+                          </span>
+                        </Link>
+                      </div>
                       <div className="">
                         <span>Category:</span>{" "}
                         <Link
