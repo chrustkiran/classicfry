@@ -3684,8 +3684,8 @@ input.main-search-input::placeholder {
 }
 @media (min-width: 992px) {
   .shop-list-items .shop-image {
-    max-width: calc(100% - 200px);
-    width: 340px;
+    width: 300px;
+    min-width: 300px;
   }
 }
 @media (max-width: 1199px) {

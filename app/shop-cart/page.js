@@ -8,7 +8,7 @@ import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Toast } from "react-bootstrap";
+import { OverlayTrigger, Toast, Tooltip } from "react-bootstrap";
 const page = () => {
   const {
     cart,
@@ -28,7 +28,7 @@ const page = () => {
     setAddress,
     selectedSuburb,
     setSelectedSuburb,
-    storeCheckoutValuesInSession
+    storeCheckoutValuesInSession,
   } = useAppContext();
 
   const calculateCartTotal = () => {
@@ -36,15 +36,15 @@ const page = () => {
   };
 
   const incrementQuantity = (item) => {
-    increaseQuantity(item.itemId, item.size);
+    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig);
   };
 
   const decrementQuantity = (item) => {
-    decreaseQuantity(item.itemId, item.size);
+    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig);
   };
 
   const removeItem = (item) => {
-    removeItemFromCart(item.itemId, item.size);
+    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig);
   };
 
   const [formData, setFormData] = useState({
@@ -152,7 +152,7 @@ const page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      storeCheckoutValuesInSession()
+      storeCheckoutValuesInSession();
       setCheckoutWait(true);
       await UserService.createUser({
         ...formData,
@@ -209,13 +209,59 @@ const page = () => {
                                   borderRadius: "4px",
                                 }}
                               />
-                              <div className="d-flex row">
+                              <div className="d-flex flex-column">
                                 <span>{item.name}</span>
-                                {item.size !== env.DEFAULT && (
-                                  <span className="badge size-badge badge-warning px-0">
-                                    {getPortionSize(item.size)}
-                                  </span>
-                                )}
+                                <div className="d-flex flex-row">
+                                  <div className="me-2">
+                                    {item.size !== env.DEFAULT && (
+                                      <span className="badge size-badge badge-warning px-0">
+                                        {getPortionSize(item.size)}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  <div className="me-2">
+                                    {"pizza" in item.itemConfig && (
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={
+                                          <Tooltip>
+                                            {item.itemConfig.pizza.crusts[0].replaceAll(
+                                              "_",
+                                              " "
+                                            )}
+                                          </Tooltip>
+                                        }
+                                      >
+                                        <span className="badge bg-warning text-dark badge-warning">
+                                          Crust
+                                        </span>
+                                      </OverlayTrigger>
+                                    )}
+                                  </div>
+                                  <div>
+                                    {"pizza" in item.itemConfig &&
+                                      item.itemConfig.pizza?.toppings?.length >
+                                        0 && (
+                                        <OverlayTrigger
+                                          placement="top"
+                                          overlay={
+                                            <Tooltip>
+                                              {item.itemConfig.pizza.toppings
+                                                .map((t) =>
+                                                  t.replaceAll("_", " ")
+                                                )
+                                                .join(", ")}
+                                            </Tooltip>
+                                          }
+                                        >
+                                          <span className="badge bg-warning text-dark badge-warning">
+                                            Toppings
+                                          </span>
+                                        </OverlayTrigger>
+                                      )}
+                                  </div>
+                                </div>
                               </div>
                             </td>
 

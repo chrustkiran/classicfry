@@ -18,9 +18,11 @@ export const AppProvider = ({ children }) => {
               item.name,
               item.price,
               item.image,
+              item.category,
               item.size,
               item.quantity,
-              item.type
+              item.type,
+              item.itemConfig
             )
         )
       : [];
@@ -35,17 +37,51 @@ export const AppProvider = ({ children }) => {
   const [additionalInstructions, setAdditionalInstructions] = useState("");
 
   const findIndexByItem = (itemId, category, size, itemConfig) => {
-    if (category in itemConfig) {
-      
-    }
-    return cart.findIndex(
-      (item) => item.itemId === itemId && item.size === size
-    );
+    return cart.findIndex((item) => {
+      return item.checkIsSame(itemId, category, size, itemConfig);
+
+      // if (category in itemConfig) {
+      //   if (category === "pizza") {
+      //     // Ensure itemId and size match
+      //     const isSameItem = item.itemId === itemId && item.size === size;
+
+      //     // Ensure crust matches
+      //     const isSameCrust = item.config.crust === itemConfig.pizza.crust;
+
+      //     // Ensure all toppings in itemConfig are present in item.config.toppings
+      //     const hasSameToppings =
+      //       itemConfig.pizza.toppings.every((topping) =>
+      //         item.config.toppings.includes(topping)
+      //       ) &&
+      //       item.config.toppings.length === itemConfig.pizza.toppings.length; // Ensure no extra toppings
+
+      //     return isSameItem && isSameCrust && hasSameToppings;
+      //   }
+      // }
+
+      // // Default check for non-pizza items
+      // return item.itemId === itemId && item.size === size;
+    });
   };
 
-  const addItemToCart = (itemId, name, price, image, size, quantity, type, itemConfig = {}) => {
+  const addItemToCart = (
+    itemId,
+    name,
+    price,
+    image,
+    size,
+    quantity,
+    type,
+    category,
+    itemConfig = {}
+  ) => {
     // Check if the item already exists in the cart
-    const existingItemIndex = findIndexByItem(itemId,size, itemConfig);
+    const existingItemIndex = findIndexByItem(
+      itemId,
+      category,
+      size,
+      itemConfig
+    );
 
     if (existingItemIndex !== -1) {
       // If the item exists, increase its quantity
@@ -63,10 +99,11 @@ export const AppProvider = ({ children }) => {
         name,
         price,
         image,
+        category,
         size,
         quantity,
         type,
-        pizzaConfig
+        itemConfig
       );
       const updatedCart = [...cart, newItem];
       setCart(updatedCart);
@@ -78,24 +115,24 @@ export const AppProvider = ({ children }) => {
   };
 
   // Method to remove an item from the cart
-  const removeItemFromCart = (itemId, size) => {
-    const index = findIndexByItem(itemId, size);
+  const removeItemFromCart = (itemId, category, size, itemConfig) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig);
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
   // Method to decrease the quantity of an item
-  const decreaseQuantity = (itemId, size) => {
-    const index = findIndexByItem(itemId, size);
+  const decreaseQuantity = (itemId, category, size, itemConfig) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig);
     const updatedCart = [...cart];
     updatedCart[index].decreaseQuantity();
     setCart(updatedCart);
     global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
-  const increaseQuantity = (itemId, size) => {
-    const index = findIndexByItem(itemId, size);
+  const increaseQuantity = (itemId, category, size, itemConfig) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig);
     const updatedCart = [...cart];
     updatedCart[index].increaseQuantity();
     setCart(updatedCart);
@@ -158,15 +195,15 @@ export const AppProvider = ({ children }) => {
     ];
 
     const pizza_sizes = {
-      "SEVEN_INCH": "7\"",
-      "NINE_INCH": "9\"",
-      "THIRTEEN_INCH": "13\"",
-      "FIFTEEN_INCH": "15\"",
+      SEVEN_INCH: '7"',
+      NINE_INCH: '9"',
+      THIRTEEN_INCH: '13"',
+      FIFTEEN_INCH: '15"',
     };
     if (numbers.includes(portionSize)) {
       return numbers.indexOf(portionSize) + 1;
-    } else if(portionSize in pizza_sizes) {
-      return pizza_sizes[portionSize]
+    } else if (portionSize in pizza_sizes) {
+      return pizza_sizes[portionSize];
     }
     return portionSize.substring(0, 1);
   };
@@ -179,14 +216,19 @@ export const AppProvider = ({ children }) => {
       additionalInstructions,
       deliveryMethod,
     };
-    global?.window?.sessionStorage.setItem(classicFryCheckoutFormData, JSON.stringify(data));
+    global?.window?.sessionStorage.setItem(
+      classicFryCheckoutFormData,
+      JSON.stringify(data)
+    );
   };
 
   // Retrieve the object directly from sessionStorage
   const getCheckoutValuesFromSession = () => {
-    const item = global?.window?.sessionStorage.getItem(classicFryCheckoutFormData)
+    const item = global?.window?.sessionStorage.getItem(
+      classicFryCheckoutFormData
+    );
     if (item) return JSON.parse(item);
-    return {}
+    return {};
   };
 
   // Clear the stored object from sessionStorage

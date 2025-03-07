@@ -141,11 +141,12 @@ const page = () => {
         portionSize ? portionSize : env.DEFAULT,
         quantity,
         env.ITEM_TYPE.ITEM,
+        fetchedItem.category?.toLowerCase(),
         {
           ...(fetchedItem.category?.toLowerCase() === "pizza" && {
             pizza: {
-              crust: [selectedPizzaCrust],
-              toppings: [selectedPizzaToppings],
+              crusts: [selectedPizzaCrust],
+              toppings: [...selectedPizzaToppings],
             },
           }),
         }
@@ -159,6 +160,7 @@ const page = () => {
         portionSize ? portionSize : env.DEFAULT,
         quantity,
         env.ITEM_TYPE.DEAL,
+        fetchedItem.dealType?.toLowerCase(),
         {}
       );
     }
