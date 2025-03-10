@@ -282,7 +282,7 @@ const page = () => {
                             <button
                               onClick={() => setPizzaCrust(crust)}
                               key={crust}
-                              className={`btn btn-sm me-2 ${
+                              className={`btn btn-sm m-2 ${
                                 selectedPizzaCrust === crust
                                   ? "size-btn-selected"
                                   : "size-btn"
@@ -311,7 +311,7 @@ const page = () => {
                                   )
                                 }
                                 key={topping}
-                                className={`btn btn-sm me-2 ${
+                                className={`btn btn-sm m-2 ${
                                   selectedPizzaToppings.includes(topping)
                                     ? "size-btn-selected"
                                     : "size-btn"

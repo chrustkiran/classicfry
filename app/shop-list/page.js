@@ -64,32 +64,24 @@ const Deal = ({ deal, key }) => {
         <div className="shop-image">
           <img src={deal.image} alt="shop-img" />
         </div>
+        <div className="d-flex flex-column">
         <div className="d-flex">
           <div className="shop-content col-6">
             {/* <div className="star pb-4">
               <span>{deal.tag.replace("_", " ")}</span>
             </div> */}
             <h3>
-              <Link href="shop-single">{deal.name}</Link>
-            </h3>
-            <p>{deal.description}</p>
-            <h5>£{deal.basePrice}</h5>
-            <div className="shop-list-btn">
               <Link
                 href={{
                   pathname: "/shop-single",
                   query: { deal: deal.dealId },
                 }}
-                className="theme-btn"
               >
-                <span className="button-content-wrapper d-flex align-items-center">
-                  <span className="button-icon">
-                    <i className="flaticon-chicken" />
-                  </span>
-                  <span className="button-text">Choose Deal</span>
-                </span>
+                {deal.name}
               </Link>
-            </div>
+            </h3>
+            <p>{deal.description}</p>
+            <h5>£{deal.basePrice}</h5>
           </div>
           <div className="col-6">
             <div className="card shadow-sm">
@@ -114,6 +106,26 @@ const Deal = ({ deal, key }) => {
             </div>
           </div>
         </div>
+        <div>
+           <div className="shop-list-btn mt-2">
+          <Link
+            href={{
+              pathname: "/shop-single",
+              query: { deal: deal.dealId },
+            }}
+            className="theme-btn"
+          >
+            <span className="button-content-wrapper d-flex align-items-center">
+              <span className="button-icon">
+                <i className="flaticon-chicken" />
+              </span>
+              <span className="button-text">Choose Deal</span>
+            </span>
+          </Link>
+        </div>
+        </div>
+        </div>
+       
       </div>
     </div>
   );
