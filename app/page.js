@@ -83,7 +83,7 @@ const page = () => {
             className="catagory-button text-center pt-4 wow fadeInUp"
             data-wow-delay=".3s"
           >
-            <Link href="/shop" className="theme-btn">
+            <Link href="/shop-list" className="theme-btn">
               <span className="button-content-wrapper d-flex align-items-center">
                 <span className="button-icon">
                   <i className="flaticon-delivery" />
