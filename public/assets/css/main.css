@@ -3679,9 +3679,7 @@ input.main-search-input::placeholder {
     justify-content: center;
   }
 }
-.shop-list-items .shop-image {
-  height: 100%;
-}
+
 @media (min-width: 992px) {
   .shop-list-items .shop-image {
     width: 300px;
@@ -3702,7 +3700,6 @@ input.main-search-input::placeholder {
 .shop-list-items .shop-image img {
   -o-object-fit: cover;
   object-fit: cover;
-  height: 100%;
   border-radius: 18px;
   max-width: 100%;
 }

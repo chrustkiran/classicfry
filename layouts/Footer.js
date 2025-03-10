@@ -80,7 +80,7 @@ const Footer1 = () => {
                   <div className="mt-4">
                     <h4>Mobile:</h4>
                   </div>
-                  <h6 className="mt-2">07477427927</h6>
+                  <h6 className="mt-2">01372 650894</h6>
                   <div className="mt-5 privacy-terms">
                     <a
                       id="privacy-terms"

@@ -35,7 +35,7 @@ const ProductSidebar = ({
       <div className={`main-sidebar ${style}`}>
         <div className="single-sidebar-widget">
           <div className="wid-title">
-            <h4>{activeTab == 'items' ? 'catagories' : 'Deal Types'}</h4>
+            <h4>{activeTab == 'items' ? 'categories' : 'Deal Types'}</h4>
           </div>
           <div className="widget-categories d-flex">
             <ul
@@ -72,7 +72,7 @@ const ProductSidebar = ({
                     className="list-group-item-action"
                   >
                     {/* <i className="flaticon-burger" /> */}
-                    {cat}
+                    {cat.replaceAll("_", " ")}
                   </a>
                 </li>
               ))}
@@ -155,7 +155,7 @@ const ProductSidebar = ({
                     onClick={() => onClickCategory(cat)}
                     className="list-group-item-action"
                   >
-                    {cat}
+                    {cat.replaceAll("_", " ")}
                   </a>
                 </li>
               ))}

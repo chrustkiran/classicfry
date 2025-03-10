@@ -222,7 +222,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                       <i className="fal fa-envelope" />
                     </div>
                     <div className="offcanvas__contact-text">
-                      <a href="tel:07477427927">
+                      <a href="tel:01372650894">
                         <span className="mailto:contact@classicfry.co.uk">
                           contact@classicfry.co.uk
                         </span>
@@ -234,7 +234,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                       <i className="far fa-phone" />
                     </div>
                     <div className="offcanvas__contact-text">
-                      <a href="tel:07477427927">07477427927</a>
+                      <a href="tel:01372650894">01372 650894</a>
                     </div>
                   </li>
                 </ul>

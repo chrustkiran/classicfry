@@ -12,7 +12,7 @@ const page = () => {
     {
       icon: "phone.svg",
       title: "Phone Number",
-      content: "07477427927",
+      content: "01372 650894",
       delay: ".5s",
       active: true,
     },

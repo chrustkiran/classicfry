@@ -243,17 +243,23 @@ const ShopPage = () => {
                             item.basePrice < priceFilter[1]
                         );
 
-                        const sortedFilteredItems = filteredItems.sort((i1, i2) => {
-                          if (i1.category?.toLowerCase() === 'pizza' && i2.category?.toLowerCase() === 'pizza') {
-                            if (i1.pizza?.isCustomPizza) return 1;
-                            else if (i2.pizza?.isCustomPizza) return -1;
+                        const sortedFilteredItems = filteredItems.sort(
+                          (i1, i2) => {
+                            if (
+                              i1.category?.toLowerCase() === "pizza" &&
+                              i2.category?.toLowerCase() === "pizza"
+                            ) {
+                              if (i1.pizzaConfig?.isCustomPizza) return -1;
+                              if (i2.pizzaConfig?.isCustomPizza) return 1;
+                              return 0;
+                            }
+                            return 0;
                           }
-                          return 1;
-                        })
+                        );
 
                         return (
                           <div key={category}>
-                            <h3>{category}</h3>
+                            <h3>{category.replaceAll("_", " ")}</h3>
                             <div className="row d-flex">
                               {sortedFilteredItems.length > 0 ? (
                                 sortedFilteredItems.map((item) => (
@@ -307,7 +313,7 @@ const ShopPage = () => {
 
                         return (
                           <div key={index}>
-                            <h3>{category}</h3>
+                            <h3>{category.replaceAll("_", " ")}</h3>
                             <div className="row d-flex">
                               {filteredItems.length > 0 ? (
                                 filteredItems.map((item, index) => (
