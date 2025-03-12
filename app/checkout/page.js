@@ -34,7 +34,7 @@ const ParentPayment = ({
   handleSetStripeErr,
   cart,
   clearItems,
-  checkoutDetails
+  checkoutDetails,
 }) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
@@ -223,7 +223,7 @@ const page = () => {
     cart,
     clearItems,
     getUser,
-    getCheckoutValuesFromSession
+    getCheckoutValuesFromSession,
   } = useAppContext();
   const router = useRouter();
 
@@ -239,6 +239,8 @@ const page = () => {
 
   const [paymentIntentId, setPaymentIntentId] = useState(undefined);
 
+  const [isConfirmedPress, setConfirmedPress] = useState(false);
+
   useEffect(() => {
     if (!user?.userId) {
       console.warn("There is no userId");
@@ -247,8 +249,12 @@ const page = () => {
   }, []);
 
   const checkoutDetails = getCheckoutValuesFromSession();
-  const deliveryMethod = checkoutDetails.deliveryMethod
-  useEffect(() => {deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? setSelectedCash("online") : setSelectedCash("counter")}, [])
+  const deliveryMethod = checkoutDetails.deliveryMethod;
+  useEffect(() => {
+    deliveryMethod === env.DELIVERY_METHOD.DELIVERY
+      ? setSelectedCash("online")
+      : setSelectedCash("counter");
+  }, []);
 
   const handlePaymentIntent = (paymentIntentId) => {
     setPaymentIntentId(paymentIntentId);
@@ -270,6 +276,7 @@ const page = () => {
     clearItems,
     checkoutDetails
   ) => {
+    setConfirmedPress(true);
     const postOrderReq = new PostOrderRequest(
       userId,
       cart,
@@ -288,6 +295,7 @@ const page = () => {
         }
       })
       .catch((_) => {
+        setConfirmedPress(false);
         setShowError(true);
       });
 
@@ -408,23 +416,32 @@ const page = () => {
                         boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
                       }}
                     >
-                      <span id="button-text">Confirm your order</span>
+                      <span id="button-text">
+                        {isConfirmedPress ? (
+                          <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                          </div>
+                        ) : (
+                          "Confirm your order"
+                        )}
+                      </span>
                     </button>
                   )}
 
-                  {deliveryMethod === env.DELIVERY_METHOD.DELIVERY && amount > 0 && (
-                    <div className="mt-3 p-3 border rounded bg-light">
-                      <ParentPayment
-                        amount={amount}
-                        userId={user?.userId}
-                        handlePaymentIntent={handlePaymentIntent}
-                        handleSetStripeErr={handleSetStripeErr}
-                        cart={cart}
-                        clearItems={clearItems}
-                        checkoutDetails={checkoutDetails}
-                      ></ParentPayment>
-                    </div>
-                  )}
+                  {deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
+                    amount > 0 && (
+                      <div className="mt-3 p-3 border rounded bg-light">
+                        <ParentPayment
+                          amount={amount}
+                          userId={user?.userId}
+                          handlePaymentIntent={handlePaymentIntent}
+                          handleSetStripeErr={handleSetStripeErr}
+                          cart={cart}
+                          clearItems={clearItems}
+                          checkoutDetails={checkoutDetails}
+                        ></ParentPayment>
+                      </div>
+                    )}
                 </ul>
 
                 {/* <form action="#" method="post">

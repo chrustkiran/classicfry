@@ -22,7 +22,8 @@ export class PostOrderRequest {
           portionSize: item.size,
         };
         if ("pizza" === item.category && "pizza" in item.itemConfig) {
-          result.pizzaConfig = {...item.itemConfig.pizza}
+          result.pizzaCrust = item.itemConfig.pizza.crusts[0]
+          result.toppings =  item.itemConfig.pizza.toppings
         }
         if (item.type === env.ITEM_TYPE.ITEM) {
           result.item = { itemId: item.itemId };
