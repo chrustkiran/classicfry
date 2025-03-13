@@ -323,7 +323,7 @@ const OrderPage = () => {
                                     {orderItem?.quantity}){" "}
                                     <span className="badge bg-warning">
                                       {orderItem?.portionSize !== env.DEFAULT &&
-                                        orderItem?.portionSize}
+                                        orderItem?.portionSize?.replaceAll("_", " ")}
                                     </span>
                                   </div>
                                 </li>

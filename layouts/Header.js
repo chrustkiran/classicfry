@@ -204,65 +204,16 @@ const Sidebar = ({ toggle, setToggle }) => {
               </div>
 
               <MobileMenu />
-              <div className="offcanvas__contact">
-                <h4>Contact Info</h4>
-                <ul>
-                  <li className="d-flex align-items-center">
-                    <div className="offcanvas__contact-icon">
-                      <i className="fal fa-map-marker-alt" />
-                    </div>
-                    <div className="offcanvas__contact-text">
-                      <a target="_blank" href="#">
-                        100 Chessington Road West Ewell , KT19 9UR
-                      </a>
-                    </div>
-                  </li>
-                  <li className="d-flex align-items-center">
-                    <div className="offcanvas__contact-icon mr-15">
-                      <i className="fal fa-envelope" />
-                    </div>
-                    <div className="offcanvas__contact-text">
-                      <a href="tel:01372650894">
-                        <span className="mailto:contact@classicfry.co.uk">
-                          contact@classicfry.co.uk
-                        </span>
-                      </a>
-                    </div>
-                  </li>
-                  <li className="d-flex align-items-center">
-                    <div className="offcanvas__contact-icon mr-15">
-                      <i className="far fa-phone" />
-                    </div>
-                    <div className="offcanvas__contact-text">
-                      <a href="tel:01372650894">01372 650894</a>
-                    </div>
-                  </li>
-                </ul>
-                <div className="header-button mt-4">
-                  <Link href="/shop-single" className="theme-btn">
+              <div className="header-button mt-4">
+                  <Link href="/contact" className="theme-btn">
                     <span className="button-content-wrapper d-flex align-items-center justify-content-center">
                       <span className="button-icon">
                         <i className="flaticon-delivery" />
                       </span>
-                      <span className="button-text">order now</span>
+                      <span className="button-text">Contact Us</span>
                     </span>
                   </Link>
                 </div>
-                <div className="social-icon d-flex align-items-center">
-                  <a href="#">
-                    <i className="fab fa-facebook-f" />
-                  </a>
-                  <a href="#">
-                    <i className="fab fa-twitter" />
-                  </a>
-                  <a href="#">
-                    <i className="fab fa-youtube" />
-                  </a>
-                  <a href="#">
-                    <i className="fab fa-linkedin-in" />
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>
