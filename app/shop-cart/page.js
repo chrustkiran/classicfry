@@ -151,6 +151,12 @@ const page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isTempDisabled = true
+    if (isTempDisabled) {
+      alert('Sorry, currently unavailable');
+      return;
+    }
+
     if (validateForm()) {
       storeCheckoutValuesInSession();
       setCheckoutWait(true);
