@@ -31,7 +31,7 @@ const useDeal = () => {
   const fetchDeals = () => {
     setDealLoading(true);
     axios.get(base_url + "deals").then((res) => {
-      setDeals(res.data.map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
+      setDeals(res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
       setDealLoading(false);
     }).catch(_ => setDealLoading(false));
   };
@@ -39,7 +39,7 @@ const useDeal = () => {
   const fetchCategories = () => {
     axios.get(base_url + "deals").then((res) => {
       if (res.data && res.data.length > 0) {
-        const category = res.data.reduce((obj, item) => {
+        const category = res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).reduce((obj, item) => {
           if (!obj[dealTypeMapper(item.dealType)]) {
             obj[dealTypeMapper(item.dealType)] = {item, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)};
           }

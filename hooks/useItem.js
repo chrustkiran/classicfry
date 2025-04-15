@@ -29,7 +29,7 @@ const useItem = () => {
     setItemLoading(true);
     axios.get(base_url + "items").then((res) => {
       setItems(
-        res.data.map((item) => {
+        res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map((item) => {
           const basePrice = item.portionPrices
             .map((price) => price.price)
             .toSorted((a,b) => a-b)[0];
@@ -43,7 +43,7 @@ const useItem = () => {
   const fetchCategories = () => {
     axios.get(base_url + "items").then((res) => {
       if (res.data && res.data.length > 0) {
-        const category = res.data.reduce((obj, item) => {
+        const category = res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).reduce((obj, item) => {
             const cat = categoryMapper(item.category);
             if (!obj[cat]) {
               obj[cat] = {...item, total: 1, category: categoryMapper(item.category)};

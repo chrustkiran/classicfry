@@ -151,7 +151,7 @@ const page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isTempDisabled = true
+    const isTempDisabled = false;
     if (isTempDisabled) {
       alert('Sorry, currently unavailable');
       return;
