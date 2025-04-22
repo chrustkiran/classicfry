@@ -11683,3 +11683,8 @@ p.order-confirm {
   text-transform: uppercase;
   font-weight: 500;
 }
+
+.delivery-modal-title {
+  color: var(--theme2);
+  font-weight: 500;
+}
