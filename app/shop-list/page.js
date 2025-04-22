@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
 import useDeal from "@/hooks/useDeal";
+import DeliveryTimeDisplayModal from "@/components/popup/DeliveryTimeDisplayModal";
 
 const Item = ({ item, key }) => {
   return (
@@ -65,67 +66,67 @@ const Deal = ({ deal, key }) => {
           <img src={deal.image} alt="shop-img" />
         </div>
         <div className="d-flex flex-column">
-        <div className="d-flex">
-          <div className="shop-content col-6">
-            {/* <div className="star pb-4">
+          <div className="d-flex">
+            <div className="shop-content col-6">
+              {/* <div className="star pb-4">
               <span>{deal.tag.replace("_", " ")}</span>
             </div> */}
-            <h3>
+              <h3>
+                <Link
+                  href={{
+                    pathname: "/shop-single",
+                    query: { deal: deal.dealId },
+                  }}
+                >
+                  {deal.name}
+                </Link>
+              </h3>
+              <p>{deal.description}</p>
+              <h5>£{deal.basePrice}</h5>
+            </div>
+            <div className="col-6">
+              <div className="card shadow-sm">
+                <div className="card-header bg-warning text-white">
+                  <h5 className="mb-0">Deal Items</h5>
+                </div>
+                <div className="card-body">
+                  <ul className="list-group">
+                    {deal?.dealItemViews?.map((dealItem, index) => (
+                      <li
+                        key={index}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        {dealItem.name}
+                        <span class="badge bg-danger rounded-pill">
+                          {dealItem.quantity}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="shop-list-btn mt-2">
               <Link
                 href={{
                   pathname: "/shop-single",
                   query: { deal: deal.dealId },
                 }}
+                className="theme-btn"
               >
-                {deal.name}
+                <span className="button-content-wrapper d-flex align-items-center">
+                  <span className="button-icon">
+                    <i className="flaticon-chicken" />
+                  </span>
+                  <span className="button-text">Choose Deal</span>
+                </span>
               </Link>
-            </h3>
-            <p>{deal.description}</p>
-            <h5>£{deal.basePrice}</h5>
-          </div>
-          <div className="col-6">
-            <div className="card shadow-sm">
-              <div className="card-header bg-warning text-white">
-                <h5 className="mb-0">Deal Items</h5>
-              </div>
-              <div className="card-body">
-                <ul className="list-group">
-                  {deal?.dealItemViews?.map((dealItem, index) => (
-                    <li
-                      key={index}
-                      className="list-group-item d-flex justify-content-between align-items-center"
-                    >
-                      {dealItem.name}
-                      <span class="badge bg-danger rounded-pill">
-                        {dealItem.quantity}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
           </div>
         </div>
-        <div>
-           <div className="shop-list-btn mt-2">
-          <Link
-            href={{
-              pathname: "/shop-single",
-              query: { deal: deal.dealId },
-            }}
-            className="theme-btn"
-          >
-            <span className="button-content-wrapper d-flex align-items-center">
-              <span className="button-icon">
-                <i className="flaticon-chicken" />
-              </span>
-              <span className="button-text">Choose Deal</span>
-            </span>
-          </Link>
-        </div>
-        </div>
-        </div>
-       
+
       </div>
     </div>
   );
@@ -142,6 +143,7 @@ const ShopPage = () => {
 
   const [activeTab, setActiveTab] = useState("items");
   const searchParams = useSearchParams();
+  const [isDeliveryTimeModalDisplay, setDeliveryTimeModalDisplay] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("category")) {
@@ -177,6 +179,10 @@ const ShopPage = () => {
   }, [deals]);
 
   useEffect(() => {
+    setDeliveryTimeModalDisplay(true);
+  }, []);
+
+  useEffect(() => {
     if (items.length > 0) {
       setConsItems(
         items
@@ -205,15 +211,15 @@ const ShopPage = () => {
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
+      {isDeliveryTimeModalDisplay && <DeliveryTimeDisplayModal show={isDeliveryTimeModalDisplay} handleClose={() => setDeliveryTimeModalDisplay(false)} />}
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
           <div className="mb-5">
             <ul className="nav nav-tabs d-flex  order-tab gap-3">
               <li className="nav-item">
                 <button
-                  className={`nav-link ${
-                    activeTab === "items" ? "active" : ""
-                  }`}
+                  className={`nav-link ${activeTab === "items" ? "active" : ""
+                    }`}
                   onClick={() => handleTabChange("items")}
                 >
                   <h3>Items</h3>
@@ -221,9 +227,8 @@ const ShopPage = () => {
               </li>
               <li className="nav-item">
                 <button
-                  className={`nav-link ${
-                    activeTab === "deals" ? "active" : ""
-                  }`}
+                  className={`nav-link ${activeTab === "deals" ? "active" : ""
+                    }`}
                   onClick={() => handleTabChange("deals")}
                 >
                   <h3>Deals</h3>
