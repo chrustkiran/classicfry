@@ -78,7 +78,7 @@ const Footer1 = () => {
                   <h6>Chessington Road West Ewell, </h6>
                   <h6>KT19 9UR</h6>
                   <div className="mt-4">
-                    <h4>Mobile:</h4>
+                    <h4>Telephone:</h4>
                   </div>
                   <h6 className="mt-2">01372 650894</h6>
                   <div className="mt-5 privacy-terms">
