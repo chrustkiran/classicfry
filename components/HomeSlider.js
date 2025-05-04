@@ -41,7 +41,8 @@ const HomeSlider = () => {
             <div
               className="hero-1 bg-cover"
               style={{
-                backgroundImage: 'url("/assets/img/hero/hero-bg.jpg")',
+                backgroundImage: 'url("/assets/img/hero/hero-bg.webp")',
+                transition: 'background-image 0.3s ease-in-out'
               }}
             >
            

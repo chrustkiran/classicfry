@@ -3,7 +3,7 @@ const Cta = () => {
     <section
       className="main-cta-banner-2 section-padding bg-cover"
       style={{
-        backgroundImage: 'url("/assets/img/hero/hero-bg.jpg")',
+        backgroundImage: 'url("/assets/img/hero/hero-bg.webp")',
       }}
     >
       <div className="tomato-shape-left float-bob-y">
