@@ -94,7 +94,7 @@ const Header1 = () => {
                                   </span>
                                 </div>
                                 <span className="fw-bold">
-                                  £{(item.quantity * item.price).toFixed(2)}
+                                  = £{(item.quantity * item.price).toFixed(2)}
                                 </span>
                               </div>
                             </div>
