@@ -240,6 +240,15 @@ export const AppProvider = ({ children }) => {
     setAdditionalInstructions("");
   };
 
+  const getFinalTotal = () => {
+    let tot = 0;
+    tot += getTotalPrice();
+    if (deliveryMethod === env.DELIVERY_METHOD.DELIVERY) {
+      tot += env.DELIVERY_FEE;
+    }
+    return tot;
+  }
+
   const contextValue = {
     cart,
     addItemToCart,
@@ -264,6 +273,7 @@ export const AppProvider = ({ children }) => {
     storeCheckoutValuesInSession,
     getCheckoutValuesFromSession,
     clearCheckoutValuesFromSession,
+    getFinalTotal
   };
 
   return (

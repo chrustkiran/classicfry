@@ -58,7 +58,8 @@ const env = {
   DELIVERY_METHOD: Object.freeze({
     DELIVERY: "delivery",
     PICKUP: "pickup"
-  })
+  }),
+  DELIVERY_FEE: 2.99
 };
 
 export default env;

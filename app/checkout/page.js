@@ -219,7 +219,7 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
 
 const page = () => {
   const {
-    getTotalPrice,
+    getFinalTotal,
     cart,
     clearItems,
     getUser,
@@ -265,8 +265,8 @@ const page = () => {
   };
 
   useEffect(() => {
-    setAmount(getTotalPrice().toFixed(2));
-  }, [getTotalPrice]);
+    setAmount(getFinalTotal().toFixed(2));
+  }, [getFinalTotal]);
 
   const sendOrderAsCounterPayment = async (
     userId,

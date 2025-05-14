@@ -29,6 +29,7 @@ const page = () => {
     selectedSuburb,
     setSelectedSuburb,
     storeCheckoutValuesInSession,
+    getFinalTotal,
   } = useAppContext();
 
   const calculateCartTotal = () => {
@@ -528,9 +529,13 @@ const page = () => {
                         <span>Subtotal</span>
                         <span>${calculateCartTotal().toFixed(2)}</span>
                       </li>
+                      <li className="d-flex justify-content-between">
+                        <span>Delivery Fee</span>
+                        <span>${deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? env.DELIVERY_FEE : 0}</span>
+                      </li>
                       <li className="justify-content-between">
                         <span>Total</span>
-                        <span>£{calculateCartTotal().toFixed(2)}</span>
+                        <span>£{getFinalTotal().toFixed(2)}</span>
                       </li>
 
                       <p className="border shadow-sm p-4">
@@ -623,7 +628,7 @@ const page = () => {
                         ) : (
                           "Checkout"
                         )}
-                        <span>£{calculateCartTotal().toFixed(2)}</span>
+                        <span>£{getFinalTotal().toFixed(2)}</span>
                       </button>
                       {/* this is just to make the heights the smae */}
                       <br></br>
