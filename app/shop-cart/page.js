@@ -527,11 +527,11 @@ const page = () => {
                     <ul>
                       <li className="d-flex justify-content-between">
                         <span>Subtotal</span>
-                        <span>${calculateCartTotal().toFixed(2)}</span>
+                        <span>£{calculateCartTotal().toFixed(2)}</span>
                       </li>
                       <li className="d-flex justify-content-between">
                         <span>Delivery Fee</span>
-                        <span>${deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? env.DELIVERY_FEE : 0}</span>
+                        <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? env.DELIVERY_FEE : 0}</span>
                       </li>
                       <li className="justify-content-between">
                         <span>Total</span>
