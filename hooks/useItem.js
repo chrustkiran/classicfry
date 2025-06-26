@@ -26,13 +26,14 @@ const useItem = () => {
   const [itemLoading, setItemLoading] = useState(false);
 
   const fetchItems = () => {
+    console.log("Fetching items from API :: ", base_url + "items");
     setItemLoading(true);
     axios.get(base_url + "items").then((res) => {
       setItems(
         res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map((item) => {
           const basePrice = item.portionPrices
             .map((price) => price.price)
-            .toSorted((a,b) => a-b)[0];
+            .toSorted((a,b) => a-b)[0]
           return { ...item, basePrice: basePrice, category: categoryMapper(item.category) };
         })
       );

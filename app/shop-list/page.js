@@ -35,7 +35,7 @@ const Item = ({ item, key }) => {
             </Link>
           </h3>
           <p>{item.description}</p>
-          <h5>£{item.basePrice}</h5>
+          <h5>£{item.basePrice.toFixed(2)}</h5>
           <div className="shop-list-btn">
             <Link
               href={{
@@ -82,7 +82,7 @@ const Deal = ({ deal, key }) => {
                 </Link>
               </h3>
               <p>{deal.description}</p>
-              <h5>£{deal.basePrice}</h5>
+              <h5>£{deal.basePrice.toFixed(2)}</h5>
             </div>
             <div className="col-6">
               <div className="card shadow-sm">

@@ -43,7 +43,7 @@ const FoodItem = ({ fooditem }) => {
           </div>
           <div className="catagory-product-content">
             <div className="info-price d-flex align-items-center justify-content-center">
-              <h6>£{fooditem.basePrice}</h6>
+              <h6>£{fooditem.basePrice.toFixed(2)}</h6>
             </div>
             <h4>
               <Link href={`/shop-single?item=${fooditem.itemId}`}>

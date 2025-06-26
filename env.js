@@ -1,6 +1,6 @@
-const host_test = "https://2bbuprb2vf.execute-api.eu-west-2.amazonaws.com/dev";
-const host_local = "http://192.168.1.192:8080";
-const host = host_test;
+//const host_test = "https://2bbuprb2vf.execute-api.eu-west-2.amazonaws.com/dev";
+const host_local = "http://localhost:8080";
+const host = host_local;
 const env = {
   API_URL: `${host}/api/v1/`,
   stripeAPIKey: "pk_live_51QmCweRuSIuECqCmYczAmbXXwXtjc0zY3qHLD6HkvcLOwn3273OSOrmk1gUgwkiaZwDTd9AhDsxgV857Qk82XZ6x00Jz1TwHto",
@@ -59,7 +59,10 @@ const env = {
     DELIVERY: "delivery",
     PICKUP: "pickup"
   }),
-  DELIVERY_FEE: 2.99
+  DELIVERY_FEE: 1.99,
+  OFFER_MINIMUM: 25,
+  DELIVERY_MINIMUM: 20,
+  OFFER_PERCENTAGE: 0.2,
 };
 
 export default env;

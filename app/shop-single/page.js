@@ -252,7 +252,7 @@ const page = () => {
                       {fetchedItem.description || fetchedDeal.description}
                     </p>
                     <div className="price-list d-flex align-items-center responsive-cnt">
-                      <span>£{itemPrice}</span>
+                      <span>£{itemPrice.toFixed(2)}</span>
                     </div>
                     <div className="d-flex mt-4 flex-column size-btn-container gap-4">
                       <div>
