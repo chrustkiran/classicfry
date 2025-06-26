@@ -240,15 +240,25 @@ export const AppProvider = ({ children }) => {
     setAdditionalInstructions("");
   };
 
-  const getFinalTotal = () => {
-    let tot = 0;
-    tot += getTotalPrice();
-    if (deliveryMethod === env.DELIVERY_METHOD.DELIVERY) {
-      tot += env.DELIVERY_FEE;
+  // 20% off for orders over £25
+  const getOffer = () => {
+    const cartTotal = getTotalPrice();
+    if (cartTotal >= env.OFFER_MINIMUM) {
+      return cartTotal * env.OFFER_PERCENTAGE; 
     }
-    return tot;
+    return 0;
   }
 
+  const getFinalTotal = () => {
+    let tot = 0;
+    const cartTotal = getTotalPrice();
+    tot += cartTotal;
+    if (deliveryMethod === env.DELIVERY_METHOD.DELIVERY && cartTotal <= env.DELIVERY_MINIMUM) {
+      tot += env.DELIVERY_FEE;
+    }
+    return tot - getOffer();
+  }
+  
   const contextValue = {
     cart,
     addItemToCart,
@@ -273,7 +283,8 @@ export const AppProvider = ({ children }) => {
     storeCheckoutValuesInSession,
     getCheckoutValuesFromSession,
     clearCheckoutValuesFromSession,
-    getFinalTotal
+    getFinalTotal,
+    getOffer
   };
 
   return (

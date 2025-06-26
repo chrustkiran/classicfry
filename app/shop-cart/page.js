@@ -30,12 +30,14 @@ const page = () => {
     setSelectedSuburb,
     storeCheckoutValuesInSession,
     getFinalTotal,
+    getOffer,
   } = useAppContext();
 
   const calculateCartTotal = () => {
     return getTotalPrice();
   };
 
+  
   const incrementQuantity = (item) => {
     increaseQuantity(item.itemId, item.category, item.size, item.itemConfig);
   };
@@ -531,8 +533,19 @@ const page = () => {
                       </li>
                       <li className="d-flex justify-content-between">
                         <span>Delivery Fee</span>
-                        <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? env.DELIVERY_FEE : 0}</span>
+                        <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? calculateCartTotal() >= 20 ? 0 : env.DELIVERY_FEE  : 0}</span>
                       </li>
+                      {getOffer() === 0 && (
+                          <span style={{ fontStyle: "italic", fontSize: '13px', color: "#888" }}>
+                            Spend £{(env.OFFER_MINIMUM - calculateCartTotal()).toFixed(2)} more to get {env.OFFER_PERCENTAGE * 100}% off your order!
+                          </span>
+                      )}
+                      {getOffer() > 0 && (
+                        <li className="justify-content-between">
+                          <span>Offer <span style={{ fontStyle: "italic", fontSize: "13px", color: "#888" }}>({env.OFFER_PERCENTAGE * 100}% Off Over £{env.OFFER_MINIMUM})</span></span>
+                          <span>£{getOffer().toFixed(2)}</span>
+                        </li>
+                      )}
                       <li className="justify-content-between">
                         <span>Total</span>
                         <span>£{getFinalTotal().toFixed(2)}</span>
