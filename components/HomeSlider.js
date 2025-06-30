@@ -95,7 +95,7 @@ const HomeSlider = () => {
                       data-duration={duration}
                       data-delay="1.4s"
                     >
-                      <img src="/assets/img/hero/chiken.png" alt="chiken-img" />
+                      {/* <img src="/assets/img/hero/chiken.png" alt="chiken-img" /> */}
                     </div>
                     <div
                       className="main-top-img"
@@ -103,7 +103,8 @@ const HomeSlider = () => {
                       data-duration={duration}
                       data-delay="2.7s"
                     >
-                      <img width="500" src="/assets/img/hero/chilli.png" alt="shape-img" />
+                      {/* <img width="500" src="/assets/img/hero/chilli.png" alt="shape-img" /> */}
+                      <img width="500" src="/assets/img/hero/offer.png" alt="offer-img" />
                     </div>
                   </div>
                 </div>
