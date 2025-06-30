@@ -3,6 +3,8 @@ import useItem from "@/hooks/useItem";
 import useDeal from "@/hooks/useDeal";
 import Link from "next/link";
 import "./RecomandationPopup.css";
+import { useRouter } from "next/navigation";
+
 function getRandom(arr, n) {
   if (!arr || arr.length === 0) return [];
   const shuffled = arr.slice().sort(() => 0.5 - Math.random());
@@ -10,10 +12,10 @@ function getRandom(arr, n) {
 }
 
 const RecommendationPopup = ({ onClose }) => {
+  const route = useRouter();
   const { items, fetchItems, itemLoading } = useItem();
   const { deals, fetchDeals, dealLoading } = useDeal();
 
-  const [showType, setShowType] = useState("items");
   const [randomItems, setRandomItems] = useState([]);
   const [randomDeals, setRandomDeals] = useState([]);
 
@@ -26,6 +28,11 @@ const RecommendationPopup = ({ onClose }) => {
     if (items && items.length > 0) setRandomItems(getRandom(items, 5));
     if (deals && deals.length > 0) setRandomDeals(getRandom(deals, 5));
   }, [items, deals]);
+
+    const handleCheckOut = () => {
+        route.push("/checkout");
+        onClose();
+    }    
 
   return (
     <div
@@ -52,29 +59,7 @@ const RecommendationPopup = ({ onClose }) => {
         }}
       >
         <h4>Recommended For You</h4>
-        {/* <div
-          style={{
-            display: "flex",
-            gap: 10,
-            marginBottom: 20,
-            justifyContent: "center",
-          }}
-        >
-          <button
-            className={`theme-btn ${showType === "items" ? "active" : ""}`}
-            onClick={() => setShowType("items")}
-          >
-            Items
-          </button>
-          <button
-            className={`theme-btn ${showType === "deals" ? "active" : ""}`}
-            onClick={() => setShowType("deals")}
-          >
-            Deals
-          </button>
-        </div> */}
         <div>
-          {/* {showType === "items" && ( */}
             <div>
               {itemLoading ? (
                 <p>Loading items...</p>
@@ -112,7 +97,6 @@ const RecommendationPopup = ({ onClose }) => {
                             {item.name}
                           </Link>
                         </strong>
-                        {/* <div style={{ fontSize: 12, color: "#888" }}>{item.description}</div> */}
                         <div style={{ fontSize: 13 }}>£{item.basePrice}</div>
                       </div>
                     </li>
@@ -120,53 +104,6 @@ const RecommendationPopup = ({ onClose }) => {
                 </ul>
               )}
             </div>
-          {/* )} */}
-          {/* {showType === "deals" && ( */}
-            {/* <div>
-              {dealLoading ? (
-                <p>Loading deals...</p>
-              ) : (
-                <ul>
-                  {randomDeals.map((deal) => (
-                    <li
-                      key={deal.dealId}
-                      style={{
-                        marginBottom: 10,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <img
-                        src={deal.image}
-                        alt={deal.name}
-                        style={{
-                          width: 50,
-                          height: 50,
-                          objectFit: "cover",
-                          borderRadius: 4,
-                          marginRight: 10,
-                        }}
-                      />
-                      <div>
-                        <strong>
-                          <Link
-                            href={{
-                              pathname: "/shop-single",
-                              query: { deal: deal.dealId },
-                            }}
-                            className="recommend-link"
-                          >
-                            {deal.name}
-                          </Link>
-                        </strong>
-                        <div style={{ fontSize: 13 }}>£{deal.price}</div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div> */}
-          {/* )} */}
         </div>
         <div
           style={{
@@ -179,7 +116,7 @@ const RecommendationPopup = ({ onClose }) => {
           <button
             className="theme-btn"
             style={{ padding: "8px 14px", fontSize: "14px", minWidth: 80 }}
-            onClick={() => console.log("check it out")}
+            onClick={handleCheckOut}
           >
             Check Out
           </button>
