@@ -174,7 +174,7 @@ const page = () => {
         .then((user) => {
           setUser(user);
           setCheckoutWait(false);
-          route.push("/checkout");
+          setShowRecommendationPopup(true);
         })
         .catch((err) => {
           setCheckoutWait(false);
@@ -187,10 +187,6 @@ const page = () => {
     }
   };
 
-  const handleRecommendationPopup = (e) => {
-    e.preventDefault();
-    setShowRecommendationPopup(true);
-  };
 
   return (
     <FoodKingLayout>
@@ -641,7 +637,7 @@ const page = () => {
                       <button
                         type="submit"
                         className="theme-btn d-flex justify-content-between align-items-center w-100"
-                        onClick={handleRecommendationPopup}
+                        // onClick={handleRecommendationPopup}
                       >
                         {checkoutWait ? (
                           <div className="spinner-border" role="status">
