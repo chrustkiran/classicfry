@@ -97,7 +97,7 @@ const RecommendationPopup = ({ onClose }) => {
                             {item.name}
                           </Link>
                         </strong>
-                        <div style={{ fontSize: 13 }}>£{item.basePrice}</div>
+                        <div style={{ fontSize: 13 }}>£{item.basePrice.toFixed(2)}</div>
                       </div>
                     </li>
                   ))}
