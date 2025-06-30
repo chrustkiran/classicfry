@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OverlayTrigger, Toast, Tooltip } from "react-bootstrap";
+import RecommendationPopup from "../popups/RecommendationPopup";
+
 const page = () => {
   const {
     cart,
@@ -58,6 +60,7 @@ const page = () => {
 
   const [showCheckError, setShowCheckError] = useState(false);
   const [checkoutWait, setCheckoutWait] = useState(false);
+  const [showRecommendationPopup, setShowRecommendationPopup] = useState(false);
 
   const [suburb, setSuburb] = useState("");
   const [filteredSuburbs, setFilteredSuburbs] = useState([]);
@@ -182,6 +185,11 @@ const page = () => {
         "Form submission failed. Please fill in all required fields."
       );
     }
+  };
+
+  const handleRecommendationPopup = (e) => {
+    e.preventDefault();
+    setShowRecommendationPopup(true);
   };
 
   return (
@@ -633,6 +641,7 @@ const page = () => {
                       <button
                         type="submit"
                         className="theme-btn d-flex justify-content-between align-items-center w-100"
+                        onClick={handleRecommendationPopup}
                       >
                         {checkoutWait ? (
                           <div className="spinner-border" role="status">
@@ -643,6 +652,7 @@ const page = () => {
                         )}
                         <span>£{getFinalTotal().toFixed(2)}</span>
                       </button>
+                      {showRecommendationPopup && <RecommendationPopup onClose={() => setShowRecommendationPopup(false)} />}
                       {/* this is just to make the heights the smae */}
                       <br></br>
                     </div>
