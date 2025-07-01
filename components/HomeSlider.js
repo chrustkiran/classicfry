@@ -52,7 +52,7 @@ const HomeSlider = () => {
                 data-duration={duration}
                 data-delay="3s"
               >
-                <img width="100"  src="/assets/img/hero/chilli-shape-3.png" alt="shape-img" />
+                {/* <img width="100"  src="/assets/img/hero/chilli-shape-3.png" alt="shape-img" /> */}
               </div>
              
               <div className="container">
@@ -89,7 +89,6 @@ const HomeSlider = () => {
                   </div>
                   <div className="col-xl-6 col-lg-5 mt-5 mt-lg-0">
                     <div
-                    
                       className="chiken-image"
                       data-animation="fadeInUp"
                       data-duration={duration}
@@ -104,7 +103,7 @@ const HomeSlider = () => {
                       data-delay="2.7s"
                     >
                       {/* <img width="500" src="/assets/img/hero/chilli.png" alt="shape-img" /> */}
-                      <img width="500" src="/assets/img/hero/offer.png" alt="offer-img" />
+                      <img src="/assets/img/hero/offer2.png" alt="offer-img" />
                     </div>
                   </div>
                 </div>
