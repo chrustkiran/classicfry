@@ -2638,10 +2638,11 @@ input.main-search-input::placeholder {
 
 @media (max-width: 557px) {
   .hero-1 .main-top-img {
-    width: 450px;
-    top: 40%;
+    width: 280px;
+    top: 60%;
     text-align: center;
     margin: 0 auto;
+    left: 20%;
   }
 }
 
