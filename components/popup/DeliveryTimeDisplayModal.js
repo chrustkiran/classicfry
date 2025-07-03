@@ -17,8 +17,7 @@ const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
         <Modal.Body>
           🍽️ We’re currently accepting delivery orders between <strong>5:30 PM and 9:30 PM</strong> only.
           Craving something delicious? Place your order during our delivery window and we’ll bring it hot and fresh to your door!
-          <br></br> <br></br>
-          💰 <strong>Note: A £2.99</strong> delivery fee applies to all online orders. Want to skip the fee? Just give us a call on <a href="tel:01372650894">01372 650894</a> to place your order.
+          <br></br> 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
