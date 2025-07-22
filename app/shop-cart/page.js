@@ -485,7 +485,7 @@ const page = () => {
                     {/* Address Input (Only if Suburb is Valid) */}
                     {deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                       validSuburbs
-                        .map((v) => `${v.name} (${v.postalCode})`)
+                        .map((v) => `${v.postalCode}`)
                         .includes(suburb) && (
                         <div className="mt-1">
                           <label>Address</label>
