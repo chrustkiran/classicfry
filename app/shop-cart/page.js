@@ -102,7 +102,7 @@ const page = () => {
   };
 
   const handleSuburbSelect = (suburb) => {
-    setSuburb(`${suburb.name} (${suburb.postalCode})`);
+    setSuburb(suburb.postalCode);
     setSelectedSuburb(suburb);
     setFilteredSuburbs([]); // Hide suggestions
   };
@@ -457,7 +457,7 @@ const page = () => {
                                 onClick={() => handleSuburbSelect(s)}
                                 style={{ cursor: "pointer" }}
                               >
-                                {s.name} ({s.postalCode})
+                                {s.postalCode}
                               </li>
                             ))}
                           </ul>
@@ -507,7 +507,7 @@ const page = () => {
                     {(deliveryMethod === env.DELIVERY_METHOD.PICKUP ||
                       (deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                         validSuburbs
-                          .map((v) => `${v.name} (${v.postalCode})`)
+                          .map((v) => `${v.postalCode}`)
                           .includes(suburb))) && (
                       <div className="mt-1">
                         <label>Additional Instructions</label>
