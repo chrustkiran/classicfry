@@ -540,13 +540,13 @@ const page = () => {
                         <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? calculateCartTotal() >= 20 ? 0 : env.DELIVERY_FEE  : 0}</span>
                       </li>
                       {getOffer() === 0 && (
-                          <span style={{ fontStyle: "italic", fontSize: '13px', color: "#888" }}>
+                          <span style={{ fontStyle: "italic", fontSize: '16px', color: "#7A1300" }}>
                             Spend £{(env.OFFER_MINIMUM - calculateCartTotal()).toFixed(2)} more to get {env.OFFER_PERCENTAGE * 100}% off your order!
                           </span>
                       )}
                       {getOffer() > 0 && (
                         <li className="justify-content-between">
-                          <span>Offer <span style={{ fontStyle: "italic", fontSize: "13px", color: "#888" }}>({env.OFFER_PERCENTAGE * 100}% Off Over £{env.OFFER_MINIMUM})</span></span>
+                          <span>Offer <span style={{ fontStyle: "italic", fontSize: "16px", color: "#7A1300" }}>({env.OFFER_PERCENTAGE * 100}% Off Over £{env.OFFER_MINIMUM})</span></span>
                           <span>£{getOffer().toFixed(2)}</span>
                         </li>
                       )}
