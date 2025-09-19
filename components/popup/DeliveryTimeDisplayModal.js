@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
+  const isShowinngDeliveryNotAvailableMessage = true // Change this to false to show the other message
   return (
     <>
       <Modal
@@ -11,19 +12,43 @@ const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton>
-          <Modal.Title className="delivery-modal-title">Delivery Hours: 5:30 PM – 9:30 PM </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          🍽️ We’re currently accepting delivery orders between <strong>5:30 PM and 9:30 PM</strong> only.
-          Craving something delicious? Place your order during our delivery window and we’ll bring it hot and fresh to your door!
-          <br></br> 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
+        {
+          isShowinngDeliveryNotAvailableMessage ? (
+            <>
+              <Modal.Header closeButton>
+                <Modal.Title className="delivery-modal-title">Delivery Unavailable</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                🍽️ We’re currently accepting delivery orders between <strong>5:30 PM and 9:30 PM</strong> only.
+                Craving something delicious? Place your order during our delivery window and we’ll bring it hot and fresh to your door!
+                <br></br>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </>
+
+          ) : (
+            <>
+              <Modal.Header closeButton>
+                <Modal.Title className="delivery-modal-title">Delivery Hours: 5:30 PM – 9:30 PM </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                We’re sorry for the inconvenience. Delivery service is currently unavailable today. Please check back tomorrow.
+                <br></br>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </>
+
+          )
+        }
+
       </Modal>
     </>
   );
