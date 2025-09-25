@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
-  const isShowinngDeliveryNotAvailableMessage = true; // Change this to false to show delivery hours message
+  const isShowinngDeliveryNotAvailableMessage = false; // Change this to false to show delivery hours message
   return (
     <>
       <Modal
@@ -45,7 +45,6 @@ const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
                 </Button>
               </Modal.Footer>
             </>
-
           )
         }
 
