@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OverlayTrigger, Toast, Tooltip } from "react-bootstrap";
 import RecommendationPopup from "../popups/RecommendationPopup";
+import { addresses } from "@/adsresses";
 
 const page = () => {
   const {
@@ -64,8 +65,10 @@ const page = () => {
 
   const [suburb, setSuburb] = useState("");
   const [filteredSuburbs, setFilteredSuburbs] = useState([]);
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
+  const [tmpAddress, setTmpAddress] = useState(undefined);
 
-  const validSuburbs = env.VALID_SUBURBS;
+  const validSuburbs = Object.keys(addresses);
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -93,19 +96,36 @@ const page = () => {
     // Filter suburbs based on name or postal code
     const matches = validSuburbs.filter(
       (s) =>
-        input &&
-        (s.name.toLowerCase().includes(input.toLowerCase()) ||
-          s.postalCode.toLowerCase().includes(input.toLowerCase()))
+        input && s.toLowerCase().includes(input.toLowerCase())
     );
 
     setFilteredSuburbs(matches);
   };
 
   const handleSuburbSelect = (suburb) => {
-    setSuburb(suburb.postalCode);
+    setSuburb(suburb);
     setSelectedSuburb(suburb);
     setFilteredSuburbs([]); // Hide suggestions
   };
+
+  const handleAddressChange = (addr) => {
+    if (validSuburbs.includes(selectedSuburb)) {
+      setTmpAddress(addr);
+      //find matching addresses
+      const addressesInPostCode = addresses[selectedSuburb];
+      const matchedAddress = addressesInPostCode.filter(a => addr.length > 0 && a.replace(/[^a-zA-Z0-9]/g, "").toLowerCase().includes(addr.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()));
+      setAddressSuggestions(matchedAddress.slice(0, Math.min(15, matchedAddress.length)));
+    } else {
+      //set an error
+      setErrors((prev) => ({ ...prev, address: "Please select a valid postCode" }));
+    }
+  }
+
+  const selectAddress = (addr) => {
+    setAddress(addr);
+    setTmpAddress(addr);
+    setAddressSuggestions([]);
+  }
 
   const validateForm = () => {
     let isValid = true;
@@ -457,7 +477,7 @@ const page = () => {
                                 onClick={() => handleSuburbSelect(s)}
                                 style={{ cursor: "pointer" }}
                               >
-                                {s.postalCode}
+                                {s}
                               </li>
                             ))}
                           </ul>
@@ -485,15 +505,14 @@ const page = () => {
                     {/* Address Input (Only if Suburb is Valid) */}
                     {deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                       validSuburbs
-                        .map((v) => `${v.postalCode}`)
                         .includes(suburb) && (
                         <div className="mt-1">
                           <label>Address</label>
                           <input
                             type="text"
                             className="form-control"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
+                            value={tmpAddress}
+                            onChange={(e) => handleAddressChange(e.target.value)}
                             placeholder="Enter address"
                           />
                           {errors.address && (
@@ -501,13 +520,26 @@ const page = () => {
                               {errors.address}
                             </small>
                           )}
+                          {addressSuggestions.length > 0 && (
+                          <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">
+                            {addressSuggestions.map((address, index) => (
+                              <li
+                                key={index}
+                                className="list-group-item list-group-item-action"
+                                onClick={() => selectAddress(address)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                {address}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                         </div>
                       )}
 
                     {(deliveryMethod === env.DELIVERY_METHOD.PICKUP ||
                       (deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                         validSuburbs
-                          .map((v) => `${v.postalCode}`)
                           .includes(suburb))) && (
                       <div className="mt-1">
                         <label>Additional Instructions</label>
