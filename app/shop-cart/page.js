@@ -102,7 +102,7 @@ const page = () => {
   };
 
   const handleSuburbSelect = (suburb) => {
-    setSuburb(`${suburb.name} (${suburb.postalCode})`);
+    setSuburb(suburb.postalCode);
     setSelectedSuburb(suburb);
     setFilteredSuburbs([]); // Hide suggestions
   };
@@ -457,7 +457,7 @@ const page = () => {
                                 onClick={() => handleSuburbSelect(s)}
                                 style={{ cursor: "pointer" }}
                               >
-                                {s.name} ({s.postalCode})
+                                {s.postalCode}
                               </li>
                             ))}
                           </ul>
@@ -485,7 +485,7 @@ const page = () => {
                     {/* Address Input (Only if Suburb is Valid) */}
                     {deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                       validSuburbs
-                        .map((v) => `${v.name} (${v.postalCode})`)
+                        .map((v) => `${v.postalCode}`)
                         .includes(suburb) && (
                         <div className="mt-1">
                           <label>Address</label>
@@ -507,7 +507,7 @@ const page = () => {
                     {(deliveryMethod === env.DELIVERY_METHOD.PICKUP ||
                       (deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                         validSuburbs
-                          .map((v) => `${v.name} (${v.postalCode})`)
+                          .map((v) => `${v.postalCode}`)
                           .includes(suburb))) && (
                       <div className="mt-1">
                         <label>Additional Instructions</label>
@@ -540,13 +540,13 @@ const page = () => {
                         <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? calculateCartTotal() >= 20 ? 0 : env.DELIVERY_FEE  : 0}</span>
                       </li>
                       {getOffer() === 0 && (
-                          <span style={{ fontStyle: "italic", fontSize: '13px', color: "#888" }}>
+                          <strong style={{ fontStyle: "italic", fontSize: '16px', color: "#7A1300" }}>
                             Spend £{(env.OFFER_MINIMUM - calculateCartTotal()).toFixed(2)} more to get {env.OFFER_PERCENTAGE * 100}% off your order!
-                          </span>
+                          </strong>
                       )}
                       {getOffer() > 0 && (
                         <li className="justify-content-between">
-                          <span>Offer <span style={{ fontStyle: "italic", fontSize: "13px", color: "#888" }}>({env.OFFER_PERCENTAGE * 100}% Off Over £{env.OFFER_MINIMUM})</span></span>
+                          <strong>Offer <span style={{ fontStyle: "italic", fontSize: "16px", color: "#7A1300" }}>({env.OFFER_PERCENTAGE * 100}% Off Over £{env.OFFER_MINIMUM})</span></strong>
                           <span>£{getOffer().toFixed(2)}</span>
                         </li>
                       )}

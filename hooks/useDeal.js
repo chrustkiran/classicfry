@@ -13,6 +13,9 @@ const dealTypeMapper = (dealType) => {
     PERI_PERI_DEAL: "Peri Peri",
     FAMILY_DEAL: "Family",
     KIDS_DEAL: "Kids",
+    PIZZA_DEAL: "Pizza",
+    BOX_MEAL_DEAL: "Box Meal",
+    SPECIAL_OFFER: "Special Offer"
   };
   if (dealType in Dealtype) {
     return Dealtype[dealType];
