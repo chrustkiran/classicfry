@@ -114,6 +114,59 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const addMultipleItemsToCart = (items) => {
+    console.log("Batch adding items:", items);
+
+    setCart((prevCart) => {
+      let updatedCart = [...prevCart];
+
+      items.forEach((newItem) => {
+        const existingItemIndex = updatedCart.findIndex((item) =>
+          item.checkIsSame(
+            newItem.itemId,
+            newItem.category,
+            newItem.size,
+            newItem.itemConfig,
+            newItem.drinkOptions
+          )
+        );
+
+        if (existingItemIndex !== -1) {
+          // If the item exists, increase its quantity
+          updatedCart[existingItemIndex].increaseQuantity(newItem.quantity);
+          console.log(
+            "Increased quantity of existing item:",
+            updatedCart[existingItemIndex]
+          );
+        } else {
+          // If the item does not exist, add it to the cart
+          const cartItem = new CartItem(
+            newItem.itemId,
+            newItem.name,
+            newItem.price,
+            newItem.image,
+            newItem.category,
+            newItem.size,
+            newItem.quantity,
+            newItem.type,
+            newItem.itemConfig,
+            newItem.drinkOptions
+          );
+          updatedCart.push(cartItem);
+          console.log("Added new item to cart:", cartItem);
+        }
+      });
+
+      // Update localStorage
+      global?.window?.localStorage.setItem(
+        cartName,
+        JSON.stringify(updatedCart)
+      );
+      console.log("Final cart after batch add:", updatedCart);
+      return updatedCart;
+    });
+  };
+
   // Method to remove an item from the cart
   const removeItemFromCart = (itemId, category, size, itemConfig) => {
     const index = findIndexByItem(itemId, category, size, itemConfig);
@@ -244,21 +297,24 @@ export const AppProvider = ({ children }) => {
   const getOffer = () => {
     const cartTotal = getTotalPrice();
     if (cartTotal >= env.OFFER_MINIMUM) {
-      return cartTotal * env.OFFER_PERCENTAGE; 
+      return cartTotal * env.OFFER_PERCENTAGE;
     }
     return 0;
-  }
+  };
 
   const getFinalTotal = () => {
     let tot = 0;
     const cartTotal = getTotalPrice();
     tot += cartTotal;
-    if (deliveryMethod === env.DELIVERY_METHOD.DELIVERY && cartTotal <= env.DELIVERY_MINIMUM) {
+    if (
+      deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
+      cartTotal <= env.DELIVERY_MINIMUM
+    ) {
       tot += env.DELIVERY_FEE;
     }
     return tot - getOffer();
-  }
-  
+  };
+
   const contextValue = {
     cart,
     addItemToCart,
@@ -284,7 +340,8 @@ export const AppProvider = ({ children }) => {
     getCheckoutValuesFromSession,
     clearCheckoutValuesFromSession,
     getFinalTotal,
-    getOffer
+    getOffer,
+    addMultipleItemsToCart,
   };
 
   return (
