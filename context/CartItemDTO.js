@@ -10,7 +10,8 @@ export class CartItem {
     size = env.DEFAULT,
     quantity = 1,
     type = "ITEM",
-    itemConfig = {}
+    itemConfig = {},
+    drinkOptions = []
   ) {
     this.itemId = itemId;
     this.name = name;
@@ -21,6 +22,7 @@ export class CartItem {
     this.image = image;
     this.type = type;
     this.itemConfig = itemConfig;
+    this.drinkOptions = drinkOptions;
   }
 
   calculateTotalPrice = () => {
@@ -35,7 +37,29 @@ export class CartItem {
     if (this.quantity > size) this.quantity -= size;
   }
 
-  checkIsSame(itemId, category, size, itemConfig) {
+  _areDrinksEqual(a = [], b = []) {
+    console.log("Comparing drinks:", a, "vs", b);
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      const ai = a[i] || {};
+      const bi = b[i] || {};
+      const aid = ai.itemId ?? ai.id ?? ai;
+      const bid = bi.itemId ?? bi.id ?? bi;
+      console.log(
+        "Drink comparison:",
+        aid,
+        "===",
+        bid,
+        "?",
+        String(aid) === String(bid)
+      );
+      if (String(aid) !== String(bid)) return false;
+    }
+    return true;
+  }
+
+  checkIsSame(itemId, category, size, itemConfig, drinkOptions = []) {
+    console.log("checking item", this, itemId, category, size, itemConfig);
     if (category === "pizza" && category in itemConfig) {
       //if we add other items, when it compare with other items exist in cart. it should be false
       if (this.category !== "pizza") return false;
@@ -53,6 +77,16 @@ export class CartItem {
         ); // Ensure no extra toppings
 
       return isSameItem && isSameCrust && hasSameToppings;
+    } // if either existing cart item or incoming config has drinks, require drinks to match
+    else if (
+      (drinkOptions && Array.isArray(drinkOptions)) ||
+      (this.drinkOptions && Array.isArray(this.drinkOptions))
+    ) {
+      console.log("comparing drinks");
+      return this._areDrinksEqual(
+        this.drinkOptions || [],
+        drinkOptions || []
+      );
     } else {
       // Logic for other item categories
       return this.itemId === itemId && this.size === size;
