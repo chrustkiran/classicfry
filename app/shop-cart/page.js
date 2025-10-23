@@ -42,15 +42,15 @@ const page = () => {
 
   
   const incrementQuantity = (item) => {
-    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig);
+    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
   };
 
   const decrementQuantity = (item) => {
-    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig);
+    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
   };
 
   const removeItem = (item) => {
-    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig);
+    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
   };
 
   const [formData, setFormData] = useState({

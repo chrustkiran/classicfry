@@ -38,28 +38,18 @@ export class CartItem {
   }
 
   _areDrinksEqual(a = [], b = []) {
-    console.log("Comparing drinks:", a, "vs", b);
     if (a.length !== b.length) return false;
     for (let i = 0; i < a.length; i++) {
       const ai = a[i] || {};
       const bi = b[i] || {};
       const aid = ai.itemId ?? ai.id ?? ai;
       const bid = bi.itemId ?? bi.id ?? bi;
-      console.log(
-        "Drink comparison:",
-        aid,
-        "===",
-        bid,
-        "?",
-        String(aid) === String(bid)
-      );
       if (String(aid) !== String(bid)) return false;
     }
     return true;
   }
 
   checkIsSame(itemId, category, size, itemConfig, drinkOptions = []) {
-    console.log("checking item", this, itemId, category, size, itemConfig);
     if (category === "pizza" && category in itemConfig) {
       //if we add other items, when it compare with other items exist in cart. it should be false
       if (this.category !== "pizza") return false;
@@ -82,7 +72,6 @@ export class CartItem {
       (drinkOptions && Array.isArray(drinkOptions)) ||
       (this.drinkOptions && Array.isArray(this.drinkOptions))
     ) {
-      console.log("comparing drinks");
       return this._areDrinksEqual(
         this.drinkOptions || [],
         drinkOptions || []
