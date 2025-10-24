@@ -101,8 +101,8 @@ const page = () => {
     const opts = [];
     dealObj.dealItemViews.forEach((it) => {
       const name = (it.name || "").toLowerCase();
-      if (name.includes("drink") && Array.isArray(it.options)) {
-        it.options.forEach((o, idx) => {
+      if (name.includes("drink") && Array.isArray(it.dealItemOptions)) {
+        it.dealItemOptions.forEach((o, idx) => {
           // normalize option into object { id, name, image?, price? }
           if (typeof o === "string") {
             opts.push({
