@@ -40,7 +40,7 @@ const page = () => {
     return getTotalPrice();
   };
 
-  
+
   const incrementQuantity = (item) => {
     increaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
   };
@@ -244,6 +244,7 @@ const page = () => {
                               />
                               <div className="d-flex flex-column">
                                 <span>{item.name}</span>
+                                {item.drinkOption && <span>Drink: {item.drinkOption?.name}</span>}
                                 <div className="d-flex flex-row">
                                   <div className="me-2">
                                     {item.size !== env.DEFAULT && (
@@ -275,7 +276,7 @@ const page = () => {
                                   <div>
                                     {"pizza" in item.itemConfig &&
                                       item.itemConfig.pizza?.toppings?.length >
-                                        0 && (
+                                      0 && (
                                         <OverlayTrigger
                                           placement="top"
                                           overlay={
@@ -389,9 +390,8 @@ const page = () => {
                   <form className="cart-graph shadow-sm delivery-detail">
                     <h4>Delivery Details</h4>
                     <div
-                      className={` p-2 custom-control ${
-                        !deliveryMethod ? "border border-danger" : ""
-                      }`}
+                      className={` p-2 custom-control ${!deliveryMethod ? "border border-danger" : ""
+                        }`}
                     >
                       <div>
                         {!deliveryMethod ? (
@@ -521,19 +521,19 @@ const page = () => {
                             </small>
                           )}
                           {addressSuggestions.length > 0 && (
-                          <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">
-                            {addressSuggestions.map((address, index) => (
-                              <li
-                                key={index}
-                                className="list-group-item list-group-item-action"
-                                onClick={() => selectAddress(address)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                {address}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                            <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">
+                              {addressSuggestions.map((address, index) => (
+                                <li
+                                  key={index}
+                                  className="list-group-item list-group-item-action"
+                                  onClick={() => selectAddress(address)}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  {address}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       )}
 
@@ -541,17 +541,17 @@ const page = () => {
                       (deliveryMethod === env.DELIVERY_METHOD.DELIVERY &&
                         validSuburbs
                           .includes(suburb))) && (
-                      <div className="mt-1">
-                        <label>Additional Instructions</label>
-                        <textarea
-                          className="form-control"
-                          rows="3"
-                          value={additionalInstructions}
-                          onChange={handleAdditionalInstructionsChange}
-                          placeholder="Enter any special delivery instructions or requests (This is an optional field)"
-                        ></textarea>
-                      </div>
-                    )}
+                        <div className="mt-1">
+                          <label>Additional Instructions</label>
+                          <textarea
+                            className="form-control"
+                            rows="3"
+                            value={additionalInstructions}
+                            onChange={handleAdditionalInstructionsChange}
+                            placeholder="Enter any special delivery instructions or requests (This is an optional field)"
+                          ></textarea>
+                        </div>
+                      )}
                   </form>
                 </div>
               </div>
@@ -569,12 +569,12 @@ const page = () => {
                       </li>
                       <li className="d-flex justify-content-between">
                         <span>Delivery Fee</span>
-                        <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? calculateCartTotal() >= 20 ? 0 : env.DELIVERY_FEE  : 0}</span>
+                        <span>£{deliveryMethod === env.DELIVERY_METHOD.DELIVERY ? calculateCartTotal() >= 20 ? 0 : env.DELIVERY_FEE : 0}</span>
                       </li>
                       {getOffer() === 0 && (
-                          <strong style={{ fontStyle: "italic", fontSize: '16px', color: "#7A1300" }}>
-                            Spend £{(env.OFFER_MINIMUM - calculateCartTotal()).toFixed(2)} more to get {env.OFFER_PERCENTAGE * 100}% off your order!
-                          </strong>
+                        <strong style={{ fontStyle: "italic", fontSize: '16px', color: "#7A1300" }}>
+                          Spend £{(env.OFFER_MINIMUM - calculateCartTotal()).toFixed(2)} more to get {env.OFFER_PERCENTAGE * 100}% off your order!
+                        </strong>
                       )}
                       {getOffer() > 0 && (
                         <li className="justify-content-between">
@@ -669,7 +669,7 @@ const page = () => {
                       <button
                         type="submit"
                         className="theme-btn d-flex justify-content-between align-items-center w-100"
-                        // onClick={handleRecommendationPopup}
+                      // onClick={handleRecommendationPopup}
                       >
                         {checkoutWait ? (
                           <div className="spinner-border" role="status">

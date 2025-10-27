@@ -90,8 +90,8 @@ const page = () => {
   const getDrinksPerDeal = (dealObj) => {
     if (!dealObj?.dealItemViews) return 0;
     return dealObj.dealItemViews.reduce((acc, it) => {
-      const name = (it.name || "").toString().toLowerCase();
-      return acc + (name.includes("drink") ? Number(it.quantity || 0) : 0);
+      const name = (it.dealItemType || "").toString().toLowerCase();
+      return acc + (name == "drink" ? Number(it.quantity || 0) : 0);
     }, 0);
   };
 
@@ -100,8 +100,8 @@ const page = () => {
     if (!dealObj || !Array.isArray(dealObj.dealItemViews)) return [];
     const opts = [];
     dealObj.dealItemViews.forEach((it) => {
-      const name = (it.name || "").toLowerCase();
-      if (name.includes("drink") && Array.isArray(it.dealItemOptions)) {
+      const name = (it.dealItemType || "").toLowerCase();
+      if (name == "drink" && Array.isArray(it.dealItemOptions)) {
         it.dealItemOptions.forEach((o, idx) => {
           // normalize option into object { id, name, image?, price? }
           if (typeof o === "string") {
@@ -243,21 +243,12 @@ const page = () => {
         // Prepare all items to add
         for (let i = 0; i < quantity; i++) {
           const drinkIndex = i * drinksPerDeal;
-          const drinksForThisUnit = selectedDrinks.slice(
-            drinkIndex,
-            drinkIndex + drinksPerDeal
-          );
+          const drinksForThisUnit = selectedDrinks[drinkIndex];
 
-          const drinksMeta = drinksForThisUnit.map((d) => {
-            if (!d) {
-              console.warn("Empty drink selection at index:", drinkIndex);
-              return null;
+          const drinksMeta = {
+              id: drinksForThisUnit.id || drinksForThisUnit.itemId || drinksForThisUnit.name,
+              name: drinksForThisUnit.name || drinksForThisUnit.label,
             }
-            return {
-              id: d.id || d.itemId || d.name,
-              name: d.name || d.label,
-            };
-          });
 
           console.log(`Preparing item ${i + 1} with drinks:`, drinksMeta);
 
@@ -270,7 +261,7 @@ const page = () => {
             quantity: 1, // Each unit has quantity 1
             type: env.ITEM_TYPE.DEAL,
             category: fetchedDeal.dealType?.toLowerCase(),
-            drinkOptions: drinksMeta,
+            drinkOption: drinksMeta,
           });
         }
 

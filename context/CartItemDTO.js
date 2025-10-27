@@ -11,7 +11,7 @@ export class CartItem {
     quantity = 1,
     type = "ITEM",
     itemConfig = {},
-    drinkOptions = []
+    drinkOption = undefined
   ) {
     this.itemId = itemId;
     this.name = name;
@@ -22,7 +22,7 @@ export class CartItem {
     this.image = image;
     this.type = type;
     this.itemConfig = itemConfig;
-    this.drinkOptions = drinkOptions;
+    this.drinkOption = drinkOption;
   }
 
   calculateTotalPrice = () => {
@@ -37,19 +37,16 @@ export class CartItem {
     if (this.quantity > size) this.quantity -= size;
   }
 
-  _areDrinksEqual(a = [], b = []) {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      const ai = a[i] || {};
-      const bi = b[i] || {};
-      const aid = ai.itemId ?? ai.id ?? ai;
-      const bid = bi.itemId ?? bi.id ?? bi;
-      if (String(aid) !== String(bid)) return false;
-    }
+  _areDrinksEqual(a = {}, b = {}) {
+    const ai = a;
+    const bi = b;
+    const aid = ai.itemId ?? ai.id ?? ai;
+    const bid = bi.itemId ?? bi.id ?? bi;
+    if (String(aid) !== String(bid)) return false;
     return true;
   }
 
-  checkIsSame(itemId, category, size, itemConfig, drinkOptions = []) {
+  checkIsSame(itemId, category, size, itemConfig, drinkOption = undefined) {
     if (category === "pizza" && category in itemConfig) {
       //if we add other items, when it compare with other items exist in cart. it should be false
       if (this.category !== "pizza") return false;
@@ -61,7 +58,7 @@ export class CartItem {
       // Ensure all toppings in itemConfig are present in item.config.toppings
       const hasSameToppings =
         this.itemConfig.pizza.toppings.length ===
-          itemConfig.pizza.toppings.length &&
+        itemConfig.pizza.toppings.length &&
         itemConfig.pizza.toppings.every((topping) =>
           this.itemConfig.pizza.toppings.includes(topping)
         ); // Ensure no extra toppings
@@ -69,13 +66,8 @@ export class CartItem {
       return isSameItem && isSameCrust && hasSameToppings;
     } // if either existing cart item or incoming config has drinks, require drinks to match
     else if (
-      (drinkOptions && Array.isArray(drinkOptions)) ||
-      (this.drinkOptions && Array.isArray(this.drinkOptions))
-    ) {
-      return this._areDrinksEqual(
-        this.drinkOptions || [],
-        drinkOptions || []
-      );
+      (drinkOption && Object.keys(drinkOption).length > 0)) {
+      return this._areDrinksEqual(this.drinkOption,drinkOption);
     } else {
       // Logic for other item categories
       return this.itemId === itemId && this.size === size;

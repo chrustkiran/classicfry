@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "powershell -Command \"& { NODE_ENV=prod next dev }\"",
+    "dev": "powershell -Command \"& { $env:APP_ENV='local'; next dev }\"",
     "dev:staging": "powershell -Command \"$env:APP_ENV='prod'; next dev\"",
     "build-ws": "powershell -Command \" & {$env:APP_ENV='prod'; next build}\"",
     "build": "next build",

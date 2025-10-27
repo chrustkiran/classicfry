@@ -325,6 +325,7 @@ const OrderPage = () => {
                                       {orderItem?.portionSize !== env.DEFAULT &&
                                         orderItem?.portionSize?.replaceAll("_", " ")}
                                     </span>
+                                    {orderItem.drinkOption && <p>Drink: {orderItem.drinkOption.name}</p>}
                                   </div>
                                 </li>
                               );
