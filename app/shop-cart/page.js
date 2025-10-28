@@ -244,7 +244,9 @@ const page = () => {
                               />
                               <div className="d-flex flex-column">
                                 <span>{item.name}</span>
-                                {item.drinkOption && <span>Drink: {item.drinkOption?.name}</span>}
+                                {item.drinkOptions && item.drinkOptions.length > 0 && <span>Drink: {item.drinkOptions
+                                  .map(d => d.name)
+                                  .join(", ")}</span>}
                                 <div className="d-flex flex-row">
                                   <div className="me-2">
                                     {item.size !== env.DEFAULT && (

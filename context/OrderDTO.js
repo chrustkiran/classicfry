@@ -30,7 +30,7 @@ export class PostOrderRequest {
         }
         if (item.type === env.ITEM_TYPE.DEAL) {
           result.deal = { dealId: item.itemId };
-          result.drinkOption = item.drinkOption || undefined;
+          result.drinkOptions = item.drinkOptions || undefined;
         }
         return result;
       });

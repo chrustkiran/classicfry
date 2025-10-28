@@ -158,7 +158,7 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    if(isValidUser()) {
+    if (isValidUser()) {
       fetchOrders(getUser()?.userId);
     }
   }, []);
@@ -169,18 +169,18 @@ const OrderPage = () => {
       <section className="food-category-section fix section-padding section-bg">
         {!isValidUser() && (
           <div className="container d-flex flex-column align-items-center justify-content-center text-center ">
-          <h4 className="mb-4">
-            Looks like you're new here or haven't placed an order yet!
-          </h4>
-          <h4>
-            <Link href="/shop-list" className="theme-btn">
-              Order Now
-            </Link>{" "}
-            <br></br>
-           <div className="mt-4">to enjoy our crispy, mouthwatering chicken fries!</div> 
-          </h4>
-        </div>
-        
+            <h4 className="mb-4">
+              Looks like you're new here or haven't placed an order yet!
+            </h4>
+            <h4>
+              <Link href="/shop-list" className="theme-btn">
+                Order Now
+              </Link>{" "}
+              <br></br>
+              <div className="mt-4">to enjoy our crispy, mouthwatering chicken fries!</div>
+            </h4>
+          </div>
+
         )}
         {isValidUser() && (
           <div className="container px-3 px-md-5 px-lg-5 px-xl-5">
@@ -206,22 +206,20 @@ const OrderPage = () => {
               <ul className="nav nav-tabs d-flex  order-tab">
                 <li className="nav-item">
                   <button
-                    className={`nav-link ${
-                      activeTab === "active" ? "active" : ""
-                    }`}
+                    className={`nav-link ${activeTab === "active" ? "active" : ""
+                      }`}
                     onClick={() => handleTabChange("active")}
                   >
-                    Active Orders ({orders['active']? orders['active'].length : 0})
+                    Active Orders ({orders['active'] ? orders['active'].length : 0})
                   </button>
                 </li>
                 <li className="nav-item">
                   <button
-                    className={`nav-link ${
-                      activeTab === "completed" ? "active" : ""
-                    }`}
+                    className={`nav-link ${activeTab === "completed" ? "active" : ""
+                      }`}
                     onClick={() => handleTabChange("completed")}
                   >
-                    Completed Orders ({orders['completed']? orders['completed'].length : 0})
+                    Completed Orders ({orders['completed'] ? orders['completed'].length : 0})
                   </button>
                 </li>
                 <li>
@@ -295,9 +293,8 @@ const OrderPage = () => {
 
                       {/* Expandable Order Details */}
                       <div
-                        className={`collapse ${
-                          expandedOrder === order.orderId ? "show" : ""
-                        }`}
+                        className={`collapse ${expandedOrder === order.orderId ? "show" : ""
+                          }`}
                       >
                         <div className="card-body">
                           <h6>Order Items</h6>
@@ -325,7 +322,9 @@ const OrderPage = () => {
                                       {orderItem?.portionSize !== env.DEFAULT &&
                                         orderItem?.portionSize?.replaceAll("_", " ")}
                                     </span>
-                                    {orderItem.drinkOption && <p>Drink: {orderItem.drinkOption.name}</p>}
+                                    {orderItem.drinkOptions && orderItem.drinkOptions.length > 0 && <p>Drink - {orderItem.drinkOptions
+                                      .map(d => d.name)
+                                      .join(", ")}</p>}
                                   </div>
                                 </li>
                               );

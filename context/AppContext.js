@@ -23,7 +23,7 @@ export const AppProvider = ({ children }) => {
               item.quantity,
               item.type,
               item.itemConfig,
-              item.drinkOption
+              item.drinkOptions
             )
         )
       : [];
@@ -37,9 +37,9 @@ export const AppProvider = ({ children }) => {
   const [address, setAddress] = useState("");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
 
-  const findIndexByItem = (itemId, category, size, itemConfig, drinkOption=undefined) => {
+  const findIndexByItem = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
     return cart.findIndex((item) => {
-      return item.checkIsSame(itemId, category, size, itemConfig, drinkOption);
+      return item.checkIsSame(itemId, category, size, itemConfig, drinkOptions);
 
       // if (category in itemConfig) {
       //   if (category === "pizza") {
@@ -126,7 +126,7 @@ export const AppProvider = ({ children }) => {
             newItem.category,
             newItem.size,
             newItem.itemConfig,
-            newItem.drinkOption
+            newItem.drinkOptions
           )
         );
 
@@ -145,7 +145,7 @@ export const AppProvider = ({ children }) => {
             newItem.quantity,
             newItem.type,
             newItem.itemConfig,
-            newItem.drinkOption
+            newItem.drinkOptions
           );
           updatedCart.push(cartItem);
         }
@@ -161,24 +161,24 @@ export const AppProvider = ({ children }) => {
   };
 
   // Method to remove an item from the cart
-  const removeItemFromCart = (itemId, category, size, itemConfig, drinkOption=undefined) => {
-    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOption);
+  const removeItemFromCart = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOptions);
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
   // Method to decrease the quantity of an item
-  const decreaseQuantity = (itemId, category, size, itemConfig, drinkOption=undefined) => {
-    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOption);
+  const decreaseQuantity = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOptions);
     const updatedCart = [...cart];
     updatedCart[index].decreaseQuantity();
     setCart(updatedCart);
     global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
-  const increaseQuantity = (itemId, category, size, itemConfig, drinkOption=undefined) => {
-    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOption);
+  const increaseQuantity = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOptions);
     const updatedCart = [...cart];
     updatedCart[index].increaseQuantity();
     setCart(updatedCart);

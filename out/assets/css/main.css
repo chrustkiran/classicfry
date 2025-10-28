@@ -11689,3 +11689,7 @@ p.order-confirm {
   color: var(--theme2);
   font-weight: 500;
 }
+
+.z-1000 {
+  z-index: 1000;
+}

@@ -242,13 +242,23 @@ const page = () => {
 
         // Prepare all items to add
         for (let i = 0; i < quantity; i++) {
+          console.log(selectedDrinks)
           const drinkIndex = i * drinksPerDeal;
-          const drinksForThisUnit = selectedDrinks[drinkIndex];
-
-          const drinksMeta = {
-              id: drinksForThisUnit.id || drinksForThisUnit.itemId || drinksForThisUnit.name,
-              name: drinksForThisUnit.name || drinksForThisUnit.label,
+          const drinksForThisUnit = selectedDrinks.slice(
+            drinkIndex,
+            drinkIndex + drinksPerDeal
+          );
+          
+          const drinksMeta = drinksForThisUnit.map((d) => {
+            if (!d) {
+              console.warn("Empty drink selection at index:", drinkIndex);
+              return null;
             }
+            return {
+              id: d.id || d.itemId || d.name,
+              name: d.name || d.label,
+            };
+          });
 
           console.log(`Preparing item ${i + 1} with drinks:`, drinksMeta);
 
@@ -261,7 +271,7 @@ const page = () => {
             quantity: 1, // Each unit has quantity 1
             type: env.ITEM_TYPE.DEAL,
             category: fetchedDeal.dealType?.toLowerCase(),
-            drinkOption: drinksMeta,
+            drinkOptions: drinksMeta,
           });
         }
 

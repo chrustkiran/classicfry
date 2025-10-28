@@ -11,7 +11,7 @@ export class CartItem {
     quantity = 1,
     type = "ITEM",
     itemConfig = {},
-    drinkOption = undefined
+    drinkOptions = undefined
   ) {
     this.itemId = itemId;
     this.name = name;
@@ -22,7 +22,7 @@ export class CartItem {
     this.image = image;
     this.type = type;
     this.itemConfig = itemConfig;
-    this.drinkOption = drinkOption;
+    this.drinkOptions = drinkOptions;
   }
 
   calculateTotalPrice = () => {
@@ -37,16 +37,18 @@ export class CartItem {
     if (this.quantity > size) this.quantity -= size;
   }
 
-  _areDrinksEqual(a = {}, b = {}) {
-    const ai = a;
-    const bi = b;
-    const aid = ai.itemId ?? ai.id ?? ai;
-    const bid = bi.itemId ?? bi.id ?? bi;
-    if (String(aid) !== String(bid)) return false;
-    return true;
+  _areDrinksEqual(a = [], b = []) {
+    if (a.length !== b.length) return false;
+
+    return a.every((drinkA, index) => {
+      const drinkB = b[index];
+      const aid = drinkA?.itemId ?? drinkA?.id ?? drinkA;
+      const bid = drinkB?.itemId ?? drinkB?.id ?? drinkB;
+      return String(aid) === String(bid);
+    });
   }
 
-  checkIsSame(itemId, category, size, itemConfig, drinkOption = undefined) {
+  checkIsSame(itemId, category, size, itemConfig, drinkOptions = undefined) {
     if (category === "pizza" && category in itemConfig) {
       //if we add other items, when it compare with other items exist in cart. it should be false
       if (this.category !== "pizza") return false;
@@ -66,8 +68,8 @@ export class CartItem {
       return isSameItem && isSameCrust && hasSameToppings;
     } // if either existing cart item or incoming config has drinks, require drinks to match
     else if (
-      (drinkOption && Object.keys(drinkOption).length > 0)) {
-      return this._areDrinksEqual(this.drinkOption,drinkOption);
+      (drinkOptions && drinkOptions.length > 0)) {
+      return this.itemId === itemId && this.size === size && this._areDrinksEqual(this.drinkOptions, drinkOptions);
     } else {
       // Logic for other item categories
       return this.itemId === itemId && this.size === size;
