@@ -39,7 +39,9 @@ export class CartItem {
 
   _areDrinksEqual(a = [], b = []) {
     if (a.length !== b.length) return false;
-
+    
+    a = a.sort((a,b) => a.name.localeCompare(b.name));
+    b = b.sort((a,b) => a.name.localeCompare(b.name));
     return a.every((drinkA, index) => {
       const drinkB = b[index];
       const aid = drinkA?.itemId ?? drinkA?.id ?? drinkA;
