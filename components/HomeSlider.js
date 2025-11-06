@@ -5,6 +5,7 @@ import { sliderProps } from "@/utility/sliderProps";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SelectStoreDropDown from "./SelectStoreDropDown";
 
 const HomeSlider = () => {
   const swiperRef = useRef(null);
@@ -45,7 +46,7 @@ const HomeSlider = () => {
                 transition: 'background-image 0.3s ease-in-out'
               }}
             >
-           
+             <SelectStoreDropDown iconColor="white" />
               <div
                 className="chilii-shape-3"
                 data-animation="fadeInUp"

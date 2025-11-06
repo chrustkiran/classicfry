@@ -2,10 +2,12 @@
 import { createContext, useState, useContext } from "react";
 import { CartItem } from "./CartItemDTO";
 import env from "@/env";
+import { get } from "http";
 
 const AppContext = createContext();
 
 const cartName = "classic-fry-cart";
+const storeName = "classic-fry-store";
 
 export const AppProvider = ({ children }) => {
   const getCartFromLocalStorage = () => {
@@ -29,6 +31,10 @@ export const AppProvider = ({ children }) => {
       : [];
   };
 
+  const getStoreFromLocalStoarage = () => {
+    return  global?.window?.localStorage.getItem(storeName) || "";
+  }
+
   const [cart, setCart] = useState(getCartFromLocalStorage);
 
   //These fields are for passing infor to checkout page from shopcart
@@ -36,6 +42,7 @@ export const AppProvider = ({ children }) => {
   const [selectedSuburb, setSelectedSuburb] = useState(null);
   const [address, setAddress] = useState("");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
+  const [store, setStore]= useState(getStoreFromLocalStoarage);
 
   const findIndexByItem = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
     return cart.findIndex((item) => {
@@ -308,6 +315,11 @@ export const AppProvider = ({ children }) => {
     return tot - getOffer();
   };
 
+  const setSelectedStore = (store) => {
+    setStore(store);
+    global?.window?.localStorage.setItem(storeName, store);
+  }
+
   const contextValue = {
     cart,
     addItemToCart,
@@ -335,6 +347,8 @@ export const AppProvider = ({ children }) => {
     getFinalTotal,
     getOffer,
     addMultipleItemsToCart,
+    store,
+    setSelectedStore
   };
 
   return (

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OverlayTrigger, Toast, Tooltip } from "react-bootstrap";
 import RecommendationPopup from "../popups/RecommendationPopup";
-import { addresses } from "@/adsresses";
+import { addresses } from "@/address/address";
 
 const page = () => {
   const {
@@ -34,8 +34,22 @@ const page = () => {
     storeCheckoutValuesInSession,
     getFinalTotal,
     getOffer,
+    store,
   } = useAppContext();
-
+   console.log("No store selected, redirecting to home page. + Store:", store);
+  if (!store || store === "") {
+ 
+    return (
+      <FoodKingLayout> 
+        <PageBanner pageName={"shop Cart"} />
+        <div className="container my-5">
+          <div className="alert alert-warning text-center" role="alert">  
+            Please select your store to proceed to the cart. <br /><br/>
+            <Link href="/shop-list" className="theme-btn">Go back to Menu</Link>
+          </div>
+        </div>
+      </FoodKingLayout>);
+  }
   const calculateCartTotal = () => {
     return getTotalPrice();
   };
