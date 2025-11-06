@@ -25,10 +25,10 @@ const useItem = () => {
   const [item, setItem] = useState(undefined);
   const [itemLoading, setItemLoading] = useState(false);
 
-  const fetchItems = () => {
-    console.log("Fetching items from API :: ", base_url + "items");
+  const fetchItems = (store) => {
+    console.log(`Fetching items from API for store ${store}:: ${base_url} items`);
     setItemLoading(true);
-    axios.get(base_url + "items").then((res) => {
+    axios.get(`${base_url}items/?store=${store}`).then((res) => {
       setItems(
         res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map((item) => {
           const basePrice = item.portionPrices

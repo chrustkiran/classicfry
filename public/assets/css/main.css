@@ -4497,6 +4497,20 @@ input.main-search-input::placeholder {
   height: 100%;
 }
 
+
+.select-store {
+  position: absolute;
+  top: 5px;
+  /* left: 50%;
+  transform: translateX(-50%); */
+}
+
+/* .flex-lg-column {
+  @media (max-width: 991px) {
+    flex-direction: column !important;
+  }
+} */
+
 .nice-select {
   background-color: transparent;
   width: unset;
@@ -11692,4 +11706,8 @@ p.order-confirm {
 
 .z-1000 {
   z-index: 1000;
+}
+
+.p-32 {
+  padding: 5rem;
 }

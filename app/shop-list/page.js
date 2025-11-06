@@ -12,6 +12,8 @@ import { useSearchParams } from "next/navigation";
 import useItem from "@/hooks/useItem";
 import useDeal from "@/hooks/useDeal";
 import DeliveryTimeDisplayModal from "@/components/popup/DeliveryTimeDisplayModal";
+import { useAppContext } from "@/context/AppContext";
+import SelectStoreDropDown from "@/components/SelectStoreDropDown";
 
 const Item = ({ item, key }) => {
   return (
@@ -145,6 +147,12 @@ const ShopPage = () => {
   const searchParams = useSearchParams();
   const [isDeliveryTimeModalDisplay, setDeliveryTimeModalDisplay] = useState(false);
 
+  const { store, setSelectedStore } = useAppContext();
+  const [storeLoad, setStoreLoaded] = useState(false);
+  const [isShowStoreSelect, setShowStoreSelect] = useState(false);
+
+  const isMobile = window.innerWidth <= 1024;
+
   useEffect(() => {
     if (searchParams.get("category")) {
       selectCategory(searchParams.get("category"));
@@ -158,9 +166,15 @@ const ShopPage = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    fetchItems();
-    fetchDeals();
-  }, []);
+    setStoreLoaded(true);
+    if ("" === store || !store) {
+      setShowStoreSelect(true);
+    } else {
+      setShowStoreSelect(false);
+      fetchItems();
+      fetchDeals();
+    }
+  }, [store]);
 
   useEffect(() => {
     if (deals.length > 0) {
@@ -208,12 +222,50 @@ const ShopPage = () => {
     selectCategory(undefined);
   };
 
+  if (!storeLoad) {
+    return (
+      <FoodKingLayout>
+        <PageBanner pageName={"Our Menu"} />
+        <div className="d-flex justify-content-center align-items-center p-32">
+          <div className="spinner-border text-warning" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </FoodKingLayout>
+    )
+  }
+
+  if (storeLoad && isShowStoreSelect) {
+    return (
+      <FoodKingLayout>
+        <PageBanner pageName={"Our Menu"} />
+
+        <div className="p-32">
+          <div className="d-flex flex-column justify-content-center align-items-center alert alert-warning" role="alert">
+            <p className="d-flex justify-content-center align-items-center p-4">
+              Please select store to view items.
+            </p>
+            <div className="mb-4">
+              <SelectStoreDropDown style={{ position: "relative", alignItems: "center", gap: "8px" }} isShowText={false} iconColor="#000" />
+            </div>
+          </div>
+        </div>
+      </FoodKingLayout>
+    );
+  }
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
       {isDeliveryTimeModalDisplay && <DeliveryTimeDisplayModal show={isDeliveryTimeModalDisplay} handleClose={() => setDeliveryTimeModalDisplay(false)} />}
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
+          <div>
+            {/* <div className="d-flex justify-content-center">
+            Please select store to view items.
+          </div> */}
+            <SelectStoreDropDown style={{ position: "absolute", alignItems: "center", gap: "8px", marginTop: isMobile ? "0px" : "50px" }} iconColor="#000" />
+          </div>
           <div className="mb-5">
             <ul className="nav nav-tabs d-flex  order-tab gap-3">
               <li className="nav-item">
