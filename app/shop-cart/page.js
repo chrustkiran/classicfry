@@ -11,7 +11,6 @@ import { useState } from "react";
 import { OverlayTrigger, Toast, Tooltip } from "react-bootstrap";
 import RecommendationPopup from "../popups/RecommendationPopup";
 import { addresses } from "@/address/address";
-
 const page = () => {
   const {
     cart,
@@ -82,7 +81,14 @@ const page = () => {
   const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [tmpAddress, setTmpAddress] = useState(undefined);
 
-  const validSuburbs = Object.keys(addresses);
+  // const validSuburbs = Object.keys(addresses);
+  // derive store key and only use addresses for that store
+  const storeKey = (store || "").toLowerCase().trim().replace(/\s+/g, "");
+  const storeAddresses = addresses[storeKey] || {};
+  const validSuburbs = Object.keys(storeAddresses);
+  // console.log("No store selected, redirecting to home page. + Store:", store);
+  // console.log("Derived store key:", storeKey);
+  // console.log("Valid suburbs for store:", validSuburbs);
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -126,7 +132,8 @@ const page = () => {
     if (validSuburbs.includes(selectedSuburb)) {
       setTmpAddress(addr);
       //find matching addresses
-      const addressesInPostCode = addresses[selectedSuburb];
+      // const addressesInPostCode = addresses[selectedSuburb];
+      const addressesInPostCode = storeAddresses[selectedSuburb] || [];
       const matchedAddress = addressesInPostCode.filter(a => addr.length > 0 && a.replace(/[^a-zA-Z0-9]/g, "").toLowerCase().includes(addr.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()));
       setAddressSuggestions(matchedAddress.slice(0, Math.min(15, matchedAddress.length)));
     } else {
@@ -475,17 +482,20 @@ const page = () => {
                     {/* Suburb Input (Only for Delivery) */}
                     {deliveryMethod === env.DELIVERY_METHOD.DELIVERY && (
                       <div className="mt-1 position-relative">
-                        <label>Town</label>
+                        {/* <label>Town</label> */}
+                        <label>POSTAL CODE</label>
                         <input
                           type="text"
                           className="form-control"
                           value={suburb}
                           onChange={handleSuburbChange}
-                          placeholder="Enter a town name or postal code"
+                          // placeholder="Enter a town name or postal code"
+                          placeholder="Enter Your Postal Code"
                         />
                         {/* Autocomplete Suggestions */}
                         {filteredSuburbs.length > 0 && (
-                          <ul className="list-group position-absolute w-100 bg-white shadow">
+                          <ul className="list-group position-absolute w-100 bg-white shadow"
+                          style={{ zIndex: "3000", maxHeight: "400px", overflowY: "auto", top: "100%", left: "0" }}>
                             {filteredSuburbs.map((s, index) => (
                               <li
                                 key={index}
@@ -501,7 +511,7 @@ const page = () => {
                         {errors.suburb && (
                           <small className="text-danger">{errors.suburb}</small>
                         )}
-                        <div
+                        {/* <div
                           className="alert alert-warning d-flex align-items-center mt-1"
                           style={{ zIndex: "-1000" }}
                           role="alert"
@@ -514,7 +524,20 @@ const page = () => {
                             🚛 <br></br> Sadly, we can’t deliver, but pickup is
                             always an option! 😉
                           </span>
+                        </div> */}
+                        {filteredSuburbs.length === 0 && !validSuburbs.includes(suburb) && (
+                        <div
+                          className="alert alert-warning d-flex align-items-center mt-2"
+                          style={{ zIndex: "-1000" }}
+                          role="alert"
+                        >
+                          <span className="fst-italic" style={{ fontSize: "16px" }}>
+                            You’re shopping from <strong>{store}</strong> 🏪 store<br />
+                            If your postal code isn’t listed, looks like we can’t reach that area 🚚💨<br />
+                            Pickup’s always an option! 😉
+                          </span>
                         </div>
+                        )}
                       </div>
                     )}
 
@@ -537,8 +560,7 @@ const page = () => {
                             </small>
                           )}
                           {addressSuggestions.length > 0 && (
-                            <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">
-                              {addressSuggestions.map((address, index) => (
+                            <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">                              {addressSuggestions.map((address, index) => (
                                 <li
                                   key={index}
                                   className="list-group-item list-group-item-action"

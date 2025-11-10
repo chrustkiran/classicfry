@@ -171,7 +171,7 @@ const ShopPage = () => {
       setShowStoreSelect(true);
     } else {
       setShowStoreSelect(false);
-      fetchItems();
+      fetchItems(store);
       fetchDeals();
     }
   }, [store]);
