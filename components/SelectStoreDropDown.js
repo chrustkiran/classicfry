@@ -12,7 +12,7 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
 
   if (!loaded) return null;
 
-  const stores = ["Melbourne", "Sydney", "Brisbane"];
+  const stores = ["Westewell", "Sydney", "Brisbane", "Ramford"];
 
   return (
     <div className="d-flex justify-content-center fade-rise">
