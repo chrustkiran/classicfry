@@ -172,7 +172,7 @@ const ShopPage = () => {
     } else {
       setShowStoreSelect(false);
       fetchItems(store);
-      fetchDeals();
+      fetchDeals(store);
     }
   }, [store]);
 

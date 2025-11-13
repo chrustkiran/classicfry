@@ -28,8 +28,7 @@ const useItem = () => {
   const fetchItems = (store) => {
     console.log(`Fetching items from API for store ${store}:: ${base_url} items`);
     setItemLoading(true);
-    const storeParam = String(store || "").toLowerCase().trim().replace(/\s+/g, "");
-    axios.get(`${base_url}items/?store=${storeParam}`).then((res) => {
+    axios.get(`${base_url}items?branch=${store}`).then((res) => {
       setItems(
         res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map((item) => {
           const basePrice = item.portionPrices
@@ -43,7 +42,8 @@ const useItem = () => {
   };
 
   const fetchCategories = () => {
-    axios.get(base_url + "items").then((res) => {
+    // Default to Croydon store
+    axios.get(`${base_url}items?branch=${env.STORE.CROYDON}`).then((res) => {
       if (res.data && res.data.length > 0) {
         const category = res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).reduce((obj, item) => {
             const cat = categoryMapper(item.category);

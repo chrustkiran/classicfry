@@ -31,14 +31,15 @@ const useDeal = () => {
   const [dealLoading, setDealLoading] = useState(false);
 
 
-  const fetchDeals = () => {
+  const fetchDeals = (store) => {
     setDealLoading(true);
-    axios.get(base_url + "deals").then((res) => {
+    axios.get(`${base_url}deals?branch=${store}`).then((res) => {
       setDeals(res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map(deal => ({...deal, basePrice: deal.price, dealType: dealTypeMapper(deal.dealType)})));
       setDealLoading(false);
     }).catch(_ => setDealLoading(false));
   };
 
+  // currently not used
   const fetchCategories = () => {
     axios.get(base_url + "deals").then((res) => {
       if (res.data && res.data.length > 0) {
@@ -64,7 +65,6 @@ const useDeal = () => {
     deals,
     fetchDeals,
     dealCategories,
-    fetchCategories,
     fetchDeal,
     deal,
     dealLoading
