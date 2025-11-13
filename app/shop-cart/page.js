@@ -83,8 +83,7 @@ const page = () => {
 
   // const validSuburbs = Object.keys(addresses);
   // derive store key and only use addresses for that store
-  const storeKey = (store || "").toLowerCase().trim().replace(/\s+/g, "");
-  const storeAddresses = addresses[storeKey] || {};
+  const storeAddresses = addresses[store] || {};
   const validSuburbs = Object.keys(storeAddresses);
   // console.log("No store selected, redirecting to home page. + Store:", store);
   // console.log("Derived store key:", storeKey);

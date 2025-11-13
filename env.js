@@ -18,6 +18,11 @@ const env = {
     DELIVERY: "delivery",
     PICKUP: "pickup"
   }),
+  STORE: Object.freeze({
+    CROYDON: "CROYDON",
+    ROMFORD: "ROMFORD"
+  }),
+  TAX_RATE: 0.1,
   DELIVERY_FEE: 1.99,
   OFFER_MINIMUM: 25,
   DELIVERY_MINIMUM: 20,

@@ -1,10 +1,8 @@
-import { sydney } from "./sydney";
-import { westewell } from "./westewell";    
-import { ramford } from "./ramford";
+import { CROYDON } from "./croydon";    
+import { ROMFORD } from "./romford";
 
 
 export const addresses = {
-    "westewell": westewell,
-    "sydney": sydney,
-    "ramford": ramford
+    "CROYDON": CROYDON,
+    "ROMFORD": ROMFORD
 }

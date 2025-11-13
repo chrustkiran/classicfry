@@ -11,11 +11,11 @@ const CategoryCard = ({ category }) => {
     >
       <h5>{category.total} products</h5>
       <div className="catagory-product-image text-center">
-        <Link
-          href={{
-            pathname: "/shop-list",
-            query: { category: category.category },
-          }}
+        <div
+          // href={{
+          //   pathname: "/shop-list",
+          //   query: { category: category.category },
+          // }}
         >
           <img
             className="category-product-main-image"
@@ -40,7 +40,7 @@ const CategoryCard = ({ category }) => {
                 alt="shape-img"
               />
             </div> */}
-        </Link>
+        </div>
       </div>
       <div className="catagory-product-content text-center">
         {/* <div className="catagory-product-icon">
@@ -50,14 +50,15 @@ const CategoryCard = ({ category }) => {
             />
           </div> */}
         <h3 className="mt-3">
-          <Link
-            href={{
-              pathname: "/shop-list",
-              query: { category: category.category },
-            }}
+          {/* TODO :: handle this peroperly until this, it is not clickable */}
+          <div
+            // href={{
+            //   pathname: "/shop-list",
+            //   query: { category: category.category },
+            // }}
           >
             {category.category}
-          </Link>
+          </div>
         </h3>
         <p>{category.total} products</p>
       </div>

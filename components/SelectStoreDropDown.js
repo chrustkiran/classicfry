@@ -1,6 +1,7 @@
 import { FaStore } from "react-icons/fa";
 import { useAppContext } from "@/context/AppContext";
 import { useState, useEffect, use } from "react";
+import env from "@/env";
 
 export default function SelectStoreDropDown({ style = { display: "flex", alignItems: "center", gap: "8px" }, isShowText = true, iconColor = "#000" }) {
   const { store, setSelectedStore } = useAppContext();
@@ -12,7 +13,7 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
 
   if (!loaded) return null;
 
-  const stores = ["Westewell", "Sydney", "Brisbane", "Ramford"];
+  const stores = env.STORE ? Object.values(env.STORE) : [];
 
   return (
     <div className="d-flex justify-content-center fade-rise">
@@ -37,7 +38,7 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
           <option value="">Select Store</option>
           {stores.map((s) => (
             <option key={s} value={s}>
-              {s}
+              {s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()}
             </option>
           ))}
         </select>

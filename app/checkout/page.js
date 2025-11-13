@@ -35,6 +35,7 @@ const ParentPayment = ({
   cart,
   clearItems,
   checkoutDetails,
+  store,
 }) => {
   const stripePromise = loadStripe(env.stripeAPIKey);
 
@@ -59,7 +60,8 @@ const ParentPayment = ({
       cart,
       env.PAYMENT_TYPE.ONLINE,
       amount,
-      checkoutDetails
+      checkoutDetails,
+      store,
     );
     await OrderService.createOrder(postOrderReq)
       .then((order) => {
@@ -224,6 +226,7 @@ const page = () => {
     clearItems,
     getUser,
     getCheckoutValuesFromSession,
+    store,
   } = useAppContext();
   const router = useRouter();
 
@@ -283,6 +286,7 @@ const page = () => {
       env.PAYMENT_TYPE.COUNTER,
       totalAmount,
       checkoutDetails,
+      store,
       paymentIntentId
     );
     await OrderService.createOrder(postOrderReq)
@@ -387,6 +391,7 @@ const page = () => {
                             cart={cart}
                             clearItems={clearItems}
                             checkoutDetails={checkoutDetails}
+                            store={store}
                           ></ParentPayment>
                         </div>
                       )}
@@ -439,6 +444,7 @@ const page = () => {
                           cart={cart}
                           clearItems={clearItems}
                           checkoutDetails={checkoutDetails}
+                          store={store}
                         ></ParentPayment>
                       </div>
                     )}

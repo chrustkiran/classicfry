@@ -252,9 +252,15 @@ const OrderPage = () => {
                           </div>
                         </div>
                         <div className="d-flex column justify-content-between mt-3">
-                          <div>
-                            <strong>Total:</strong> £{order.payment?.amount}
+                          <div className="d-flex row">
+                            <div>
+                              <strong>Total:</strong> £{order.payment?.amount}
+                            </div>
+                             <div>
+                               <strong><i class="fa fa-map-pin" aria-hidden="true"></i></strong> {order.branch || env.STORE.CROYDON}
+                            </div>
                           </div>
+
                           <br></br>
 
                           <div>
