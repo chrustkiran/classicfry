@@ -1,0 +1,65 @@
+.announcement-banner {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  padding: 8px 0;
+  border-bottom: 2px solid #e6c200;
+  cursor: pointer;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.banner-icon {
+  font-size: 1.2em;
+  animation: bounce 2s infinite;
+}
+
+.banner-text {
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+}
+
+.banner-badge {
+  background: #ff6b6b;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .banner-content {
+    gap: 8px;
+  }
+  
+  .banner-text {
+    font-size: 12px;
+  }
+  
+  .banner-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
