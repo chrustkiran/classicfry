@@ -1,4 +1,5 @@
 "use client";
+import Notice from "@/components/Notice";
 import { useAppContext } from "@/context/AppContext";
 import env from "@/env";
 import Link from "next/link";
@@ -152,6 +153,7 @@ const Header1 = () => {
             </div>
           </div>
         </div>
+        <Notice />
       </header>
       <div className="search-wrap">
         <div className="search-inner">
