@@ -28,7 +28,8 @@ const useItem = () => {
   const fetchItems = (store) => {
     console.log(`Fetching items from API for store ${store}:: ${base_url} items`);
     setItemLoading(true);
-    axios.get(`${base_url}items?branch=${store}`).then((res) => {
+    const itemUrl = store ? `${base_url}items?branch=${store}` : `${base_url}items`;
+    axios.get(itemUrl).then((res) => {
       setItems(
         res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).map((item) => {
           const basePrice = item.portionPrices
