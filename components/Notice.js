@@ -9,7 +9,7 @@ export default function Notice(){
             <strong>COMING SOON!</strong> We're expanding to Ramford! Stay tuned
             for updates.
           </span>
-          <span className="banner-badge">NEW LOCATION</span>
+          <a href='/contact#romford-location'><span className="banner-badge">NEW LOCATION</span></a>
         </div>
       </div>
     </div>

@@ -8,6 +8,10 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    setSelectedStore(env.STORE.CROYDON);
+  }, []);
+
+  useEffect(() => {
     setLoaded(true);
   }, [store]);
 
@@ -29,13 +33,15 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
           className="form-select"
           style={{
             width: "200px",
-            height: "30px",
+            height: "38px",
             fontSize: "14px",
             margin: "0 auto",
             display: "block",
+            padding: "0 12px",
+            lineHeight: "38px",
           }}
         >
-          <option value="">Select Store</option>
+          {/* <option value="">Select Store</option> */}
           {stores.map((s) => (
             <option key={s} value={s}>
               {s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()}
