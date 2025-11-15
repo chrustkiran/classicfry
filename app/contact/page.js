@@ -72,9 +72,9 @@ const page = () => {
                     faucibus odio feugiat arc dolor.
                   </p> */}
 
-                  <div id="croydon-location" className="google-map wow fadeInUp" data-wow-delay=".7s">
+                  <div id="epsum-location" className="google-map wow fadeInUp" data-wow-delay=".7s">
                     <strong className="wow fadeInUp" data-wow-delay=".5s">
-                      Croydon Branch
+                      Epsum Branch
                     </strong>
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2491.8853228032785!2d-0.2634778230425654!3d51.35001932218793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487609e104b44b03%3A0x5222269f170e871f!2s100%20Chessington%20Rd%2C%20Ewell%2C%20Epsom%20KT19%209UR%2C%20UK!5e0!3m2!1sen!2sau!4v1738853912059!5m2!1sen!2sau"

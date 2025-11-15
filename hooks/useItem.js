@@ -42,8 +42,8 @@ const useItem = () => {
   };
 
   const fetchCategories = () => {
-    // Default to Croydon store
-    axios.get(`${base_url}items?branch=${env.STORE.CROYDON}`).then((res) => {
+    // Default to Epsum store
+    axios.get(`${base_url}items?branch=${env.STORE.EPSUM}`).then((res) => {
       if (res.data && res.data.length > 0) {
         const category = res.data.filter(it => (!("isAvailable" in it) || it.isAvailable === true)).reduce((obj, item) => {
             const cat = categoryMapper(item.category);

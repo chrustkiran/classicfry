@@ -1,8 +1,8 @@
-import { CROYDON } from "./croydon";    
+import { EPSUM } from "./epsum";    
 import { ROMFORD } from "./romford";
 
 
 export const addresses = {
-    "CROYDON": CROYDON,
+    "EPSUM": EPSUM,
     "ROMFORD": ROMFORD
 }

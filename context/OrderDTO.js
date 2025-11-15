@@ -1,12 +1,12 @@
 import env from "@/env";
 
 export class PostOrderRequest {
-  constructor(userId, cart, paymentType, totalAmount, checkoutDetails, store, paymentIntentId = undefined) {
+  constructor(userId, cart, paymentType, totalAmount, checkoutDetails, branch, paymentIntentId = undefined) {
     this.userId = userId;
     this.payment = { type: paymentType, amount: totalAmount };
     this.paymentIntentId = paymentIntentId;
     this.orderItems = [];
-    this.store = store;
+    this.branch = branch;
     
     const postCode = checkoutDetails.selectedSuburb?.postalCode
     const town = checkoutDetails.selectedSuburb?.name

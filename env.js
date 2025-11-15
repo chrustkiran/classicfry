@@ -19,7 +19,7 @@ const env = {
     PICKUP: "pickup"
   }),
   STORE: Object.freeze({
-    CROYDON: "CROYDON",
+    EPSUM: "EPSUM",
     // ROMFORD: "ROMFORD"
   }),
   TAX_RATE: 0.1,

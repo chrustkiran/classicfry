@@ -4,6 +4,7 @@ import useDeal from "@/hooks/useDeal";
 import Link from "next/link";
 import "./RecomandationPopup.css";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/AppContext";
 
 function getRandom(arr, n) {
   if (!arr || arr.length === 0) return [];
@@ -14,11 +15,11 @@ function getRandom(arr, n) {
 const RecommendationPopup = ({ onClose }) => {
   const route = useRouter();
   const { items, fetchItems, itemLoading } = useItem();
-
+  const { store } = useAppContext();
   const [randomItems, setRandomItems] = useState([]);
 
   useEffect(() => {
-    fetchItems();
+    fetchItems(store);
   }, []);
 
   useEffect(() => {

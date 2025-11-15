@@ -8,7 +8,7 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setSelectedStore(env.STORE.CROYDON);
+    setSelectedStore(env.STORE.EPSUM);
   }, []);
 
   useEffect(() => {

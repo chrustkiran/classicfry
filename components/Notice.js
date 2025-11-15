@@ -6,7 +6,7 @@ export default function Notice(){
         <div className="banner-content">
           <span className="banner-icon">🎉</span>
           <span className="banner-text">
-            <strong>COMING SOON!</strong> We're expanding to Ramford! Stay tuned
+            <strong>COMING SOON!</strong> We're expanding to Romford! Stay tuned
             for updates.
           </span>
           <a href='/contact#romford-location'><span className="banner-badge">NEW LOCATION</span></a>

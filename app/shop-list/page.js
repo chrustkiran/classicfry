@@ -147,7 +147,7 @@ const ShopPage = () => {
   const searchParams = useSearchParams();
   const [isDeliveryTimeModalDisplay, setDeliveryTimeModalDisplay] = useState(false);
 
-  const { store, setSelectedStore } = useAppContext();
+  const { store } = useAppContext();
   const [storeLoad, setStoreLoaded] = useState(false);
   const [isShowStoreSelect, setShowStoreSelect] = useState(false);
 
