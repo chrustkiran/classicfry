@@ -257,7 +257,7 @@ const OrderPage = () => {
                               <strong>Total:</strong> £{order.payment?.amount}
                             </div>
                              <div>
-                               <strong><i class="fa fa-map-pin" aria-hidden="true"></i></strong> {order.branch || env.STORE.EPSUM}
+                               <strong><i class="fa fa-map-pin" aria-hidden="true"></i></strong> {order.branch || env.STORE.EPSOM}
                             </div>
                           </div>
 
