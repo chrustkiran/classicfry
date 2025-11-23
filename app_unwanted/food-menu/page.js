@@ -1,7 +1,7 @@
-import InstagramBannerSlider from "@/components/InstagramBannerSlider";
+import InstagramBannerSlider from "@/components/unwanted/InstagramBannerSlider";
 import PageBanner from "@/components/PageBanner";
-import ReservationForm from "@/components/ReservationForm";
-import TestimonialSlider from "@/components/TestimonialSlider";
+import ReservationForm from "@/components/unwanted/ReservationForm";
+import TestimonialSlider from "@/components/unwanted/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 const page = () => {
   return (

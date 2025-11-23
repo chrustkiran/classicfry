@@ -1,10 +1,8 @@
-import BrandSlider from "@/components/BrandSlider";
+
 import FoodItemContainer from "@/components/FoodItemContainer";
 import FoodSlider from "@/components/FoodSlider";
 import HomeSlider from "@/components/HomeSlider";
 import Marque from "@/components/Marque";
-import ReservationForm from "@/components/ReservationForm";
-import TestimonialSlider from "@/components/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 

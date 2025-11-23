@@ -1,8 +1,8 @@
-import InstagramBannerSlider from "@/components/InstagramBannerSlider";
-import NiceSelect from "@/components/NiceSelect";
+import InstagramBannerSlider from "@/components/unwanted/InstagramBannerSlider";
+import NiceSelect from "@/components/unwanted/NiceSelect";
 import PageBanner from "@/components/PageBanner";
-import ReservationForm from "@/components/ReservationForm";
-import TestimonialSlider from "@/components/TestimonialSlider";
+import ReservationForm from "@/components/unwanted/ReservationForm";
+import TestimonialSlider from "@/components/unwanted/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 

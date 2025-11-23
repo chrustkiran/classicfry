@@ -1,5 +1,6 @@
 const env = {
-  API_URL: `${process.env.HOST_URI}/api/v1/`,
+  //API_URL: `${process.env.HOST_URI}/api/v1/`,
+  API_URL: `${process.env.HOST_URI}/`,
   stripeAPIKey: "pk_live_51QmCweRuSIuECqCmYczAmbXXwXtjc0zY3qHLD6HkvcLOwn3273OSOrmk1gUgwkiaZwDTd9AhDsxgV857Qk82XZ6x00Jz1TwHto",
   // stripeAPIKey:
   //   "pk_live_51QmCweRuSIuECqCmYczAmbXXwXtjc0zY3qHLD6HkvcLOwn3273OSOrmk1gUgwkiaZwDTd9AhDsxgV857Qk82XZ6x00Jz1TwHto",

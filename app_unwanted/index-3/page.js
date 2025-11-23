@@ -1,7 +1,7 @@
 import { HomeSlider3 } from "@/components/HomeSlider";
-import InstagramBannerSlider from "@/components/InstagramBannerSlider";
-import NextSaleBanner from "@/components/NextSaleBanner";
-import { TestimonialSlider3 } from "@/components/TestimonialSlider";
+import InstagramBannerSlider from "@/components/unwanted/InstagramBannerSlider";
+import NextSaleBanner from "@/components/unwanted/NextSaleBanner";
+import { TestimonialSlider3 } from "@/components/unwanted/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 const page = () => {

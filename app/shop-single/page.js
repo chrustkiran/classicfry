@@ -4,7 +4,7 @@ import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useMemo, useRef, useState } from "react";
 import { Nav, Tab, Tabs } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -13,6 +13,9 @@ import { useAppContext } from "@/context/AppContext";
 import env from "@/env";
 import Toast from "react-bootstrap/Toast";
 import useDeal from "@/hooks/useDeal";
+import DealItemOption from "@/components/DealItemOption";
+
+import { extractMultipleItemOptionsFromDeal, getMulipleItemCountPerDeal } from "@/utility/multipleItemUtils";
 
 const Ingredient = ({ ingredient }) => {
   return (
@@ -81,76 +84,67 @@ const page = () => {
     addMultipleItemsToCart,
   } = useAppContext();
 
+
   const dealItemRef = useRef();
 
-  const [drinkOptions, setDrinkOptions] = useState([]); 
+  //drinks
+  const [drinkOptions, setDrinkOptions] = useState([]);
   const [selectedDrinks, setSelectedDrinks] = useState([]);
 
-  // helper to count drinks required per deal unit
-  const getDrinksPerDeal = (dealObj) => {
-    if (!dealObj?.dealItemViews) return 0;
-    return dealObj.dealItemViews.reduce((acc, it) => {
-      const name = (it.dealItemType || "").toString().toLowerCase();
-      return acc + (name == "drink" ? Number(it.quantity || 0) : 0);
-    }, 0);
-  };
+  // compute drinksPerDeal & required slots
+  const drinksPerDeal = getMulipleItemCountPerDeal(fetchedDeal, "drink");
+  const requiredDrinks = drinksPerDeal * quantity;
 
-  // extract drink options from dealItemViews when drink item has 'options' field
-  const extractDrinkOptionsFromDeal = (dealObj) => {
-    if (!dealObj || !Array.isArray(dealObj.dealItemViews)) return [];
-    const opts = [];
-    dealObj.dealItemViews.forEach((it) => {
-      const name = (it.dealItemType || "").toLowerCase();
-      if (name == "drink" && Array.isArray(it.dealItemOptions)) {
-        it.dealItemOptions.forEach((o, idx) => {
-          // normalize option into object { id, name, image?, price? }
-          if (typeof o === "string") {
-            opts.push({
-              id: `${it.dealItemId || it.dealItemId || "d"}-${idx}`,
-              name: o,
-            });
-          } else if (o && typeof o === "object") {
-            const id = o.id || o.itemId || `${it.dealItemId || "d"}-${idx}`;
-            opts.push({
-              id,
-              name: o.name || o.label || String(o.id || idx),
-              image: o.image,
-              price: o.price,
-            });
-          }
-        });
-      }
-    });
-    // remove duplicates (by id or name)
-    const map = new Map();
-    opts.forEach((o) => {
-      const key = o.id ?? o.name;
-      if (!map.has(key)) map.set(key, o);
-    });
-    return Array.from(map.values());
-  };
+  //chips
+  const [chipsOptions, setChipsOptions] = useState([]);
+  const [selectedChips, setSelectedChips] = useState([]);
 
   // compute drinksPerDeal & required slots
-  const drinksPerDeal = getDrinksPerDeal(fetchedDeal);
-  const requiredDrinks = drinksPerDeal * quantity;
+  const chipssPerDeal = getMulipleItemCountPerDeal(fetchedDeal, "chips");
+  const requiredChips = chipssPerDeal * quantity;
+
+
+
+
+  const multileItemsConfig = useMemo(() => ({
+    DRINK: {
+      name: "Drink",
+      type: "DRINK",
+      countPerDeal: drinksPerDeal,
+      selectItemOption: drinkOptions,
+      requiredItems: requiredDrinks,
+      selectedItems: selectedDrinks,
+      setSelectedItems: setSelectedDrinks,
+    },
+    CHIPS: {
+      name: "Chips",
+      type: "CHIPS",
+      countPerDeal: chipssPerDeal,
+      selectItemOption: chipsOptions,
+      requiredChips: requiredChips,
+      selectedItems: selectedChips,
+      setSelectedItems: setSelectedChips,
+    },
+  }), [drinksPerDeal, drinkOptions, selectedDrinks, requiredDrinks, 
+    chipssPerDeal, chipsOptions, selectedChips, requiredChips]);
+
+
+  useEffect(() => {
+    console.log("Selected chips:", selectedChips);
+    console.log("Selected drinks:", selectedDrinks);
+  }, [selectedDrinks, selectedChips]);
+
 
   // sync drinkOptions from fetchedDeal
   useEffect(() => {
-    const opts = extractDrinkOptionsFromDeal(fetchedDeal);
-    setDrinkOptions(opts);
+    const drinkOpts = extractMultipleItemOptionsFromDeal(fetchedDeal, multileItemsConfig.DRINK.type);
+    const chipsOpts = extractMultipleItemOptionsFromDeal(fetchedDeal, multileItemsConfig.CHIPS.type);
+    setChipsOptions(chipsOpts);
+    setDrinkOptions(drinkOpts);
   }, [fetchedDeal]);
 
-  // keep selectedDrinks array sized to requiredDrinks
-  useEffect(() => {
-    setSelectedDrinks((prev = []) => {
-      const next = [...prev];
-      if (next.length > requiredDrinks) {
-        return next.slice(0, requiredDrinks);
-      }
-      while (next.length < requiredDrinks) next.push(null);
-      return next;
-    });
-  }, [requiredDrinks]);
+
+
 
   const scrollToTarget = () => {
     if (dealItemRef.current) {
@@ -205,16 +199,9 @@ const page = () => {
     }
   }, [item, deal]);
 
-  // helper to select a drink option for a slot index
-  const selectDrinkOption = (slotIndex, option) => {
-    setSelectedDrinks((prev = []) => {
-      const next = [...prev];
-      next[slotIndex] = option;
-      return next;
-    });
-  };
 
-    const addToCart = () => {
+
+  const addToCart = () => {
     if (itemType === "item") {
       // Existing item logic remains same
       addItemToCart(
@@ -242,13 +229,12 @@ const page = () => {
 
         // Prepare all items to add
         for (let i = 0; i < quantity; i++) {
-          console.log(selectedDrinks)
           const drinkIndex = i * drinksPerDeal;
           const drinksForThisUnit = selectedDrinks.slice(
             drinkIndex,
             drinkIndex + drinksPerDeal
           );
-          
+
           const drinksMeta = drinksForThisUnit.map((d) => {
             if (!d) {
               console.warn("Empty drink selection at index:", drinkIndex);
@@ -320,11 +306,29 @@ const page = () => {
     setItemPrice(size.price);
   };
 
+  const setEmptyItemOptions = (prev, requiredItems) => {
+    const next = [...prev];
+    if (next.length > requiredItems) {
+      return next.slice(0, requiredItems);
+    }
+    while (next.length < requiredItems) next.push(null);
+    return next;
+  }
+
+  useEffect(() => {
+    setSelectedChips((prev = []) => {
+      return setEmptyItemOptions(prev, requiredChips);
+    });
+    setSelectedDrinks((prev = []) => {
+      return setEmptyItemOptions(prev, requiredDrinks);
+    });
+  }, [quantity])
+
   const isDisabledAddToCart =
     quantity <= 0 ||
     (itemType === "deal" &&
       requiredDrinks > 0 &&
-      selectedDrinks.some((s) => !s));
+      selectedDrinks?.some((s) => !s));
 
   return (
     <FoodKingLayout>
@@ -397,11 +401,10 @@ const page = () => {
                             <button
                               onClick={() => selectSize(size)}
                               key={size.portionPriceId}
-                              className={`btn btn-sm rounded-circle me-2 ${
-                                portionSize === size.portionSize
+                              className={`btn btn-sm rounded-circle me-2 ${portionSize === size.portionSize
                                   ? "size-btn-selected"
                                   : "size-btn"
-                              }`}
+                                }`}
                               style={{ width: "40px", height: "40px" }}
                             >
                               {getPortionSize(size.portionSize)}
@@ -418,11 +421,10 @@ const page = () => {
                             <button
                               onClick={() => setPizzaCrust(crust)}
                               key={crust}
-                              className={`btn btn-sm m-2 ${
-                                selectedPizzaCrust === crust
+                              className={`btn btn-sm m-2 ${selectedPizzaCrust === crust
                                   ? "size-btn-selected"
                                   : "size-btn"
-                              }`}
+                                }`}
                               style={{ height: "40px", borderRadius: "50px" }}
                             >
                               {crust.replaceAll("_", " ")}
@@ -447,11 +449,10 @@ const page = () => {
                                   )
                                 }
                                 key={topping}
-                                className={`btn btn-sm m-2 ${
-                                  selectedPizzaToppings.includes(topping)
+                                className={`btn btn-sm m-2 ${selectedPizzaToppings.includes(topping)
                                     ? "size-btn-selected"
                                     : "size-btn"
-                                }`}
+                                  }`}
                                 style={{ height: "40px", borderRadius: "50px" }}
                               >
                                 {topping.replaceAll("_", " ")}
@@ -492,201 +493,11 @@ const page = () => {
                         </div>
                       </div>
                       <div>
-                        {itemType === "deal" &&
-                          quantity > 0 &&
-                          drinksPerDeal > 0 && (
-                            <div className="drink-selection-section mt-4">
-                              <div className="border-bottom pb-2 mb-3">
-                                <h5 className="mb-0">
-                                  <i className="fas fa-wine-bottle me-2"></i>
-                                  Select Your Drinks
-                                </h5>
-                                <small className="text-muted">
-                                  Choose drinks for each deal unit (
-                                  {drinksPerDeal} drink
-                                  {drinksPerDeal > 1 ? "s" : ""} per deal)
-                                </small>
-                              </div>
-
-                              {/* Group by deal units */}
-                              <div className="row">
-                                {[...Array(quantity)].map((_, dealIndex) => (
-                                  <div
-                                    key={dealIndex}
-                                    className="col-lg-6 mb-4"
-                                  >
-                                    <div className="card h-100 border-warning">
-                                      <div className="card-header bg-warning bg-opacity-10 py-2">
-                                        <h6 className="mb-0 text-dark">
-                                          <i className="fas fa-tag me-2"></i>
-                                          Deal Unit {dealIndex + 1}
-                                        </h6>
-                                      </div>
-                                      <div className="card-body">
-                                        {/* Show drink slots for this specific deal unit */}
-                                        {[...Array(drinksPerDeal)].map(
-                                          (_, drinkIndexInDeal) => {
-                                            const globalDrinkIndex =
-                                              dealIndex * drinksPerDeal +
-                                              drinkIndexInDeal;
-
-                                            return (
-                                              <div
-                                                key={globalDrinkIndex}
-                                                className="mb-3"
-                                              >
-                                                <label
-                                                  htmlFor={`drink-select-${globalDrinkIndex}`}
-                                                  className="form-label small fw-semibold text-muted mb-1"
-                                                >
-                                                  <i className="fas fa-glass-whiskey me-1"></i>
-                                                  Drink {drinkIndexInDeal + 1}
-                                                </label>
-                                                <select
-                                                  id={`drink-select-${globalDrinkIndex}`}
-                                                  className={`form-select ${
-                                                    selectedDrinks[
-                                                      globalDrinkIndex
-                                                    ]
-                                                      ? "border-success"
-                                                      : "border-warning"
-                                                  }`}
-                                                  value={
-                                                    selectedDrinks[
-                                                      globalDrinkIndex
-                                                    ]?.id || ""
-                                                  }
-                                                  onChange={(e) => {
-                                                    const chosen =
-                                                      drinkOptions.find(
-                                                        (d) =>
-                                                          String(d.id) ===
-                                                          String(e.target.value)
-                                                      ) || null;
-                                                    selectDrinkOption(
-                                                      globalDrinkIndex,
-                                                      chosen
-                                                    );
-                                                  }}
-                                                >
-                                                  <option
-                                                    value=""
-                                                    className="text-muted"
-                                                  >
-                                                    -- Choose a drink --
-                                                  </option>
-                                                  {drinkOptions.map((opt) => (
-                                                    <option
-                                                      key={opt.id}
-                                                      value={opt.id}
-                                                    >
-                                                      {opt.name}{" "}
-                                                      {opt.price
-                                                        ? `- £${opt.price.toFixed(
-                                                            2
-                                                          )}`
-                                                        : ""}
-                                                    </option>
-                                                  ))}
-                                                </select>
-
-                                                {/* Show selected drink preview */}
-                                                {selectedDrinks[
-                                                  globalDrinkIndex
-                                                ] && (
-                                                  <div className="mt-1 d-flex align-items-center">
-                                                    <small className="text-success">
-                                                      <i className="fas fa-check-circle me-1"></i>
-                                                      Selected:{" "}
-                                                      {
-                                                        selectedDrinks[
-                                                          globalDrinkIndex
-                                                        ].name
-                                                      }
-                                                    </small>
-                                                  </div>
-                                                )}
-                                              </div>
-                                            );
-                                          }
-                                        )}
-                                      </div>
-                                      <div className="card-footer bg-transparent py-2">
-                                        <small className="text-muted">
-                                          {drinksPerDeal} drink
-                                          {drinksPerDeal > 1 ? "s" : ""}{" "}
-                                          required
-                                        </small>
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-
-                              {/* Progress indicator */}
-                              <div className="mt-3 p-3 bg-light rounded">
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                  <span className="small fw-semibold">
-                                    Selection Progress:
-                                  </span>
-                                  <span className="small">
-                                    {selectedDrinks.filter(Boolean).length} of{" "}
-                                    {requiredDrinks} selected
-                                  </span>
-                                </div>
-                                <div
-                                  className="progress"
-                                  style={{ height: "8px" }}
-                                >
-                                  <div
-                                    className="progress-bar bg-success"
-                                    role="progressbar"
-                                    style={{
-                                      width: `${
-                                        (selectedDrinks.filter(Boolean).length /
-                                          requiredDrinks) *
-                                        100
-                                      }%`,
-                                    }}
-                                    aria-valuenow={
-                                      selectedDrinks.filter(Boolean).length
-                                    }
-                                    aria-valuemin="0"
-                                    aria-valuemax={requiredDrinks}
-                                  ></div>
-                                </div>
-                              </div>
-
-                              {/* Validation message */}
-                              {selectedDrinks.some((s) => !s) && (
-                                <div
-                                  className="alert alert-warning mt-3 d-flex align-items-center"
-                                  role="alert"
-                                >
-                                  <i className="fas fa-exclamation-triangle me-2"></i>
-                                  <div>
-                                    <strong>Almost there!</strong> Please select
-                                    all drinks to enable "Add To Cart".
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* Success message when all selected */}
-                              {!selectedDrinks.some((s) => !s) &&
-                                requiredDrinks > 0 && (
-                                  <div
-                                    className="alert alert-success mt-3 d-flex align-items-center"
-                                    role="alert"
-                                  >
-                                    <i className="fas fa-check-circle me-2"></i>
-                                    <div>
-                                      <strong>Perfect!</strong> All drinks
-                                      selected and ready to add to cart.
-                                    </div>
-                                  </div>
-                                )}
-                            </div>
-                          )}
+                        {<DealItemOption
+                          itemType={itemType}
+                          quantity={quantity}
+                          multileItemsConfig={multileItemsConfig}
+                        ></DealItemOption>}
                       </div>
                       <div className="mb-3  d-flex align-items-center w-100">
                         <Toast
@@ -717,9 +528,8 @@ const page = () => {
                         <button
                           disabled={isDisabledAddToCart}
                           onClick={addToCart}
-                          className={`theme-btn ${
-                            isDisabledAddToCart ? "disabled" : ""
-                          }`}
+                          className={`theme-btn ${isDisabledAddToCart ? "disabled" : ""
+                            }`}
                         >
                           <span className="button-content-wrapper d-flex align-items-center justify-content-center">
                             <span className="button-icon">
@@ -737,7 +547,7 @@ const page = () => {
                           href="/shop-list"
                         >
                           <span>
-                            <i class="fa fa-chevron-left"></i> Jump back to Menu
+                            <i className="fa fa-chevron-left"></i> Jump back to Menu
                           </span>
                         </Link>
                       </div>
