@@ -20,7 +20,7 @@ const env = {
   }),
   STORE: Object.freeze({
     EPSOM: "EPSOM",
-    // ROMFORD: "ROMFORD"
+    ROMFORD: "ROMFORD"
   }),
   TAX_RATE: 0.1,
   DELIVERY_FEE: 1.99,

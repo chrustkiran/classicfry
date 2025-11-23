@@ -7,9 +7,10 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
   const { store, setSelectedStore } = useAppContext();
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    setSelectedStore(env.STORE.EPSOM);
-  }, []);
+  // TODO :: Remove this useEffect once store selection is mandatory
+  // useEffect(() => {
+  //   setSelectedStore(env.STORE.EPSOM);
+  // }, []);
 
   useEffect(() => {
     setLoaded(true);
@@ -41,7 +42,7 @@ export default function SelectStoreDropDown({ style = { display: "flex", alignIt
             lineHeight: "38px",
           }}
         >
-          {/* <option value="">Select Store</option> */}
+          <option value="">Select Store</option>
           {stores.map((s) => (
             <option key={s} value={s}>
               {s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()}
