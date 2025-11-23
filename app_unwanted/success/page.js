@@ -3,7 +3,7 @@
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import ProductSidebar from "@/components/ProductSidebar";
-import ProductTopBar from "@/components/ProductTopBar";
+import ProductTopBar from "@/components/unwanted/ProductTopBar";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";

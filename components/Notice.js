@@ -1,4 +1,4 @@
-import './notice.css';
+import '../public/assets/css/notice.css';
 export default function Notice(){
   const isNoticeVisible = false;
   if (!isNoticeVisible) {

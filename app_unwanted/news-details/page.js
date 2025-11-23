@@ -1,4 +1,4 @@
-import BlogSidebar from "@/components/BlogSidebar";
+import BlogSidebar from "@/components/unwanted/BlogSidebar";
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";

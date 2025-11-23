@@ -1,8 +1,8 @@
 import Cta from "@/components/Cta";
 import Marque from "@/components/Marque";
-import NiceSelect from "@/components/NiceSelect";
+import NiceSelect from "@/components/unwanted/NiceSelect";
 import PageBanner from "@/components/PageBanner";
-import TestimonialSlider from "@/components/TestimonialSlider";
+import TestimonialSlider from "@/components/unwanted/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 const page = () => {

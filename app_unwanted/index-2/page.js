@@ -1,8 +1,8 @@
-import { AboutFoodItems2 } from "@/components/AboutFoodItems";
-import GallerySlider from "@/components/GallerySlider";
+import { AboutFoodItems2 } from "@/components/unwanted/AboutFoodItems";
+import GallerySlider from "@/components/unwanted/GallerySlider";
 import { HomeSlider2 } from "@/components/HomeSlider";
-import InstagramBannerSlider from "@/components/InstagramBannerSlider";
-import { TestimonialSlider2 } from "@/components/TestimonialSlider";
+import InstagramBannerSlider from "@/components/unwanted/InstagramBannerSlider";
+import { TestimonialSlider2 } from "@/components/unwanted/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 
