@@ -2,7 +2,7 @@
 
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
-import ProductTopBar from "@/components/ProductTopBar";
+import ProductTopBar from "@/components/unwanted/ProductTopBar";
 import useItem from "@/hooks/useItem";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";

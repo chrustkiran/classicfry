@@ -1,0 +1,199 @@
+{
+    "deals": 
+        [
+    {
+        "id":"001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
+        "branch": "EPSOM",
+        "dealId": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
+        "dealType": "CHICKEN_DEAL",
+        "name": "5 Wings Chips Drink",
+        "dealItemViews": [
+            {
+                "dealItemId": "63a06b25-895d-412c-b84d-5b4e576f3484",
+                "name": "Chips",
+                "description": null,
+                "image": "image_url",
+                "quantity": 1,
+                "dealItemOptions": [],
+                "dealItemType": null
+            },
+            {
+                "dealItemId": "6e475635-956e-4bb9-a511-52c8302e6d5c",
+                "name": "Drink",
+                "description": null,
+                "image": "image_url",
+                "quantity": 1,
+                "dealItemOptions": [
+                    {
+                        "id": "490b4eb6-d9af-40ed-82f1-42823822563d",
+                        "name": "Mirinda Strawberry",
+                        "image": null
+                    },
+                    {
+                        "id": "5a42230e-94f2-41ec-8f99-16fe181ba177",
+                        "name": "Tango Apple",
+                        "image": null
+                    },
+                    {
+                        "id": "cb75aba3-ed45-47c1-8738-bec80216b440",
+                        "name": "Pepsi Max",
+                        "image": null
+                    },
+                    {
+                        "id": "a528405c-10b1-458b-b668-91fa362b73b2",
+                        "name": "Pepsi",
+                        "image": null
+                    },
+                    {
+                        "id": "7b307b59-8408-4cef-baca-5fdc418197e4",
+                        "name": "Coke",
+                        "image": null
+                    },
+                    {
+                        "id": "eaf38aab-f398-4d10-8355-22f3aee2593f",
+                        "name": "7up",
+                        "image": null
+                    },
+                    {
+                        "id": "fe08b76a-c26c-47cd-9a6e-c40cba34231e",
+                        "name": "Sprite",
+                        "image": null
+                    },
+                    {
+                        "id": "3abe65cb-2beb-4a54-af2f-53ed304c4743",
+                        "name": "Coke Diet",
+                        "image": null
+                    },
+                    {
+                        "id": "2af83dff-bb32-4a52-82a7-3fd619afe897",
+                        "name": "Mirinda Orange",
+                        "image": null
+                    },
+                    {
+                        "id": "3096747c-bf2f-4c49-8d26-d2d076088aab",
+                        "name": "Pepsi diet",
+                        "image": null
+                    },
+                    {
+                        "id": "ac22ca63-dbaf-49d1-be71-866a304586fa",
+                        "name": "Tango Orange",
+                        "image": null
+                    }
+                ],
+                "dealItemType": "DRINK"
+            },
+            {
+                "dealItemId": "9db44d30-89ec-47f4-b49f-ee6b1907eacd",
+                "name": "Wings ",
+                "description": null,
+                "image": "image_url",
+                "quantity": 5,
+                "dealItemOptions": [],
+                "dealItemType": null
+            }
+        ],
+        "description": "5 Spicy Wings Chips Drink",
+        "isAvailable": true,
+        "isDeleted": false,
+        "tag": "BEST_SELLER",
+        "image": "https://classic-fry-images.s3.eu-west-2.amazonaws.com/deals/5%20Wings.jpg",
+        "price": 5.50,
+        "branchesList": [
+            "ROMFORD",
+            "EPSOM"
+        ]
+    },
+    {
+        "id": "004c3b53-e8cc-4ce8-aab8-d3288bbe31ed",
+        "branch": "EPSOM",
+        "dealId": "004c3b53-e8cc-4ce8-aab8-d3288bbe31ed",
+        "dealType": "BURGER_DEAL",
+        "name": "Chicken Burger ",
+        "dealItemViews": [
+            {
+                "dealItemId": "22b0d0d9-2fe7-4007-8a56-98231c6b474f",
+                "name": "Chips",
+                "description": null,
+                "image": "image_url",
+                "quantity": 1,
+                "dealItemOptions": [],
+                "dealItemType": null
+            },
+            {
+                "dealItemId": "7910227c-350f-4570-8ba8-c9842cbb12f1",
+                "name": "Chicken Burger",
+                "description": null,
+                "image": "image_url",
+                "quantity": 1,
+                "dealItemOptions": [],
+                "dealItemType": null
+            },
+            {
+                "dealItemId": "e7bc2472-1210-4a74-94da-a22539ae198e",
+                "name": "Drink",
+                "description": null,
+                "image": "image_url",
+                "quantity": 1,
+                "dealItemOptions": [
+                    {
+                        "id": "c46d904a-9e51-4919-9d78-8c9897d99cc2",
+                        "name": "Sprite",
+                        "image": null
+                    },
+                    {
+                        "id": "c932a78b-2510-4b3c-b8a9-d6c6dc593664",
+                        "name": "Coke Diet",
+                        "image": null
+                    },
+                    {
+                        "id": "ca3eda1b-5d53-4a51-8d33-b8b01f9302e5",
+                        "name": "Mirinda Strawberry",
+                        "image": null
+                    },
+                    {
+                        "id": "f8603890-edae-4620-896a-bce149ba37a6",
+                        "name": "Pepsi",
+                        "image": null
+                    },
+                    {
+                        "id": "9ba1fd5d-b6bc-4d58-97a2-75f4b89ce95e",
+                        "name": "Mirinda Orange",
+                        "image": null
+                    },
+                    {
+                        "id": "860c8d66-3cd8-4499-b707-6d127f3e599d",
+                        "name": "Tango Apple",
+                        "image": null
+                    },
+                    {
+                        "id": "9fd38ac8-8eaa-4fda-bdca-0579a80d320c",
+                        "name": "Pepsi Max",
+                        "image": null
+                    },
+                    {
+                        "id": "5020f787-40f4-4f30-bbcd-84501471fa3b",
+                        "name": "7up",
+                        "image": null
+                    },
+                    {
+                        "id": "b36d6e2e-1148-4f50-989a-6fb5b56fc3b6",
+                        "name": "Tango Orange",
+                        "image": null
+                    }
+                ],
+                "dealItemType": "DRINK"
+            }
+        ],
+        "description": "Chicken Burger Chips Drink",
+        "isAvailable": true,
+        "isDeleted": false,
+        "tag": "BEST_SELLER",
+        "image": "https://classic-fry-images.s3.eu-west-2.amazonaws.com/deals/Chicken%20Burger.jpg",
+        "price": 5.99,
+        "branchesList": [
+            "ROMFORD",
+            "EPSOM"
+        ]
+    }
+    ]
+}

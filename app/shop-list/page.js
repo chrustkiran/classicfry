@@ -3,7 +3,6 @@
 import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import ProductSidebar from "@/components/ProductSidebar";
-import ProductTopBar from "@/components/ProductTopBar";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -99,7 +98,7 @@ const Deal = ({ deal, key }) => {
                         className="list-group-item d-flex justify-content-between align-items-center"
                       >
                         {dealItem.name}
-                        <span class="badge bg-danger rounded-pill">
+                        <span className="badge bg-danger rounded-pill">
                           {dealItem.quantity}
                         </span>
                       </li>

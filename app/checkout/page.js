@@ -1,17 +1,12 @@
 "use client";
 
 import Cta from "@/components/Cta";
-import NiceSelect from "@/components/NiceSelect";
 import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
-import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import {
-  CardElement,
-  CheckoutProvider,
   Elements,
   PaymentElement,
-  PaymentRequestButtonElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
@@ -23,7 +18,6 @@ import { PostOrderRequest } from "@/context/OrderDTO";
 import OrderService from "@/api/order";
 import PaymentService from "@/api/payment";
 
-const USER_ID = env.USER_ID;
 const STRIPE_ERR_MSG =
   "We're really sorry, there is a problem in creating an online payment for you...";
 
