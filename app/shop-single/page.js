@@ -15,7 +15,7 @@ import Toast from "react-bootstrap/Toast";
 import useDeal from "@/hooks/useDeal";
 import DealItemOption from "@/components/DealItemOption";
 
-import { extractMultipleItemOptionsFromDeal, getMulipleItemCountPerDeal } from "@/utility/multipleItemUtils";
+import { extractMultipleItemOptionsFromDeal, getMulipleItemCountPerDeal, getMultipleItemSelectedOptions, getRequiredMultipleItemCount, getSelectedMultipleItems } from "@/utility/multipleItemUtils";
 
 const Ingredient = ({ ingredient }) => {
   return (
@@ -104,12 +104,11 @@ const page = () => {
   const requiredChips = chipssPerDeal * quantity;
 
 
-
-
   const multileItemsConfig = useMemo(() => ({
     DRINK: {
       name: "Drink",
       type: "DRINK",
+      addToCartKey: "drinkOptions",
       countPerDeal: drinksPerDeal,
       selectItemOption: drinkOptions,
       requiredItems: requiredDrinks,
@@ -119,20 +118,15 @@ const page = () => {
     CHIPS: {
       name: "Chips",
       type: "CHIPS",
+      addToCartKey: "chipsOptions",
       countPerDeal: chipssPerDeal,
       selectItemOption: chipsOptions,
-      requiredChips: requiredChips,
+      requiredItems: requiredChips,
       selectedItems: selectedChips,
       setSelectedItems: setSelectedChips,
     },
-  }), [drinksPerDeal, drinkOptions, selectedDrinks, requiredDrinks, 
+  }), [drinksPerDeal, drinkOptions, selectedDrinks, requiredDrinks,
     chipssPerDeal, chipsOptions, selectedChips, requiredChips]);
-
-
-  useEffect(() => {
-    console.log("Selected chips:", selectedChips);
-    console.log("Selected drinks:", selectedDrinks);
-  }, [selectedDrinks, selectedChips]);
 
 
   // sync drinkOptions from fetchedDeal
@@ -142,8 +136,6 @@ const page = () => {
     setChipsOptions(chipsOpts);
     setDrinkOptions(drinkOpts);
   }, [fetchedDeal]);
-
-
 
 
   const scrollToTarget = () => {
@@ -229,24 +221,19 @@ const page = () => {
 
         // Prepare all items to add
         for (let i = 0; i < quantity; i++) {
-          const drinkIndex = i * drinksPerDeal;
-          const drinksForThisUnit = selectedDrinks.slice(
-            drinkIndex,
-            drinkIndex + drinksPerDeal
-          );
 
-          const drinksMeta = drinksForThisUnit.map((d) => {
-            if (!d) {
-              console.warn("Empty drink selection at index:", drinkIndex);
-              return null;
-            }
-            return {
-              id: d.id || d.itemId || d.name,
-              name: d.name || d.label,
-            };
-          });
+          const multipleItemMeta = Object.values(multileItemsConfig).reduce((acc, value) => {
+            acc[value.type] = getMultipleItemSelectedOptions(
+              i,
+              value.countPerDeal,
+              value.selectedItems
+            );
+            return acc;
+          }, {});
 
-          console.log(`Preparing item ${i + 1} with drinks:`, drinksMeta);
+
+          console.log("multipleItemMeta:", multipleItemMeta);
+          // const drinksMeta = getMultipleItemSelectedOptions(i, multileItemsConfig.DRINK.countPerDeal, multileItemsConfig.DRINK.selectedItems);
 
           itemsToAdd.push({
             itemId: fetchedDeal.dealId,
@@ -257,11 +244,11 @@ const page = () => {
             quantity: 1, // Each unit has quantity 1
             type: env.ITEM_TYPE.DEAL,
             category: fetchedDeal.dealType?.toLowerCase(),
-            drinkOptions: drinksMeta,
+            multipleOptions: multipleItemMeta
           });
         }
 
-        console.log("Batch adding items:", itemsToAdd);
+        console.log("itemsToAdd:", itemsToAdd);
 
         // Add all items in single batch operation
         addMultipleItemsToCart(itemsToAdd);
@@ -315,20 +302,11 @@ const page = () => {
     return next;
   }
 
-  useEffect(() => {
-    setSelectedChips((prev = []) => {
-      return setEmptyItemOptions(prev, requiredChips);
-    });
-    setSelectedDrinks((prev = []) => {
-      return setEmptyItemOptions(prev, requiredDrinks);
-    });
-  }, [quantity])
-
   const isDisabledAddToCart =
     quantity <= 0 ||
     (itemType === "deal" &&
-      requiredDrinks > 0 &&
-      selectedDrinks?.some((s) => !s));
+      getRequiredMultipleItemCount(multileItemsConfig, quantity) > 0 &&
+      getSelectedMultipleItems(multileItemsConfig)?.some((s) => !s));
 
   return (
     <FoodKingLayout>
@@ -402,8 +380,8 @@ const page = () => {
                               onClick={() => selectSize(size)}
                               key={size.portionPriceId}
                               className={`btn btn-sm rounded-circle me-2 ${portionSize === size.portionSize
-                                  ? "size-btn-selected"
-                                  : "size-btn"
+                                ? "size-btn-selected"
+                                : "size-btn"
                                 }`}
                               style={{ width: "40px", height: "40px" }}
                             >
@@ -422,8 +400,8 @@ const page = () => {
                               onClick={() => setPizzaCrust(crust)}
                               key={crust}
                               className={`btn btn-sm m-2 ${selectedPizzaCrust === crust
-                                  ? "size-btn-selected"
-                                  : "size-btn"
+                                ? "size-btn-selected"
+                                : "size-btn"
                                 }`}
                               style={{ height: "40px", borderRadius: "50px" }}
                             >
@@ -450,8 +428,8 @@ const page = () => {
                                 }
                                 key={topping}
                                 className={`btn btn-sm m-2 ${selectedPizzaToppings.includes(topping)
-                                    ? "size-btn-selected"
-                                    : "size-btn"
+                                  ? "size-btn-selected"
+                                  : "size-btn"
                                   }`}
                                 style={{ height: "40px", borderRadius: "50px" }}
                               >
