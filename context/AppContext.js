@@ -14,25 +14,25 @@ export const AppProvider = ({ children }) => {
     const savedCart = global?.window?.localStorage.getItem(cartName);
     return savedCart
       ? JSON.parse(savedCart).map(
-          (item) =>
-            new CartItem(
-              item.itemId,
-              item.name,
-              item.price,
-              item.image,
-              item.category,
-              item.size,
-              item.quantity,
-              item.type,
-              item.itemConfig,
-              item.drinkOptions
-            )
-        )
+        (item) =>
+          new CartItem(
+            item.itemId,
+            item.name,
+            item.price,
+            item.image,
+            item.category,
+            item.size,
+            item.quantity,
+            item.type,
+            item.itemConfig,
+            item.multipleOptions
+          )
+      )
       : [];
   };
 
   const getStoreFromLocalStoarage = () => {
-    return  global?.window?.localStorage.getItem(storeName) || "";
+    return global?.window?.localStorage.getItem(storeName) || "";
   }
 
   const [cart, setCart] = useState(getCartFromLocalStorage);
@@ -42,11 +42,11 @@ export const AppProvider = ({ children }) => {
   const [selectedSuburb, setSelectedSuburb] = useState(null);
   const [address, setAddress] = useState("");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
-  const [store, setStore]= useState(getStoreFromLocalStoarage);
+  const [store, setStore] = useState(getStoreFromLocalStoarage);
 
-  const findIndexByItem = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
+  const findIndexByItem = (itemId, category, size, itemConfig, multipleOptions = undefined) => {
     return cart.findIndex((item) => {
-      return item.checkIsSame(itemId, category, size, itemConfig, drinkOptions);
+      return item.checkIsSame(itemId, category, size, itemConfig, multipleOptions);
 
       // if (category in itemConfig) {
       //   if (category === "pizza") {
@@ -127,15 +127,18 @@ export const AppProvider = ({ children }) => {
       let updatedCart = [...prevCart];
 
       items.forEach((newItem) => {
+        console.log("Processing new multiple item:", newItem);
         const existingItemIndex = updatedCart.findIndex((item) =>
           item.checkIsSame(
             newItem.itemId,
             newItem.category,
             newItem.size,
             newItem.itemConfig,
-            newItem.drinkOptions
+            newItem.multipleOptions
           )
         );
+
+        console.log("Adding multiple item to cart:", newItem, "Existing index:", existingItemIndex);
 
         if (existingItemIndex !== -1) {
           // If the item exists, increase its quantity
@@ -152,12 +155,13 @@ export const AppProvider = ({ children }) => {
             newItem.quantity,
             newItem.type,
             newItem.itemConfig,
-            newItem.drinkOptions
+            newItem.multipleOptions
           );
           updatedCart.push(cartItem);
         }
       });
 
+      console.log("Updated cart after adding multiple items:", updatedCart);
       // Update localStorage
       global?.window?.localStorage.setItem(
         cartName,
@@ -168,24 +172,24 @@ export const AppProvider = ({ children }) => {
   };
 
   // Method to remove an item from the cart
-  const removeItemFromCart = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
-    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOptions);
+  const removeItemFromCart = (itemId, category, size, itemConfig, multipleOptions  = undefined) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig, multipleOptions );
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
   // Method to decrease the quantity of an item
-  const decreaseQuantity = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
-    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOptions);
+  const decreaseQuantity = (itemId, category, size, itemConfig, multipleOptions  = undefined) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig, multipleOptions );
     const updatedCart = [...cart];
     updatedCart[index].decreaseQuantity();
     setCart(updatedCart);
     global?.window?.localStorage.setItem(cartName, JSON.stringify(updatedCart));
   };
 
-  const increaseQuantity = (itemId, category, size, itemConfig, drinkOptions=undefined) => {
-    const index = findIndexByItem(itemId, category, size, itemConfig, drinkOptions);
+  const increaseQuantity = (itemId, category, size, itemConfig, multipleOptions  = undefined) => {
+    const index = findIndexByItem(itemId, category, size, itemConfig, multipleOptions );
     const updatedCart = [...cart];
     updatedCart[index].increaseQuantity();
     setCart(updatedCart);
