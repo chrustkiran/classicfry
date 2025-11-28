@@ -1,5 +1,9 @@
 import './notice.css';
 export default function Notice(){
+  const isNoticeVisible = false;
+  if (!isNoticeVisible) {
+    return null;
+  }
   return (
     <div className="announcement-banner">
       <div className="container">

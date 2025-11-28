@@ -1,7 +1,10 @@
 "use client";
+import env from "@/env";
 import Link from "next/link";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { MdOutlinePinDrop, MdOutlinePhoneInTalk } from "react-icons/md";
+
 
 const Footer = ({ footer }) => {
   switch (footer) {
@@ -71,25 +74,31 @@ const Footer1 = () => {
             <div className="wow fadeInUp" data-wow-delay=".8s">
               <div className="single-footer-widget ">
                 <div className="">
-                  <h4>Address:</h4>
+                  <h4>Contact Us:</h4>
                 </div>
                 <div className="footer-address-text mt-2">
-                  <h6>100</h6>
-                  <h6>Chessington Road West Ewell, </h6>
-                  <h6>KT19 9UR</h6>
-                  <div className="mt-4">
-                    <h4>Telephone:</h4>
-                  </div>
-                  <h6 className="mt-2">01372 650894</h6>
-                  <div className="mt-5 privacy-terms">
-                    <a
-                      id="privacy-terms"
-                      href="#privacy-terms"
-                      onClick={handleShow}
-                    >
-                      Privacy Policy & Terms and Conditions
-                    </a>
-                  </div>
+                  {env.CONTACT_INFO.map((location) => (
+                    <div key={location.id}>
+                      <h5>{location.name}</h5>
+                      <h6 style={{fontSize: 16}}><MdOutlinePhoneInTalk/> {location.phone}</h6>
+                      <h6 style={{fontSize: 16}}><MdOutlinePinDrop  />{location.address}</h6>
+                      <br></br>
+                    </div>
+
+                  ))}
+
+
+
+                </div>
+
+                <div className="mt-5 privacy-terms">
+                  <a
+                    id="privacy-terms"
+                    href="#privacy-terms"
+                    onClick={handleShow}
+                  >
+                    Privacy Policy & Terms and Conditions
+                  </a>
                 </div>
               </div>
             </div>
