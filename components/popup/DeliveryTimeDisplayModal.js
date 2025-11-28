@@ -35,8 +35,9 @@ const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
                 <Modal.Title className="delivery-modal-title">Delivery Hours: 5:30 PM – 9:30 PM </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                🍽️ We’re currently accepting delivery orders between <strong>5:30 PM and 9:30 PM</strong> only.
-                Craving something delicious? Place your order during our delivery window and we’ll bring it hot and fresh to your door!
+                🍽️ We’re currently accepting delivery orders between <strong>5:30 PM and 9:30 PM.</strong>
+                <br></br>
+                🚚 Delivery is currently available in <strong>Epsom</strong> only. Delivery to <strong>Romford</strong> is temporarily paused.
                 <br></br>
               </Modal.Body>
               <Modal.Footer>
