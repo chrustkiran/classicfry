@@ -23,7 +23,7 @@ const useOrder = () => {
   const [orders, setOrders] = useState({'active': [], 'completed': []});
 
   const fetchOrders = (userId) => {
-    axios.get(base_url + `orders/userId/${userId}`).then((res) => {
+    axios.get(base_url + `orders?userId=${userId}`).then((res) => {
       const orders = res.data.filter(
         (order) => order.orderStatus in OrderStatus
       );
