@@ -32,7 +32,7 @@ export class PostOrderRequest {
         if (item.type === env.ITEM_TYPE.DEAL) {
           result.deal = { dealId: item.itemId };
           if (item.multipleOptions) {
-            result = {...result, ...item.multipleOptions};
+            Object.assign(result, item.multipleOptions);
           }
         }
         return result;
