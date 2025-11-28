@@ -256,8 +256,8 @@ const OrderPage = () => {
                             <div>
                               <strong>Total:</strong> £{order.payment?.amount}
                             </div>
-                             <div>
-                               <strong><i className="fa fa-map-pin" aria-hidden="true"></i></strong> {order.branch || env.STORE.EPSOM}
+                            <div>
+                              <strong><i className="fa fa-map-pin" aria-hidden="true"></i></strong> {order.branch || env.STORE.EPSOM}
                             </div>
                           </div>
 
@@ -329,6 +329,9 @@ const OrderPage = () => {
                                         orderItem?.portionSize?.replaceAll("_", " ")}
                                     </span>
                                     {orderItem.drinkOptions && orderItem.drinkOptions.length > 0 && <p>Drink - {orderItem.drinkOptions
+                                      .map(d => d.name)
+                                      .join(", ")}</p>}
+                                    {orderItem.chipsOptions && orderItem.chipsOptions.length > 0 && <p>Chips - {orderItem.chipsOptions
                                       .map(d => d.name)
                                       .join(", ")}</p>}
                                   </div>

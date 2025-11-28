@@ -16,6 +16,7 @@ import useDeal from "@/hooks/useDeal";
 import DealItemOption from "@/components/DealItemOption";
 
 import { extractMultipleItemOptionsFromDeal, getMulipleItemCountPerDeal, getMultipleItemSelectedOptions, getRequiredMultipleItemCount, getSelectedMultipleItems } from "@/utility/multipleItemUtils";
+import { DealItem } from "@/components/DealItem";
 
 const Ingredient = ({ ingredient }) => {
   return (
@@ -30,31 +31,6 @@ const Ingredient = ({ ingredient }) => {
       {ingredient.calories && <small>{ingredient.calories} KJ</small>}
       {ingredient.notes && <p className="mb-1">{ingredient.notes}</p>}
     </a>
-  );
-};
-
-const DealItem = ({ dealItem }) => {
-  return (
-    <div
-      key={dealItem.id}
-      className="col-12 d-flex align-items-center p-3 border rounded"
-    >
-      <div className="d-flex align-items-center" style={{ flex: 1 }}>
-        <img
-          src={dealItem.image}
-          alt={dealItem.name}
-          className="img-fluid"
-          style={{ width: "120px", height: "100px", marginRight: "20px" }}
-        />
-        <div>
-          <h4>{dealItem.name}</h4>
-          <p>{dealItem.description}</p>
-        </div>
-      </div>
-      <div className="ml-auto mr-4 col-3">
-        <span>Quantity: {dealItem.quantity}</span>
-      </div>
-    </div>
   );
 };
 
@@ -216,12 +192,11 @@ const page = () => {
       );
     } else {
       // NEW BATCH LOGIC: Handle deals with multiple quantities and drinks
-      if (drinksPerDeal > 0) {
+      if (getRequiredMultipleItemCount(multileItemsConfig, quantity) > 0) {
         const itemsToAdd = [];
 
         // Prepare all items to add
         for (let i = 0; i < quantity; i++) {
-
           const multipleItemMeta = Object.values(multileItemsConfig).reduce((acc, value) => {
             acc[value.type] = getMultipleItemSelectedOptions(
               i,
@@ -230,10 +205,6 @@ const page = () => {
             );
             return acc;
           }, {});
-
-
-          console.log("multipleItemMeta:", multipleItemMeta);
-          // const drinksMeta = getMultipleItemSelectedOptions(i, multileItemsConfig.DRINK.countPerDeal, multileItemsConfig.DRINK.selectedItems);
 
           itemsToAdd.push({
             itemId: fetchedDeal.dealId,
@@ -247,9 +218,6 @@ const page = () => {
             multipleOptions: multipleItemMeta
           });
         }
-
-        console.log("itemsToAdd:", itemsToAdd);
-
         // Add all items in single batch operation
         addMultipleItemsToCart(itemsToAdd);
       } else {
@@ -272,7 +240,6 @@ const page = () => {
 
   const handlePrice = (fetchedItem) => {
     if (!fetchedItem.portionPrices) {
-      //TODO :: check what it is.
       setItemPrice(fetchedItem.basePrice);
     } else {
       const portionPrices = fetchedItem.portionPrices.sort(
@@ -292,15 +259,6 @@ const page = () => {
     setPortionSize(size.portionSize);
     setItemPrice(size.price);
   };
-
-  const setEmptyItemOptions = (prev, requiredItems) => {
-    const next = [...prev];
-    if (next.length > requiredItems) {
-      return next.slice(0, requiredItems);
-    }
-    while (next.length < requiredItems) next.push(null);
-    return next;
-  }
 
   const isDisabledAddToCart =
     quantity <= 0 ||
@@ -343,16 +301,6 @@ const page = () => {
                 </div>
                 <div className="col-lg-7 mt-5 mt-lg-0">
                   <div className="product-details-content">
-                    {/* <div className="star pb-3">
-                      {(fetchedItem.tag || fetchedDeal.tag) && (
-                        <span>
-                          {(fetchedItem.tag || fetchedDeal.tag).replace(
-                            "_",
-                            " "
-                          )}
-                        </span>
-                      )}
-                    </div> */}
                     <h3 className="pb-3 responsive-cnt">
                       {fetchedItem.name || fetchedDeal.name}
                     </h3>
@@ -575,34 +523,10 @@ const page = () => {
                                 )
                               )}
                           </div>
-                          {/* </div>
-                      </div>
-                    </Tab>
-                  )} */}
                         </div>
                       </div>
                     </Tab>
                   )}
-
-                  {/* {itemType === "item" && (
-                    <Tab eventKey="Ingredients" title="Ingredients">
-                      <div className="description-items">
-                        <div className="row">
-                          <div className="list-group">
-                            {fetchedItem?.ingredientsList?.length > 0 &&
-                              fetchedItem.ingredientsList.map(
-                                (ingredient, index) => (
-                                  <Ingredient
-                                    key={index}
-                                    ingredient={ingredient}
-                                  ></Ingredient>
-                                )
-                              )}
-                          </div>
-                        </div>
-                      </div>
-                    </Tab>
-                  )} */}
                 </Tabs>
               </div>
             </div>

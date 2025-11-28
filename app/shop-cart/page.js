@@ -35,15 +35,15 @@ const page = () => {
     getOffer,
     store,
   } = useAppContext();
-   console.log("No store selected, redirecting to home page. + Store:", store);
+  console.log("No store selected, redirecting to home page. + Store:", store);
   if (!store || store === "") {
- 
+
     return (
-      <FoodKingLayout> 
+      <FoodKingLayout>
         <PageBanner pageName={"shop Cart"} />
         <div className="container my-5">
-          <div className="alert alert-warning text-center" role="alert">  
-            Please select your store to proceed to the cart. <br /><br/>
+          <div className="alert alert-warning text-center" role="alert">
+            Please select your store to proceed to the cart. <br /><br />
             <Link href="/shop-list" className="theme-btn">Go back to Menu</Link>
           </div>
         </div>
@@ -55,15 +55,15 @@ const page = () => {
 
 
   const incrementQuantity = (item) => {
-    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
+    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions);
   };
 
   const decrementQuantity = (item) => {
-    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
+    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions);
   };
 
   const removeItem = (item) => {
-    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig, item.drinkOptions);
+    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions);
   };
 
   const [formData, setFormData] = useState({
@@ -85,9 +85,6 @@ const page = () => {
   // derive store key and only use addresses for that store
   const storeAddresses = addresses[store] || {};
   const validSuburbs = Object.keys(storeAddresses);
-  // console.log("No store selected, redirecting to home page. + Store:", store);
-  // console.log("Derived store key:", storeKey);
-  // console.log("Valid suburbs for store:", validSuburbs);
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -226,7 +223,7 @@ const page = () => {
       );
     }
   };
-
+  const [rowExpanded, setRowExpanded] = useState(0);
 
   return (
     <FoodKingLayout>
@@ -250,132 +247,103 @@ const page = () => {
                       </thead>
                       <tbody>
                         {cart.map((item, index) => (
-                          <tr key={index} className="cart-item">
-                            <td className="cart-item-info">
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                style={{
-                                  width: "120px",
-                                  height: "100px",
-                                  objectFit: "cover",
-                                  borderRadius: "4px",
-                                }}
-                              />
-                              <div className="d-flex flex-column">
-                                <span>{item.name}</span>
-                                {item.drinkOptions && item.drinkOptions.length > 0 && <span>Drink: {item.drinkOptions
-                                  .map(d => d.name)
-                                  .join(", ")}</span>}
-                                <div className="d-flex flex-row">
-                                  <div className="me-2">
-                                    {item.size !== env.DEFAULT && (
-                                      <span className="badge size-badge badge-warning px-0">
-                                        {getPortionSize(item.size)}
-                                      </span>
-                                    )}
-                                  </div>
+                          <>
+                            {/* Main Row */}
+                            <tr
+                              key={index}
+                              className="cart-item"
+                              style={{ cursor: "pointer" }}
 
-                                  <div className="me-2">
-                                    {"pizza" in item.itemConfig && (
-                                      <OverlayTrigger
-                                        placement="top"
-                                        overlay={
-                                          <Tooltip>
-                                            {item.itemConfig.pizza.crusts[0].replaceAll(
-                                              "_",
-                                              " "
-                                            )}
-                                          </Tooltip>
-                                        }
+                            >
+                              <td className="cart-item-info">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  style={{
+                                    width: "120px",
+                                    height: "100px",
+                                    objectFit: "cover",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                                <div className="d-flex flex-column">
+                                  <span>{item.name}</span>
+                                  {item.multipleOptions && <span onClick={() => setRowExpanded(index + 1 === rowExpanded ? 0 : index + 1)} style={{ textDecoration: 'underline' }}>
+                                    View Items
+                                  </span>}
+                                  {item.size !== env.DEFAULT && (
+                                    <span className="badge size-badge badge-warning px-0">
+                                      {getPortionSize(item.size)}
+                                    </span>
+                                  )}
+                                </div>
+                              </td>
+
+                              <td className="cart-item-price1">
+                                £ <span className="base-price">{item.price.toFixed(2)}</span>
+                              </td>
+                              <td>
+                                <div className="cart-item-quantity">
+                                  <div className="cart-item-quantity-box">
+                                    <span className="cart-item-quantity-amount">{item.quantity}</span>
+                                    <div className="cart-item-quantity-controller">
+                                      <Link
+                                        href="#"
+                                        className="cart-increment"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          incrementQuantity(item);
+                                        }}
                                       >
-                                        <span className="badge bg-warning text-dark badge-warning">
-                                          Crust
-                                        </span>
-                                      </OverlayTrigger>
-                                    )}
-                                  </div>
-                                  <div>
-                                    {"pizza" in item.itemConfig &&
-                                      item.itemConfig.pizza?.toppings?.length >
-                                      0 && (
-                                        <OverlayTrigger
-                                          placement="top"
-                                          overlay={
-                                            <Tooltip>
-                                              {item.itemConfig.pizza.toppings
-                                                .map((t) =>
-                                                  t.replaceAll("_", " ")
-                                                )
-                                                .join(", ")}
-                                            </Tooltip>
-                                          }
-                                        >
-                                          <span className="badge bg-warning text-dark badge-warning">
-                                            Toppings
-                                          </span>
-                                        </OverlayTrigger>
-                                      )}
+                                        <i className="far fa-caret-up" />
+                                      </Link>
+                                      <Link
+                                        href="#"
+                                        className="cart-decrement"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          decrementQuantity(item);
+                                        }}
+                                      >
+                                        <i className="far fa-caret-down" />
+                                      </Link>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </td>
+                              </td>
+                              <td className="cart-item-price2">
+                                £ <span className="total-price">{(item.price * item.quantity).toFixed(2)}</span>
+                              </td>
+                              <td className="cart-item-remove">
+                                <Link
+                                  href="#"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    removeItem(item);
+                                  }}
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Link>
+                              </td>
+                            </tr>
 
-                            <td className="cart-item-price1">
-                              £{" "}
-                              <span className="base-price">
-                                {item.price.toFixed(2)}
-                              </span>
-                            </td>
-                            <td>
-                              <div className="cart-item-quantity">
-                                <div className="cart-item-quantity-box">
-                                  <span className="cart-item-quantity-amount">
-                                    {item.quantity}
-                                  </span>
-                                  <div className="cart-item-quantity-controller">
-                                    <Link
-                                      href="#"
-                                      className="cart-increment"
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        incrementQuantity(item);
-                                      }}
-                                    >
-                                      <i className="far fa-caret-up" />
-                                    </Link>
-                                    <Link
-                                      href="#"
-                                      className="cart-decrement"
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        decrementQuantity(item);
-                                      }}
-                                    >
-                                      <i className="far fa-caret-down" />
-                                    </Link>
+                            {/* Expanded Row for multipleItemOptions ONLY */}
+                            {rowExpanded === (index + 1) && item.multipleOptions && (
+                              <tr className="cart-item-expanded">
+                                <td colSpan={5}>
+                                  <div className="p-2 rounded bg-light">
+                                    {Object.entries(item.multipleOptions)
+                                      .filter(([, values]) => values?.length)
+                                      .map(([key, values]) => (
+                                        <div key={key}>
+                                          <strong>{key}:</strong> {values.map(v => v.name).join(", ")}
+                                        </div>
+                                      ))}
                                   </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="cart-item-price2">
-                              £{" "}
-                              <span className="total-price">
-                                {(item.price * item.quantity).toFixed(2)}
-                              </span>
-                            </td>
-                            <td className="cart-item-remove">
-                              <Link
-                                href="#"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  removeItem(item);
-                                }}
-                              >
-                                <i className="fas fa-trash"></i>
-                              </Link>
-                            </td>
-                          </tr>
+                                </td>
+                              </tr>
+                            )}
+                          </>
                         ))}
                       </tbody>
                     </table>
@@ -494,7 +462,7 @@ const page = () => {
                         {/* Autocomplete Suggestions */}
                         {filteredSuburbs.length > 0 && (
                           <ul className="list-group position-absolute w-100 bg-white shadow"
-                          style={{ zIndex: "3000", maxHeight: "400px", overflowY: "auto", top: "100%", left: "0" }}>
+                            style={{ zIndex: "3000", maxHeight: "400px", overflowY: "auto", top: "100%", left: "0" }}>
                             {filteredSuburbs.map((s, index) => (
                               <li
                                 key={index}
@@ -525,17 +493,17 @@ const page = () => {
                           </span>
                         </div> */}
                         {filteredSuburbs.length === 0 && !validSuburbs.includes(suburb) && (
-                        <div
-                          className="alert alert-warning d-flex align-items-center mt-2"
-                          style={{ zIndex: "-1000" }}
-                          role="alert"
-                        >
-                          <span className="fst-italic" style={{ fontSize: "16px" }}>
-                            You’re shopping from <strong>{store}</strong> 🏪 store<br />
-                            If your postal code isn’t listed, looks like we can’t reach that area 🚚💨<br />
-                            Pickup’s always an option! 😉
-                          </span>
-                        </div>
+                          <div
+                            className="alert alert-warning d-flex align-items-center mt-2"
+                            style={{ zIndex: "-1000" }}
+                            role="alert"
+                          >
+                            <span className="fst-italic" style={{ fontSize: "16px" }}>
+                              You’re shopping from <strong>{store}</strong> 🏪 store<br />
+                              If your postal code isn’t listed, looks like we can’t reach that area 🚚💨<br />
+                              Pickup’s always an option! 😉
+                            </span>
+                          </div>
                         )}
                       </div>
                     )}
@@ -559,7 +527,8 @@ const page = () => {
                             </small>
                           )}
                           {addressSuggestions.length > 0 && (
-                            <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">                              {addressSuggestions.map((address, index) => (
+                            <ul className="list-group position-absolute w-50 z-1000 bg-white shadow">
+                              {addressSuggestions.map((address, index) => (
                                 <li
                                   key={index}
                                   className="list-group-item list-group-item-action"
@@ -624,7 +593,7 @@ const page = () => {
                         <span>£{getFinalTotal().toFixed(2)}</span>
                       </li>
 
-                      <p className="border shadow-sm p-4">
+                      <div className="border shadow-sm p-4">
                         <h5>Required details</h5>
                         <li className="justify-content-between mt-2">
                           <span>
@@ -689,7 +658,7 @@ const page = () => {
                             )}
                           </span>
                         </li>
-                      </p>
+                      </div>
                     </ul>
                     <div className="chck">
                       <Toast
