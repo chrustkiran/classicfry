@@ -151,7 +151,15 @@ const ShopPage = () => {
   const [storeLoad, setStoreLoaded] = useState(false);
   const [isShowStoreSelect, setShowStoreSelect] = useState(false);
 
-  const isMobile = window.innerWidth <= 1024;
+    const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   useEffect(() => {
     if (searchParams.get("category")) {
