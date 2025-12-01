@@ -7,11 +7,11 @@ export class PostOrderRequest {
     this.paymentIntentId = paymentIntentId;
     this.orderItems = [];
     this.branch = branch;
-    
+
     const postCode = checkoutDetails.selectedSuburb?.postalCode
     const town = checkoutDetails.selectedSuburb?.name
 
-    this.deliveryAddress = {streetAddress: checkoutDetails.address, town, postCode};
+    this.deliveryAddress = { streetAddress: checkoutDetails.address, town, postCode };
     this.additionalInstructions = checkoutDetails.additionalInstructions;
 
     this.deliveryMethod = checkoutDetails.deliveryMethod?.toUpperCase() || env.DELIVERY_METHOD.PICKUP.toUpperCase();
@@ -24,7 +24,7 @@ export class PostOrderRequest {
         };
         if ("pizza" === item.category && "pizza" in item.itemConfig) {
           result.pizzaCrust = item.itemConfig.pizza.crusts[0]
-          result.toppings =  item.itemConfig.pizza.toppings
+          result.toppings = item.itemConfig.pizza.toppings
         }
         if (item.type === env.ITEM_TYPE.ITEM) {
           result.item = { itemId: item.itemId };
@@ -32,9 +32,14 @@ export class PostOrderRequest {
         if (item.type === env.ITEM_TYPE.DEAL) {
           result.deal = { dealId: item.itemId };
           if (item.multipleOptions) {
-            Object.assign(result, item.multipleOptions);
+            const modifedKeyMultliOption = Object.keys(item.multipleOptions).reduce((acc, multiObjKey) => {
+              acc[env.MULTI_OBJ_CONF[multiObjKey].addToCartKey] = item.multipleOptions[multiObjKey];
+              return acc;
+            }, {})
+            Object.assign(result, modifedKeyMultliOption);
           }
         }
+        console.log('result ', result)
         return result;
       });
     }
