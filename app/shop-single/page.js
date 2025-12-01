@@ -17,6 +17,8 @@ import DealItemOption from "@/components/DealItemOption";
 
 import { extractMultipleItemOptionsFromDeal, getMulipleItemCountPerDeal, getMultipleItemSelectedOptions, getRequiredMultipleItemCount, getSelectedMultipleItems } from "@/utility/multipleItemUtils";
 import { DealItem } from "@/components/DealItem";
+import { CiFries } from "react-icons/ci";
+import { FaGlassWhiskey, FaWineBottle } from "react-icons/fa";
 
 const Ingredient = ({ ingredient }) => {
   return (
@@ -84,7 +86,7 @@ const page = () => {
     DRINK: {
       name: "Drink",
       type: "DRINK",
-      addToCartKey: "drinkOptions",
+      icons: [<FaWineBottle className="me-1 mb-1" />, <FaGlassWhiskey className="me-1 mb-1"/>],
       countPerDeal: drinksPerDeal,
       selectItemOption: drinkOptions,
       requiredItems: requiredDrinks,
@@ -94,7 +96,7 @@ const page = () => {
     CHIPS: {
       name: "Chips",
       type: "CHIPS",
-      addToCartKey: "chipsOptions",
+      icons: [<CiFries className="me-1 mb-1"/>, <CiFries className="me-1 mb-1"/>],
       countPerDeal: chipssPerDeal,
       selectItemOption: chipsOptions,
       requiredItems: requiredChips,

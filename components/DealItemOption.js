@@ -2,7 +2,7 @@ import { getRequiredMultipleItemCount, getSelectedMultipleItems } from "@/utilit
 import { Divider } from "@material-ui/core";
 import { useEffect } from "react";
 
-const DealItem = ({ name, countPerDeal, quantity, selectedItem, itemOptions, setSelectedItems }) => {
+const DealItem = ({ name, countPerDeal, quantity, selectedItem, itemOptions, setSelectedItems, icons }) => {
 
     // helper to select an item option for a slot index
     const selectItemOption = (slotIndex, option) => {
@@ -19,7 +19,7 @@ const DealItem = ({ name, countPerDeal, quantity, selectedItem, itemOptions, set
             {countPerDeal > 0 && <div className="drink-selection-section mt-4">
                 <div className="border-bottom pb-2 mb-3">
                     <h5 className="mb-0">
-                        <i className="fas fa-wine-bottle me-2"></i>
+                        {icons[0]}
                         Select Your {name}{name.endsWith('s') ? '' : 's'}
                     </h5>
                     <small className="text-muted">
@@ -60,7 +60,7 @@ const DealItem = ({ name, countPerDeal, quantity, selectedItem, itemOptions, set
                                                         htmlFor={`item-select-${globalItemIndex}`}
                                                         className="form-label small fw-semibold text-muted mb-1"
                                                     >
-                                                        <i className="fas fa-glass-whiskey me-1"></i>
+                                                        {icons[1]}
                                                         {name} {itemIndexInDeal + 1}
                                                     </label>
                                                     <select
@@ -188,6 +188,7 @@ export default function DealItemOption({ itemType, quantity, multileItemsConfig 
                                     selectedItem={multileItemsConfig[key].selectedItems}
                                     itemOptions={multileItemsConfig[key].selectItemOption}
                                     setSelectedItems={multileItemsConfig[key].setSelectedItems}
+                                    icons={multileItemsConfig[key].icons}
                                 ></DealItem>
                                 <Divider></Divider>
                             </div>

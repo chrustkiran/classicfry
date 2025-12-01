@@ -28,7 +28,14 @@ const env = {
   OFFER_MINIMUM: 25,
   DELIVERY_MINIMUM: 20,
   OFFER_PERCENTAGE: 0.2,
-
+  MULTI_OBJ_CONF: {
+    'DRINK': {
+      addToCartKey: "drinkOptions",
+    },
+    'CHIPS': {
+      addToCartKey: "chipsOptions",
+    }
+  },
   CONTACT_INFO: [
     {
       id: "epsom-location",
