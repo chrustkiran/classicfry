@@ -25,7 +25,7 @@ const DealItem = ({ name, countPerDeal, quantity, selectedItem, itemOptions, set
                     <small className="text-muted">
                         Choose {name} for each deal unit (
                         {countPerDeal} {name}
-                        {countPerDeal > 1 ? "s" : ""} per deal)
+                        {countPerDeal > 1 && !name.endsWith('s') ? "s" : ""} per deal)
                     </small>
                 </div>
 
