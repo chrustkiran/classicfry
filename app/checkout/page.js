@@ -34,6 +34,7 @@ const ParentPayment = ({
   const stripePromise = loadStripe(env.stripeAPIKey);
 
   const [clientSecret, setClientSecret] = useState(null);
+  const [paymentIntentId, setPaymentIntentId] = useState(null);
   const [orderId, setOrderId] = useState(undefined);
 
   const appearance = {
@@ -66,6 +67,7 @@ const ParentPayment = ({
           //since this is an online payment, this should have stripeDetails.
           setClientSecret(order.stripeDetails?.clientSecret);
           handlePaymentIntent(order.stripeDetails?.paymentIntentId);
+          setPaymentIntentId(order.stripeDetails?.paymentIntentId);
         }
       })
       .catch((_) => {
@@ -78,20 +80,20 @@ const ParentPayment = ({
   };
 
   useEffect(() => {
-    if (clientSecret === null) {
+    if (clientSecret === null && paymentIntentId === null) {
       sendOrderAsOnlinePayment(userId, cart, amount);
     }
   }, []);
 
   return (
     <div>
-      {clientSecret && (
+      {clientSecret && paymentIntentId && (
         <Elements
           stripe={stripePromise}
           options={{ clientSecret, appearance, loader }}
         >
           <PaymentForm
-            clientSecret={clientSecret}
+            paymentIntentId={paymentIntentId}
             amount={amount}
             handleSetStripeErr={handleSetStripeErr}
             orderId={orderId}
@@ -99,12 +101,12 @@ const ParentPayment = ({
           />
         </Elements>
       )}
-      {!clientSecret && <p className="mb-0">Please wait...</p>}
+      {!(clientSecret && paymentIntentId) && <p className="mb-0">Please wait...</p>}
     </div>
   );
 };
 
-const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
+const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, clearItems }) => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -126,44 +128,88 @@ const PaymentForm = ({ amount, handleSetStripeErr, orderId, clearItems }) => {
       redirect: "if_required",
     });
 
-    if (result.error) {
-      handleSetStripeErr(
-        "Hmm.. Something went wrong! Please check your card details..."
-      );
-      //TODO :: what if payment fails ?
-      setTimeout(() => {
-        handleSetStripeErr(undefined);
-      }, 8000);
-    } else {
-      PaymentService.confirmPayment({
-        paymentIntentId: result?.paymentIntent.id,
-        orderID: orderId,
-      })
-        .then((confRes) => {
-          if (!confRes?.orderId) {
-            handleSetStripeErr(
-              `Oops.. we are really sorry, You have completed your payment successfully... but there was an error from ourside, please inform about this at our store, Your Order ID is ${orderId.substring(
-                0,
-                6
-              )}`
-            );
-          } else {
-            clearItems();
-            router.push(`/orders?success=true&orderId=${confRes.orderId}`);
-          }
-        })
-        .catch((err) => {
-          handleSetStripeErr(
-            `Oops.. we are really sorry, You have completed your payment successfully... but there was an error from ourside, please inform about this at our store, Your Order ID is ${orderId.substring(
-              0,
-              6
-            )}`
-          );
-        });
+    /*
+    Now what happens?
+    A user makes a payment directly to stripe with a payment intend.
+    after `result` arrives, the user calls the backend if there is no error
 
-      // if (confRes?.order)
-      //   alert("Payment successful! Your order is being processed.");
+    scenairos
+    result.error true => payment is deducted = order should be created.
+    result.error false => payment is deducted = order should be created.
+
+
+    once the result is present, start polling to the backend, check the status, if it returns fails, just show the error message. 
+    if it's still pending (at the end of the polling time => don't clear the cart and redirect to pending page of order and let the user handle it. the user needs to retry.),
+    if its successful, rediect to order page and clear the cart. 
+    */
+
+    console.log("Payment Result:", result);
+    console.log("Starting payment status polling...");
+    //polling logic to check the payment status.
+
+    try {
+      const paymentConfirmationResponse = await PaymentService.pollPaymentStatus({
+        paymentIntentId: paymentIntentId,
+        orderID: orderId
+      });
+
+      console.log("Initial payment confirmation response:", paymentConfirmationResponse);
+
+      if (paymentConfirmationResponse.orderStatus === 'PLACED_WITH_PAYMENT') {
+        clearItems();
+        router.push(`/orders?success=true&orderId=${orderId}`);
+      } else {
+        console.log("handling error for payment failure");
+        handleSetStripeErr("Hmm.. Something went wrong! Please check your card details...");
+        setTimeout(() => {
+          handleSetStripeErr(undefined);
+        }, 8000);
+      }
+    } catch (error) {
+      console.error("Error during payment status polling:", error);
+      handleSetStripeErr("Seems like there is a delay in confirming your payment, please check your order status in orders page and keep refreshing it.");
+      router.push(`/orders`);
     }
+
+
+    // if (result.error) {
+    //   handleSetStripeErr(
+    //     "Hmm.. Something went wrong! Please check your card details..."
+    //   );
+    //   //TODO :: what if payment fails ?
+    //   setTimeout(() => {
+    //     handleSetStripeErr(undefined);
+    //   }, 8000);
+    // } else {
+    //   PaymentService.confirmPayment({
+    //     paymentIntentId: result?.paymentIntent.id,
+    //     orderID: orderId,
+    //   })
+    //     .then((confRes) => {
+    //       if (!confRes?.orderId) {
+    //         handleSetStripeErr(
+    //           `Oops.. we are really sorry, You have completed your payment successfully... but there was an error from ourside, please inform about this at our store, Your Order ID is ${orderId.substring(
+    //             0,
+    //             6
+    //           )}`
+    //         );
+    //       } else {
+    //         clearItems();
+    //         router.push(`/orders?success=true&orderId=${confRes.orderId}`);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       handleSetStripeErr(
+    //         `Oops.. we are really sorry, You have completed your payment successfully... but there was an error from ourside, please inform about this at our store, Your Order ID is ${orderId.substring(
+    //           0,
+    //           6
+    //         )}`
+    //       );
+    //     });
+
+    //   // if (confRes?.order)
+    //   //   alert("Payment successful! Your order is being processed.");
+    // }
   };
 
   return (

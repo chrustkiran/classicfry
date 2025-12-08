@@ -146,6 +146,7 @@ const OrderPage = () => {
       clearItems();
       clearCheckoutValuesFromSession();
     }
+    console.log("Orders updated in OrderPage: ", orders);
   }, [orders]);
 
   const toggleOrder = (orderId) => {
@@ -222,13 +223,30 @@ const OrderPage = () => {
                     Completed Orders ({orders['completed'] ? orders['completed'].length : 0})
                   </button>
                 </li>
-                <li>
+                <li className="nav-item">
+                  <button
+                    className={`nav-link ${activeTab === "pending" ? "active" : ""
+                      }`}
+                    onClick={() => handleTabChange("pending")}
+                  >
+                    Pending Orders ({orders['pending'] ? orders['pending'].length : 0})
+                  </button>
+                </li>
+                <li className="p-2">
                   <div onClick={() => fetchOrders(getUser()?.userId)} className="btn mr-0">
                     <i className="fas fa-redo"></i>
                   </div>
                 </li>
               </ul>
-
+              
+              {activeTab === "pending" && orders['pending'].length > 0 && (
+                <div className="alert alert-info mt-3" role="alert">
+                  <i className="fas fa-info-circle"></i>{" "}
+                  If you have any pending orders, payment gateway might take a while to
+                  confirm the payment status. Please keep refreshing the orders tab to see
+                  the latest status.
+                </div>
+              )}
               {/* Order List */}
               <div className="row row-cols-1 mt-3 g-1">
                 {orders[activeTab].length === 0 ? (

@@ -1,5 +1,6 @@
 import axios from "axios";
 import env from "../env";
+import { fail } from "assert";
 
 const { useState } = require("react");
 
@@ -9,6 +10,16 @@ const OrderStatus = {
   IN_PROGRESS: "In Progess",
   READY_FOR_PICKUP: "Completed",
   COMPLETED: "Completed",
+  PENDING_FOR_PAYMENT: "Pending",
+  CANCELLED: "Cancelled",
+  PAYMENT_FAILED: "Payment Failed",
+};
+
+const orderStatusCategories = {
+  active: ["PLACED_WITH_PAYMENT", "PLACED_WITHOUT_PAYMENT", "IN_PROGRESS"],
+  completed: ["READY_FOR_PICKUP", "COMPLETED"],
+  failed: ["PAYMENT_FAILED"],
+  pending: ["PENDING_FOR_PAYMENT"],
 };
 
 const OrderStatusMapper = (status) => {
@@ -20,7 +31,7 @@ const OrderStatusMapper = (status) => {
 
 const base_url = env.API_URL;
 const useOrder = () => {
-  const [orders, setOrders] = useState({'active': [], 'completed': []});
+  const [orders, setOrders] = useState({ 'active': [], 'completed': [], 'pending': [], 'failed': [] });
 
   const fetchOrders = (userId) => {
     axios.get(base_url + `orders/userId/${userId}`).then((res) => {
@@ -31,20 +42,32 @@ const useOrder = () => {
       // Categorize orders into active and completed
       const categorizedOrders = orders.reduce(
         (acc, order) => {
-          if (order.orderStatus === Object.keys(OrderStatus)[3] || order.orderStatus === Object.keys(OrderStatus)[4]) {
+          console.log("Processing order:", order.orderId, "with status:", order.orderStatus);
+          console.log("Current categorized orders:", orderStatusCategories.pending.includes(order.orderStatus));
+          if (orderStatusCategories.completed.includes(order.orderStatus)) {
             acc.completed.push({
               ...order,
               orderStatus: OrderStatusMapper(order.orderStatus),
             });
-          } else {
+          } else if (orderStatusCategories.pending.includes(order.orderStatus)) {
+            acc.pending.push({
+              ...order,
+              orderStatus: OrderStatusMapper(order.orderStatus),
+            });
+          } else if (orderStatusCategories.active.includes(order.orderStatus)) {
             acc.active.push({
+              ...order,
+              orderStatus: OrderStatusMapper(order.orderStatus),
+            });
+          } else if (orderStatusCategories.failed.includes(order.orderStatus)) {
+            acc.failed.push({
               ...order,
               orderStatus: OrderStatusMapper(order.orderStatus),
             });
           }
           return acc;
         },
-        { active: [], completed: [] }
+        { active: [], completed: [], pending: [], failed: [] }
       );
 
       setOrders(categorizedOrders);

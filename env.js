@@ -3,7 +3,7 @@ const env = {
   //API_URL: `${process.env.HOST_URI}/`,
   stripeAPIKey: process.env.STRIPE_KEY,
   // stripeAPIKey:
-  //   "pk_live_51QmCweRuSIuECqCmYczAmbXXwXtjc0zY3qHLD6HkvcLOwn3273OSOrmk1gUgwkiaZwDTd9AhDsxgV857Qk82XZ6x00Jz1TwHto",
+  //   "pk_test_51QmCweRuSIuECqCmXLJwLJqdye0BE0HvIoPXkRJcETeGUMt825clnHzuzcj2mbyqlpAKPV6lLNzZWQB8pcM0YmKU00KMa6ZYNw",
   API_URL_STRIPE: `${process.env.HOST_URI}/api/v1`,
   DEFAULT: "REGULAR",
   USER: "classic-fry-user",
