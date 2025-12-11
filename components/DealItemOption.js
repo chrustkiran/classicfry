@@ -1,5 +1,6 @@
 import { getRequiredMultipleItemCount, getSelectedMultipleItems } from "@/utility/multipleItemUtils";
-import { Divider } from "@material-ui/core";
+// import { Divider } from "@material-ui/core";
+import Divider from "@mui/material/Divider";
 import { useEffect } from "react";
 
 const DealItem = ({ name, countPerDeal, quantity, selectedItem, itemOptions, setSelectedItems, icons }) => {
@@ -197,73 +198,6 @@ export default function DealItemOption({ itemType, quantity, multileItemsConfig 
                     }
                 </>)}
 
-            {itemType === "deal" &&
-                quantity > 0 &&
-                requiredItems > 0 &&
-                    (<>
-                        {/* Progress indicator */}
-                        <div className="mt-3 p-3 bg-light rounded">
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <span className="small fw-semibold">
-                                    Selection Progress:
-                                </span>
-                                <span className="small">
-                                    {getSelectedItems().filter(Boolean).length} of{" "}
-                                    {requiredItems} selected
-                                </span>
-                            </div>
-                            <div
-                                className="progress"
-                                style={{ height: "8px" }}
-                            >
-                                <div
-                                    className="progress-bar bg-success"
-                                    role="progressbar"
-                                    style={{
-                                        width: `${(getSelectedItems().filter(Boolean).length /
-                                            requiredItems) *
-                                            100
-                                            }%`,
-                                    }}
-                                    aria-valuenow={
-                                        getSelectedItems().filter(Boolean).length
-                                    }
-                                    aria-valuemin="0"
-                                    aria-valuemax={requiredItems}
-                                ></div>
-                            </div>
-                        </div>
-
-                        {/* Validation message */}
-                        {getSelectedItems().some((s) => !s) && (
-                            <div
-                                className="alert alert-warning mt-3 d-flex align-items-center"
-                                role="alert"
-                            >
-                                <i className="fas fa-exclamation-triangle me-2"></i>
-                                <div>
-                                    <strong>Almost there!</strong> Please select
-                                    all items to enable "Add To Cart".
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Success message when all selected */}
-                        {!getSelectedItems().some((s) => !s) &&
-                            requiredItems > 0 && (
-                                <div
-                                    className="alert alert-success mt-3 d-flex align-items-center"
-                                    role="alert"
-                                >
-                                    <i className="fas fa-check-circle me-2"></i>
-                                    <div>
-                                        <strong>Perfect!</strong> All items have been
-                                        selected and ready to add to cart.
-                                    </div>
-                                </div>
-                            )}
-                    </>)
-            }
         </>
     )
 }

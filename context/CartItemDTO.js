@@ -11,7 +11,8 @@ export class CartItem {
     quantity = 1,
     type = "ITEM",
     itemConfig = {},
-    multipleOptions = undefined
+    multipleOptions = undefined,
+    extra = undefined
   ) {
     this.itemId = itemId;
     this.name = name;
@@ -23,6 +24,7 @@ export class CartItem {
     this.type = type;
     this.itemConfig = itemConfig;
     this.multipleOptions = multipleOptions;
+    this.extra = extra
   }
 
   calculateTotalPrice = () => {
@@ -58,31 +60,40 @@ export class CartItem {
     });
   }
 
-  checkIsSame(itemId, category, size, itemConfig, multipleOptions = undefined) {
+  _areExtrasEqual(a = [], b = []) {
+    if (!a && !b) return true;
+    if (!a || !b) return false;
+    if (a.length !== b.length) return false;
+    const sortedA = [...a].sort((x, y) => String(x.id).localeCompare(String(y.id)));
+    const sortedB = [...b].sort((x, y) => String(x.id).localeCompare(String(y.id)));
+    return sortedA.every((extraA, idx) => {
+      const extraB = sortedB[idx];
+      return String(extraA.id) === String(extraB.id) && extraA.quantity === extraB.quantity;
+    });
+  }
+
+  checkIsSame(itemId, category, size, itemConfig, multipleOptions = undefined, extra = undefined) {
     if (category === "pizza" && category in itemConfig) {
-      //if we add other items, when it compare with other items exist in cart. it should be false
       if (this.category !== "pizza") return false;
-      // Pizza-specific logic
       const isSameItem = this.itemId === itemId && this.size === size;
-      // Ensure crust matches
       const isSameCrust =
         this.itemConfig.pizza.crusts[0] === itemConfig.pizza.crusts[0];
-      // Ensure all toppings in itemConfig are present in item.config.toppings
       const hasSameToppings =
         this.itemConfig.pizza.toppings.length ===
         itemConfig.pizza.toppings.length &&
-        itemConfig.pizza.toppings.every((topping) =>
+        this.itemConfig.pizza.toppings.every((topping) =>
           this.itemConfig.pizza.toppings.includes(topping)
-        ); // Ensure no extra toppings
-
+        );
       return isSameItem && isSameCrust && hasSameToppings;
-    } // if either existing cart item or incoming config has drinks, require drinks to match
-    else if (
-      (multipleOptions && Object.keys(multipleOptions).length > 0)){
-      return this.itemId === itemId && this.size === size && this.areMulitOptionObjectEqual(this.multipleOptions, multipleOptions);
+    } else if (multipleOptions && Object.keys(multipleOptions).length > 0) {
+      const extrasMatch = this._areExtrasEqual(this.extra, extra);
+      return this.itemId === itemId && 
+             this.size === size && 
+             this.areMulitOptionObjectEqual(this.multipleOptions, multipleOptions) &&
+             extrasMatch;
     } else {
-      // Logic for other item categories
-      return this.itemId === itemId && this.size === size;
+      const extrasMatch = this._areExtrasEqual(this.extra, extra);
+      return this.itemId === itemId && this.size === size && extrasMatch;
     }
   }
 }

@@ -19,6 +19,8 @@ import { extractMultipleItemOptionsFromDeal, getMulipleItemCountPerDeal, getMult
 import { DealItem } from "@/components/DealItem";
 import { CiFries } from "react-icons/ci";
 import { FaGlassWhiskey, FaWineBottle } from "react-icons/fa";
+import ExtrasSelector from "@/components/ExtrasSelector";
+import DealSelectionProgress from "@/components/DealSelectionProgress";
 
 const Ingredient = ({ ingredient }) => {
   return (
@@ -76,6 +78,11 @@ const page = () => {
   //chips
   const [chipsOptions, setChipsOptions] = useState([]);
   const [selectedChips, setSelectedChips] = useState([]);
+
+  // Extras state
+  const [selectedExtras, setSelectedExtras] = useState([]);
+  const [totalExtraPrice, setTotalExtraPrice] = useState(0);
+  const [extrasResetKey, setExtrasResetKey] = useState(0);
 
   // compute drinksPerDeal & required slots
   const chipssPerDeal = getMulipleItemCountPerDeal(fetchedDeal, "chips");
@@ -171,6 +178,21 @@ const page = () => {
 
 
 
+  const resetAllSelections = () => {
+    // Reset quantity to 1
+    setQuantity(1);
+    // Reset extras
+    setSelectedExtras([]);
+    setTotalExtraPrice(0);
+    setExtrasResetKey(prev => prev + 1); // Force ExtrasSelector to reset
+    // Reset drinks and chips
+    setSelectedDrinks([]);
+    setSelectedChips([]);
+    // Reset pizza selections
+    setPizzaCrust(undefined);
+    setPizzaToppings([]);
+  };
+
   const addToCart = () => {
     if (itemType === "item") {
       // Existing item logic remains same
@@ -211,13 +233,14 @@ const page = () => {
           itemsToAdd.push({
             itemId: fetchedDeal.dealId,
             name: fetchedDeal.name,
-            price: itemPrice, // individual price per unit
+            price: itemPrice + totalExtraPrice, // individual price per unit
             image: fetchedDeal.image,
             size: portionSize ? portionSize : env.DEFAULT,
             quantity: 1, // Each unit has quantity 1
             type: env.ITEM_TYPE.DEAL,
             category: fetchedDeal.dealType?.toLowerCase(),
-            multipleOptions: multipleItemMeta
+            multipleOptions: multipleItemMeta,
+            extra: selectedExtras.length > 0 ? selectedExtras : undefined
           });
         }
         // Add all items in single batch operation
@@ -227,17 +250,21 @@ const page = () => {
         addItemToCart(
           fetchedDeal.dealId,
           fetchedDeal.name,
-          itemPrice,
+          itemPrice + totalExtraPrice,
           fetchedDeal.image,
           portionSize ? portionSize : env.DEFAULT,
           quantity,
           env.ITEM_TYPE.DEAL,
           fetchedDeal.dealType?.toLowerCase(),
-          {}
+          {},
+          undefined,
+          selectedExtras.length > 0 ? selectedExtras : undefined,
         );
       }
     }
     setShowCartToast(true);
+    // Reset all selections after adding to cart
+    resetAllSelections();
   };
 
   const handlePrice = (fetchedItem) => {
@@ -427,7 +454,27 @@ const page = () => {
                           multileItemsConfig={multileItemsConfig}
                         ></DealItemOption>}
                       </div>
-                      <div className="mb-3  d-flex align-items-center w-100">
+                      {itemType === "deal" && quantity > 0 && fetchedDeal?.dealExtras?.length > 0 && (
+                        <div className="mt-4">
+                          <ExtrasSelector
+                            key={`extras-${extrasResetKey}`}
+                            extras={fetchedDeal.dealExtras}
+                            resetKey={extrasResetKey}
+                            onChange={(selectedExtras, totalPrice) => {
+                              setSelectedExtras(selectedExtras);
+                              setTotalExtraPrice(totalPrice);
+                            }}
+                          />
+                        </div>
+                      )}
+                      {/* Progress bar and validation messages - appears after extras */}
+                      <DealSelectionProgress
+                        itemType={itemType}
+                        quantity={quantity}
+                        multileItemsConfig={multileItemsConfig}
+                      />
+                      {/* Toast with spacing when extras are expanded */}
+                      <div className={`mb-3 d-flex align-items-center w-100 ${itemType === "deal" && quantity > 0 && fetchedDeal?.dealExtras?.length > 0 ? "mt-4" : ""}`}>
                         <Toast
                           show={showCartToast}
                           delay={3000}
