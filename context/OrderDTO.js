@@ -38,6 +38,9 @@ export class PostOrderRequest {
             }, {})
             Object.assign(result, modifedKeyMultliOption);
           }
+          if (item.extra) {
+            result.extras = item.extra.map(e => e.name);
+          }
         }
         console.log('result ', result)
         return result;

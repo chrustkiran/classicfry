@@ -55,15 +55,15 @@ const page = () => {
 
 
   const incrementQuantity = (item) => {
-    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions);
+    increaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions, item.extra);
   };
 
   const decrementQuantity = (item) => {
-    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions);
+    decreaseQuantity(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions, item.extra);
   };
 
   const removeItem = (item) => {
-    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions);
+    removeItemFromCart(item.itemId, item.category, item.size, item.itemConfig, item.multipleOptions, item.extra);
   };
 
   const [formData, setFormData] = useState({
@@ -268,7 +268,7 @@ const page = () => {
                                 />
                                 <div className="d-flex flex-column">
                                   <span>{item.name}</span>
-                                  {item.multipleOptions && <span onClick={() => setRowExpanded(index + 1 === rowExpanded ? 0 : index + 1)} style={{ textDecoration: 'underline' }}>
+                                  {(item.multipleOptions || item.extra) && <span onClick={() => setRowExpanded(index + 1 === rowExpanded ? 0 : index + 1)} style={{ textDecoration: 'underline' }}>
                                     View Items
                                   </span>}
                                   {item.size !== env.DEFAULT && (
@@ -326,19 +326,23 @@ const page = () => {
                                 </Link>
                               </td>
                             </tr>
-
-                            {/* Expanded Row for multipleItemOptions ONLY */}
-                            {rowExpanded === (index + 1) && item.multipleOptions && (
+                            {/* Expanded Row for multipleItemOptions and Extras */}
+                            {(rowExpanded === (index + 1) && (item.multipleOptions || item.extra)) && (
                               <tr className="cart-item-expanded">
                                 <td colSpan={5}>
                                   <div className="p-2 rounded bg-light">
-                                    {Object.entries(item.multipleOptions)
+                                    {item.multipleOptions && Object.entries(item.multipleOptions)
                                       .filter(([, values]) => values?.length)
                                       .map(([key, values]) => (
                                         <div key={key}>
                                           <strong>{key}:</strong> {values.map(v => v.name).join(", ")}
                                         </div>
                                       ))}
+                                      {item.extra && item.extra.length > 0 && (
+                                        <div>
+                                          <strong>Extras:</strong> {item.extra.map(e => `${e.quantity}x ${e.name || e.id}`).join(", ")}
+                                        </div>
+                                      )}
                                   </div>
                                 </td>
                               </tr>
