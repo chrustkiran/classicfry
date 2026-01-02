@@ -24,7 +24,7 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
   useEffect(() => {
     const updated = {};
     extras.forEach((extra) => {
-      updated[extra.id] = quantities[extra.id] || 0;
+      updated[extra.extraItemId] = quantities[extra.extraItemId] || 0;
     });
 
     const changed =
@@ -43,15 +43,15 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
     if (!onChangeRef.current) return;
 
     const selectedExtras = extras
-      .filter((extra) => quantities[extra.id] > 0)
+      .filter((extra) => quantities[extra.extraItemId] > 0)
       .map((extra) => ({
-        id: extra.id,
-        name: extra.name,
-        quantity: quantities[extra.id],
+        id: extra.extraItemId,
+        name: extra.extraItemName,
+        quantity: quantities[extra.extraItemId],
       }));
 
     const totalPrice = extras.reduce(
-      (sum, extra) => sum + (extra.price || 0) * (quantities[extra.id] || 0),
+      (sum, extra) => sum + (extra.extraItemPrice || 0) * (quantities[extra.extraItemId] || 0),
       0
     );
 
@@ -70,7 +70,7 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
   };
 
   const totalPrice = extras.reduce(
-    (sum, extra) => sum + (extra.price || 0) * (quantities[extra.id] || 0),
+    (sum, extra) => sum + (extra.extraItemPrice || 0) * (quantities[extra.extraItemId] || 0),
     0
   );
 
@@ -116,16 +116,16 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
           <div className="mt-3">
             <div className="es-table">
               {extras.map((extra) => {
-                const qty = quantities[extra.id] || 0;
+                const qty = quantities[extra.extraItemId] || 0;
                 return (
                   <div
-                    key={extra.id}
+                    key={extra.extraItemId}
                     className={`es-table-row ${qty > 0 ? "es-active" : ""}`}
                   >
                     {/* Name with Price */}
                     <div className="es-table-cell es-cell-name">
-                      <span className="fw-semibold">{extra.name}</span>
-                      <span className="text-muted ms-1">(£{extra.price?.toFixed(2)})</span>
+                      <span className="fw-semibold">{extra.extraItemName}</span>
+                      <span className="text-muted ms-1">(£{extra.extraItemPrice?.toFixed(2)})</span>
                     </div>
 
                     {/* Quantity Controls */}
@@ -135,7 +135,7 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
                         disabled={qty === 0}
                         onClick={(e) => {
                           e.stopPropagation();
-                          updateQuantity(extra.id, qty - 1);
+                          updateQuantity(extra.extraItemId, qty - 1);
                         }}
                         type="button"
                         aria-label="Decrease quantity"
@@ -146,18 +146,18 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
                         type="text"
                         className="es-qty-input"
                         value={qty}
-                        onChange={(e) => updateQuantity(extra.id, Number.parseInt(e.target.value, 10) || 0)}
+                        onChange={(e) => updateQuantity(extra.extraItemId, Number.parseInt(e.target.value, 10) || 0)}
                         onClick={(e) => e.stopPropagation()}
                         min="0"
                         max="10"
-                        aria-label={`Quantity for ${extra.name}`}
+                        aria-label={`Quantity for ${extra.extraItemName}`}
                       />
                       <button
                         className="btn btn-xs es-qty-btn"
                         disabled={qty === 10}
                         onClick={(e) => {
                           e.stopPropagation();
-                          updateQuantity(extra.id, qty + 1);
+                          updateQuantity(extra.extraItemId, qty + 1);
                         }}
                         type="button"
                         aria-label="Increase quantity"
@@ -169,7 +169,7 @@ export default function ExtrasSelector({ extras = [], onChange, resetKey = 0 }) 
                     {/* Total Price */}
                     <div className="es-table-cell es-cell-price">
                       <span className={`fw-bold ${qty > 0 ? "text-success" : "text-muted"}`}>
-                        £{((extra.price || 0) * qty).toFixed(2)}
+                        £{((extra.extraItemPrice || 0) * qty).toFixed(2)}
                       </span>
                     </div>
                   </div>
