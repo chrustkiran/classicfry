@@ -38,8 +38,16 @@ export class PostOrderRequest {
             }, {})
             Object.assign(result, modifedKeyMultliOption);
           }
+            console.log('item.extra ', item)
           if (item.extra) {
-            result.extras = item.extra.map(e => e.name);
+            result.orderItemExtras = item.extra.map(e => ({
+              dealExtra: {
+                extraItemId: e.id,
+                extraItemName: e.name,
+                extraItemPrice: e.price
+              },
+              quantity: e.quantity,
+            }));
           }
         }
         console.log('result ', result)

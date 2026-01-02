@@ -64,11 +64,11 @@ export class CartItem {
     if (!a && !b) return true;
     if (!a || !b) return false;
     if (a.length !== b.length) return false;
-    const sortedA = [...a].sort((x, y) => String(x.id).localeCompare(String(y.id)));
-    const sortedB = [...b].sort((x, y) => String(x.id).localeCompare(String(y.id)));
+    const sortedA = [...a].sort((x, y) => String(x.extraItemId).localeCompare(String(y.extraItemId)));
+    const sortedB = [...b].sort((x, y) => String(x.extraItemId).localeCompare(String(y.extraItemId)));
     return sortedA.every((extraA, idx) => {
       const extraB = sortedB[idx];
-      return String(extraA.id) === String(extraB.id) && extraA.quantity === extraB.quantity;
+      return String(extraA.extraItemId) === String(extraB.extraItemId) && extraA.quantity === extraB.quantity;
     });
   }
 
