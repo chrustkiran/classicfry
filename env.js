@@ -27,7 +27,7 @@ const env = {
   DELIVERY_FEE: 1.99,
   OFFER_MINIMUM: 25,
   DELIVERY_MINIMUM: 20,
-  OFFER_PERCENTAGE: 0.2,
+  OFFER_PERCENTAGE: 0.1,
   MULTI_OBJ_CONF: {
     'DRINK': {
       addToCartKey: "drinkOptions",
