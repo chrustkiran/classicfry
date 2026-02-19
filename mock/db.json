@@ -1,6 +1,47 @@
 {
   "items": [
     {
+      "id": "1f8f7a19-c7a4-4c80-9b5d-6a2a97f153b0",
+      "itemId": "1f8f7a19-c7a4-4c80-9b5d-6a2a97f153a0",
+      "name": "Spicy Chicken Wings",
+      "category": "PIZZA",
+      "portionPrices": [
+        {
+          "portionPriceId": "9bf9f1f1-ff9d-4a4c-9b29-c39dce255dbd",
+          "portionSize": "SMALL",
+          "price": 5.99
+        },
+        {
+          "portionPriceId": "660fb3e5-5f77-4c10-bbbf-0fa0a21d1be4",
+          "portionSize": "REGULAR",
+          "price": 7.99
+        },
+        {
+          "portionPriceId": "46e362c9-d875-4efb-8c9a-f5b8a7a589d2",
+          "portionSize": "LARGE",
+          "price": 9.99
+        }
+      ],
+      "isAvailable": true,
+      "tag": "Spicy",
+      "ingredientsList": [
+        {
+          "ingredientId": "3d1a4d70-33f1-4cf4-a27c-b19b741f5425",
+          "name": "Chicken Wing",
+          "calories": 200,
+          "notes": "Fresh, crispy wings."
+        },
+        {
+          "ingredientId": "91f71cf5-19a1-4a8f-97c5-59242a37c6fc",
+          "name": "Hot Sauce",
+          "calories": 50,
+          "notes": "Spicy sauce for flavor."
+        }
+      ],
+      "description": "Crispy chicken wings with spicy sauce.",
+      "image": "https://media.istockphoto.com/id/835903320/photo/baked-chicken-wings-with-sesame-seeds-and-sweet-chili-sauce-on-white-wooden-board.jpg?s=612x612&w=0&k=20&c=SH8ZCkEKuWD_wxulpntIJ0uD4yRnUf9UXovQwSwrmmA="
+    },
+    {
       "id": "1f8f7a19-c7a4-4c80-9b5d-6a2a97f153a0",
       "itemId": "1f8f7a19-c7a4-4c80-9b5d-6a2a97f153a0",
       "name": "Spicy Chicken Wings",
@@ -318,6 +359,128 @@
     }
   ],
   "deals": [
+     {
+      "id": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
+      "branch": "EPSOM",
+      "dealId": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
+      "dealType": "SPECIAL_OFFER",
+      "name": "5 Wings Chips Drink",
+      "dealItemViews": [
+        {
+          "dealItemId": "63a06b25-895d-412c-b84d-5b4e576f3484",
+          "name": "Chips",
+          "description": null,
+          "image": "image_url",
+          "quantity": 1,
+          "dealItemOptions": [],
+          "dealItemType": null
+        },
+        {
+          "dealItemId": "6e475635-956e-4bb9-a511-52c8302e6d5c",
+          "name": "Drink",
+          "description": null,
+          "image": "image_url",
+          "quantity": 1,
+          "dealItemOptions": [
+            {
+              "id": "490b4eb6-d9af-40ed-82f1-42823822563d",
+              "name": "Mirinda Strawberry",
+              "image": null
+            },
+            {
+              "id": "5a42230e-94f2-41ec-8f99-16fe181ba177",
+              "name": "Tango Apple",
+              "image": null
+            },
+            {
+              "id": "cb75aba3-ed45-47c1-8738-bec80216b440",
+              "name": "Pepsi Max",
+              "image": null
+            },
+            {
+              "id": "a528405c-10b1-458b-b668-91fa362b73b2",
+              "name": "Pepsi",
+              "image": null
+            },
+            {
+              "id": "7b307b59-8408-4cef-baca-5fdc418197e4",
+              "name": "Coke",
+              "image": null
+            },
+            {
+              "id": "eaf38aab-f398-4d10-8355-22f3aee2593f",
+              "name": "7up",
+              "image": null
+            },
+            {
+              "id": "fe08b76a-c26c-47cd-9a6e-c40cba34231e",
+              "name": "Sprite",
+              "image": null
+            },
+            {
+              "id": "3abe65cb-2beb-4a54-af2f-53ed304c4743",
+              "name": "Coke Diet",
+              "image": null
+            },
+            {
+              "id": "2af83dff-bb32-4a52-82a7-3fd619afe897",
+              "name": "Mirinda Orange",
+              "image": null
+            },
+            {
+              "id": "3096747c-bf2f-4c49-8d26-d2d076088aab",
+              "name": "Pepsi diet",
+              "image": null
+            },
+            {
+              "id": "ac22ca63-dbaf-49d1-be71-866a304586fa",
+              "name": "Tango Orange",
+              "image": null
+            }
+          ],
+          "dealItemType": "DRINK"
+        },
+        {
+          "dealItemId": "9db44d30-89ec-47f4-b49f-ee6b1907eacd",
+          "name": "Wings ",
+          "description": null,
+          "image": "image_url",
+          "quantity": 5,
+          "dealItemOptions": [],
+          "dealItemType": null
+        },
+        {
+          "dealItemId": "9db44d30-89ec-47f4-b49f-ee6b1907eaad",
+          "name": "Chips",
+          "description": null,
+          "image": "image_url",
+          "quantity": 3,
+          "dealItemOptions": [
+            {
+              "id": "490b4eb6-d9af-40ed-82f1-42823822563d",
+              "name": "Potato Wedges",
+              "image": null
+            },
+            {
+              "id": "5a42230e-94f2-41ec-8f99-16fe181ba177",
+              "name": "Lemon Pepper Chips",
+              "image": null
+            }
+          ],
+          "dealItemType": "CHIPS"
+        }
+      ],
+      "description": "5 Spicy Wings Chips Drink",
+      "isAvailable": true,
+      "isDeleted": false,
+      "tag": "BEST_SELLER",
+      "image": "https://classic-fry-images.s3.eu-west-2.amazonaws.com/deals/5%20Wings.jpg",
+      "price": 5.5,
+      "branchesList": [
+        "ROMFORD",
+        "EPSOM"
+      ]
+    },
     {
       "id": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
       "branch": "EPSOM",

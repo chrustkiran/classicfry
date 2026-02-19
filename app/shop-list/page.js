@@ -13,6 +13,7 @@ import useDeal from "@/hooks/useDeal";
 import DeliveryTimeDisplayModal from "@/components/popup/DeliveryTimeDisplayModal";
 import { useAppContext } from "@/context/AppContext";
 import SelectStoreDropDown from "@/components/SelectStoreDropDown";
+import env from "@/env";
 
 const Item = ({ item, key }) => {
   return (
@@ -319,20 +320,13 @@ const ShopPage = () => {
                             item.basePrice < priceFilter[1]
                         );
 
-                        const sortedFilteredItems = filteredItems.sort(
-                          (i1, i2) => {
-                            if (
-                              i1.category?.toLowerCase() === "pizza" &&
-                              i2.category?.toLowerCase() === "pizza"
-                            ) {
-                              if (i1.pizzaConfig?.isCustomPizza) return -1;
-                              if (i2.pizzaConfig?.isCustomPizza) return 1;
-                              return 0;
-                            }
-                            return 0;
-                          }
-                        );
-
+                        const sortedFilteredItems = filteredItems.sort((i1, i2) => {
+                          const getKey = (item) => item.category?.trim().toLowerCase().replaceAll(' ', '_');
+                          const category1Order = env.CATERGORY_ORDER[getKey(i1)] ?? 0;
+                          const category2Order = env.CATERGORY_ORDER[getKey(i2)] ?? 0;
+                          return category2Order - category1Order;
+                        })
+      
                         return (
                           <div key={category}>
                             <h3>{category.replaceAll("_", " ")}</h3>
