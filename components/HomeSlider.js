@@ -57,8 +57,8 @@ const HomeSlider = () => {
               </div>
              
               <div className="container">
-                <div className="row justify-content-between">
-                  <div className="col-xl-5 col-lg-7">
+                <div className="row justify-content-between ">
+                  <div className="col-xl-5 col-lg-7 order-2 order-lg-1">
                     <div className="hero-content">
                       <p data-animation="fadeInUp">Crispy, Perfection in Every Bite</p>
                       <h1
@@ -88,22 +88,13 @@ const HomeSlider = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-6 col-lg-5 mt-5 mt-lg-0">
-                    <div
-                      className="chiken-image"
-                      data-animation="fadeInUp"
-                      data-duration={duration}
-                      data-delay="1.4s"
-                    >
-                      {/* <img src="/assets/img/hero/chiken.png" alt="chiken-img" /> */}
-                    </div>
+                  <div className="col-xl-6 col-lg-5 mt-lg-0 order-1 order-lg-2">
                     <div
                       className="main-top-img"
                       data-animation="fadeInUp"
                       data-duration={duration}
                       data-delay="2.7s"
                     >
-                      {/* <img width="500" src="/assets/img/hero/chilli.png" alt="shape-img" /> */}
                       <img src="/assets/img/hero/offer3.png" alt="offer-img" />
                     </div>
                   </div>

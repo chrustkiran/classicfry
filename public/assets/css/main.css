@@ -2604,17 +2604,26 @@ input.main-search-input::placeholder {
 .hero-1 .main-top-img {
   width: 760px;
   z-index: -1 !important;
-  position: absolute !important;
   top: 0px 
 }
 .hero-1 .main-top-img img {
   width: 100%;
   height: 100%;
+  bottom: 5%;  top: 5% ;
+}
+
+/* above 1399px */
+@media (min-width: 1399px) {
+  .hero-1 .main-top-img {
+    position: absolute !important;
+    width: initial;
+    scale: 80% 
+  }
 }
 @media (max-width: 1399px) {
   .hero-1 .main-top-img {
-    /* max-width: 750px; */
     width: initial;
+    top: 5% 
   }
 }
 @media (max-width: 991px) {
@@ -2629,7 +2638,6 @@ input.main-search-input::placeholder {
 @media (max-width: 767px) {
   .hero-1 .main-top-img {
     width: 600px;
-    scale: 90%;
     top: 40%;
     text-align: center;
     margin: 0 auto;
@@ -2639,7 +2647,6 @@ input.main-search-input::placeholder {
 @media (max-width: 557px) {
   .hero-1 .main-top-img {
     width: 280px;
-    top: 60%;
     text-align: center;
     margin: 0 auto;
     left: 20%;

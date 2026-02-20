@@ -151,7 +151,7 @@ const ShopPage = () => {
   const [storeLoad, setStoreLoaded] = useState(false);
   const [isShowStoreSelect, setShowStoreSelect] = useState(false);
 
-    const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 1024);
@@ -229,6 +229,25 @@ const ShopPage = () => {
     setActiveTab(tab);
     selectCategory(undefined);
   };
+
+  const sortItemsByCategoryOrder = (cat1, cat2) => {
+    const getKey = (item) => item.category?.trim().toLowerCase().replaceAll(' ', '_');
+    const category1Order = env.CATERGORY_ORDER[getKey(cat1)] ?? 0;
+    const category2Order = env.CATERGORY_ORDER[getKey(cat2)] ?? 0;
+    return category2Order - category1Order;
+  }
+
+  const sortObjectByKey = (items) => {
+    return Object.keys(items).sort(sortItemsByCategoryOrder).reduce((obj, key) => {
+      obj[key] = items[key];
+      return obj;
+    }, {});
+  };
+
+  useEffect(() => {
+    sortObjectByKey(consItems);
+    sortObjectByKey(consDeals);
+  }, [consDeals, consItems]);
 
   if (!storeLoad) {
     return (
@@ -320,19 +339,12 @@ const ShopPage = () => {
                             item.basePrice < priceFilter[1]
                         );
 
-                        const sortedFilteredItems = filteredItems.sort((i1, i2) => {
-                          const getKey = (item) => item.category?.trim().toLowerCase().replaceAll(' ', '_');
-                          const category1Order = env.CATERGORY_ORDER[getKey(i1)] ?? 0;
-                          const category2Order = env.CATERGORY_ORDER[getKey(i2)] ?? 0;
-                          return category2Order - category1Order;
-                        })
-      
                         return (
                           <div key={category}>
                             <h3>{category.replaceAll("_", " ")}</h3>
                             <div className="row d-flex">
-                              {sortedFilteredItems.length > 0 ? (
-                                sortedFilteredItems.map((item) => (
+                              {filteredItems.length > 0 ? (
+                                filteredItems.map((item) => (
                                   <Item key={item.id} item={item} />
                                 ))
                               ) : (
