@@ -186,7 +186,7 @@ const ShopPage = () => {
 
   useEffect(() => {
     if (deals.length > 0) {
-      setConsDeals(
+      const reducedDeals =
         deals
           //.filter((deal) => deal.isAvailable)
           .reduce((obj, deal) => {
@@ -195,8 +195,9 @@ const ShopPage = () => {
             }
             obj[deal.dealType].push(deal);
             return obj;
-          }, {})
-      );
+          }, {});
+      setConsDeals(sortObjectByKey(reducedDeals));
+
     }
   }, [deals]);
 
@@ -206,7 +207,7 @@ const ShopPage = () => {
 
   useEffect(() => {
     if (items.length > 0) {
-      setConsItems(
+      const reducedItems =
         items
           //.filter((item) => item.isAvailable)
           .reduce((obj, item) => {
@@ -215,8 +216,9 @@ const ShopPage = () => {
             }
             obj[item.category].push(item);
             return obj;
-          }, {})
-      );
+          }, {});
+      setConsItems(sortObjectByKey(reducedItems));
+
     }
   }, [items]);
 
@@ -231,7 +233,7 @@ const ShopPage = () => {
   };
 
   const sortItemsByCategoryOrder = (cat1, cat2) => {
-    const getKey = (item) => item.category?.trim().toLowerCase().replaceAll(' ', '_');
+    const getKey = (category) => category?.trim().toUpperCase().replaceAll(' ', '_');
     const category1Order = env.CATERGORY_ORDER[getKey(cat1)] ?? 0;
     const category2Order = env.CATERGORY_ORDER[getKey(cat2)] ?? 0;
     return category2Order - category1Order;
@@ -243,11 +245,6 @@ const ShopPage = () => {
       return obj;
     }, {});
   };
-
-  useEffect(() => {
-    sortObjectByKey(consItems);
-    sortObjectByKey(consDeals);
-  }, [consDeals, consItems]);
 
   if (!storeLoad) {
     return (

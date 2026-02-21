@@ -359,128 +359,6 @@
     }
   ],
   "deals": [
-     {
-      "id": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
-      "branch": "EPSOM",
-      "dealId": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
-      "dealType": "SPECIAL_OFFER",
-      "name": "5 Wings Chips Drink",
-      "dealItemViews": [
-        {
-          "dealItemId": "63a06b25-895d-412c-b84d-5b4e576f3484",
-          "name": "Chips",
-          "description": null,
-          "image": "image_url",
-          "quantity": 1,
-          "dealItemOptions": [],
-          "dealItemType": null
-        },
-        {
-          "dealItemId": "6e475635-956e-4bb9-a511-52c8302e6d5c",
-          "name": "Drink",
-          "description": null,
-          "image": "image_url",
-          "quantity": 1,
-          "dealItemOptions": [
-            {
-              "id": "490b4eb6-d9af-40ed-82f1-42823822563d",
-              "name": "Mirinda Strawberry",
-              "image": null
-            },
-            {
-              "id": "5a42230e-94f2-41ec-8f99-16fe181ba177",
-              "name": "Tango Apple",
-              "image": null
-            },
-            {
-              "id": "cb75aba3-ed45-47c1-8738-bec80216b440",
-              "name": "Pepsi Max",
-              "image": null
-            },
-            {
-              "id": "a528405c-10b1-458b-b668-91fa362b73b2",
-              "name": "Pepsi",
-              "image": null
-            },
-            {
-              "id": "7b307b59-8408-4cef-baca-5fdc418197e4",
-              "name": "Coke",
-              "image": null
-            },
-            {
-              "id": "eaf38aab-f398-4d10-8355-22f3aee2593f",
-              "name": "7up",
-              "image": null
-            },
-            {
-              "id": "fe08b76a-c26c-47cd-9a6e-c40cba34231e",
-              "name": "Sprite",
-              "image": null
-            },
-            {
-              "id": "3abe65cb-2beb-4a54-af2f-53ed304c4743",
-              "name": "Coke Diet",
-              "image": null
-            },
-            {
-              "id": "2af83dff-bb32-4a52-82a7-3fd619afe897",
-              "name": "Mirinda Orange",
-              "image": null
-            },
-            {
-              "id": "3096747c-bf2f-4c49-8d26-d2d076088aab",
-              "name": "Pepsi diet",
-              "image": null
-            },
-            {
-              "id": "ac22ca63-dbaf-49d1-be71-866a304586fa",
-              "name": "Tango Orange",
-              "image": null
-            }
-          ],
-          "dealItemType": "DRINK"
-        },
-        {
-          "dealItemId": "9db44d30-89ec-47f4-b49f-ee6b1907eacd",
-          "name": "Wings ",
-          "description": null,
-          "image": "image_url",
-          "quantity": 5,
-          "dealItemOptions": [],
-          "dealItemType": null
-        },
-        {
-          "dealItemId": "9db44d30-89ec-47f4-b49f-ee6b1907eaad",
-          "name": "Chips",
-          "description": null,
-          "image": "image_url",
-          "quantity": 3,
-          "dealItemOptions": [
-            {
-              "id": "490b4eb6-d9af-40ed-82f1-42823822563d",
-              "name": "Potato Wedges",
-              "image": null
-            },
-            {
-              "id": "5a42230e-94f2-41ec-8f99-16fe181ba177",
-              "name": "Lemon Pepper Chips",
-              "image": null
-            }
-          ],
-          "dealItemType": "CHIPS"
-        }
-      ],
-      "description": "5 Spicy Wings Chips Drink",
-      "isAvailable": true,
-      "isDeleted": false,
-      "tag": "BEST_SELLER",
-      "image": "https://classic-fry-images.s3.eu-west-2.amazonaws.com/deals/5%20Wings.jpg",
-      "price": 5.5,
-      "branchesList": [
-        "ROMFORD",
-        "EPSOM"
-      ]
-    },
     {
       "id": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
       "branch": "EPSOM",
@@ -810,8 +688,33 @@
       "image": "https://example.com/images/ultimate_feast.jpg",
       "price": 18.99
     },
+    
+    {
+      "branch": "EPSOM",
+      "dealId": "e8f3b7c9-2a4d-5b6e-9c5f-3a7e4b2d1c8f",
+      "dealType": "WRAP_DEAL",
+      "name": "Grilled Chicken Wrap",
+      "dealItems": [
+        {
+          "dealItemId": "c9f3a7b8-4d5e-2b6c-9f3a7e4b1d5c",
+          "name": "Grilled Chicken Wrap",
+          "description": "Soft tortilla filled with grilled chicken and veggies",
+          "quantity": 1,
+          "image": "https://example.com/images/chicken_wrap.jpg",
+          "deal": {
+            "dealId": "e8f3b7c9-2a4d-5b6e-9c5f-3a7e4b2d1c8f",
+            "name": "Grilled Chicken Wrap"
+          }
+        }
+      ],
+      "description": "A healthy and delicious grilled chicken wrap.",
+      "isAvailable": true,
+      "tag": "HEALTHY",
+      "image": "https://example.com/images/grilled_wrap.jpg",
+      "price": 9.99
+    },
      {
-      "id": "001f5017-1ca4-4ba9-bf85-ab5acd0a7745",
+      "id": "cr001f5017-1ca4-4ba9-bf85-ab5acd0a7745",
       "branch": "EPSOM",
       "dealId": "001f5017-1ca4-4ba9-bf85-ab5acd0b7745",
       "dealType": "SPECIAL_OFFER",
@@ -931,29 +834,6 @@
         "ROMFORD",
         "EPSOM"
       ]
-    },
-    {
-      "dealId": "e8f3b7c9-2a4d-5b6e-9c5f-3a7e4b2d1c8f",
-      "dealType": "WRAP_DEAL",
-      "name": "Grilled Chicken Wrap",
-      "dealItems": [
-        {
-          "dealItemId": "c9f3a7b8-4d5e-2b6c-9f3a7e4b1d5c",
-          "name": "Grilled Chicken Wrap",
-          "description": "Soft tortilla filled with grilled chicken and veggies",
-          "quantity": 1,
-          "image": "https://example.com/images/chicken_wrap.jpg",
-          "deal": {
-            "dealId": "e8f3b7c9-2a4d-5b6e-9c5f-3a7e4b2d1c8f",
-            "name": "Grilled Chicken Wrap"
-          }
-        }
-      ],
-      "description": "A healthy and delicious grilled chicken wrap.",
-      "isAvailable": true,
-      "tag": "HEALTHY",
-      "image": "https://example.com/images/grilled_wrap.jpg",
-      "price": 9.99
     }
   ],
   "orders": [
