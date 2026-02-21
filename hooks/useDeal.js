@@ -15,7 +15,7 @@ const dealTypeMapper = (dealType) => {
     KIDS_DEAL: "Kids",
     PIZZA_DEAL: "Pizza",
     BOX_MEAL_DEAL: "Box Meal",
-    SPECIAL_OFFER: "Special Offer"
+    SPECIAL_OFFER: "Deal of the Day",
   };
   if (dealType in Dealtype) {
     return Dealtype[dealType];

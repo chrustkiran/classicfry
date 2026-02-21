@@ -60,7 +60,7 @@ const env = {
   ],
   CATERGORY_ORDER: Object.freeze({
     "PIZZA": 100,
-    "SPECIAL_OFFER": 100,
+    "DEAL_OF_THE_DAY": 100,
   })
 };
 
