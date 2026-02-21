@@ -95,7 +95,8 @@ const HomeSlider = () => {
                       data-duration={duration}
                       data-delay="2.7s"
                     >
-                      <img src="/assets/img/hero/offer3.png" alt="offer-img" />
+                      {/* <img src="/assets/img/hero/offer3.png" alt="offer-img" /> */}
+                      <img src="/assets/img/hero/until1stmarchoffer.png" alt="offer-img" />
                     </div>
                   </div>
                 </div>
