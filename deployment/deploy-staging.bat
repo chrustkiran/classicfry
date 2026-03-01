@@ -1,0 +1,4 @@
+echo Deploying to S3 in Staging...
+aws s3 sync out/ s3://www.stg-classicfry.co.uk --delete
+echo Deployment Completed in Staging!
+pause

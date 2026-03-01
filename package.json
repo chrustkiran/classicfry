@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "powershell -Command \"& { $env:APP_ENV='local'; next dev }\"",
-    "dev:staging": "powershell -Command \"$env:APP_ENV='prod'; next dev\"",
+    "dev:staging": "powershell -Command \"$env:APP_ENV='staging'; next dev\"",
     "build-ws": "powershell -Command \" & {$env:APP_ENV='prod'; next build}\"",
+    "build-stg": "powershell -Command \" & {$env:APP_ENV='staging'; next build}\"",
     "build": "next build",
     "start": "next start",
     "start-ws": "powershell -Command \" & {next start}\"",
