@@ -9,6 +9,7 @@ const nextConfig = {
   trailingSlash: true,
   env: {
     HOST_URI: process.env.HOST_URI,
+    STRIPE_KEY: process.env.STRIPE_KEY,
   }
 };
 
