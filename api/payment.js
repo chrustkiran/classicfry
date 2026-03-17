@@ -16,8 +16,8 @@ const PaymentService = {
   },
 
   pollPaymentStatus: async (confirmPaymentReq, attempts = 0) => {
-    const maxAttempts = 3;
-    const delay = 1500; // 15 seconds
+    const maxAttempts = 5;
+    const delay = 1500; // 1.5 seconds
     const currentAttempt = attempts + 1;
 
     console.log("Polling attempt:", currentAttempt, "confirmPaymentReq:", confirmPaymentReq);
@@ -30,7 +30,7 @@ const PaymentService = {
       const response = await PaymentService.confirmPayment(confirmPaymentReq);
       console.log("Polling attempt:", currentAttempt, "Response:", response);
 
-      if (response.orderStatus === "PENDING_FOR_PAYMENT") {
+      if (response.orderStatus !== "PLACED_WITH_PAYMENT") {
         console.log("Payment still pending, retrying...");
         await new Promise(resolve => setTimeout(resolve, delay));
         return await PaymentService.pollPaymentStatus(confirmPaymentReq, currentAttempt);

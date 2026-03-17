@@ -127,6 +127,7 @@ const page = () => {
   const handleAddressChange = (addr) => {
     if (validSuburbs.includes(selectedSuburb)) {
       setTmpAddress(addr);
+      setAddress(addr);
       //find matching addresses
       // const addressesInPostCode = addresses[selectedSuburb];
       const addressesInPostCode = storeAddresses[selectedSuburb] || [];

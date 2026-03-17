@@ -111,6 +111,8 @@ const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, cle
   const elements = useElements();
   const router = useRouter();
 
+  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
+
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -121,6 +123,7 @@ const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, cle
     if (!stripe || !elements) {
       return;
     }
+    setIsPaymentProcessing(true);
 
     const result = await stripe.confirmPayment({
       elements,
@@ -159,6 +162,7 @@ const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, cle
         clearItems();
         router.push(`/orders?success=true&orderId=${orderId}`);
       } else {
+        // can this happen? 
         console.log("handling error for payment failure");
         handleSetStripeErr("Hmm.. Something went wrong! Please check your card details...");
         setTimeout(() => {
@@ -167,7 +171,7 @@ const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, cle
       }
     } catch (error) {
       console.error("Error during payment status polling:", error);
-      handleSetStripeErr("Seems like there is a delay in confirming your payment, please check your order status in orders page and keep refreshing it.");
+      handleSetStripeErr("Your payment confirmation is taking longer than expected. Please check your order status on the Orders page and refresh it. If the problem persists, contact our shop.");
       router.push(`/orders`);
     }
 
@@ -222,7 +226,7 @@ const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, cle
             }}
           ></PaymentElement>
           <button
-            disabled={isLoading || !stripe || !elements}
+            disabled={isLoading || !stripe || !elements || isPaymentProcessing}
             id="submit"
             className="mt-3"
             style={{
@@ -244,6 +248,8 @@ const PaymentForm = ({ paymentIntentId, amount, handleSetStripeErr, orderId, cle
             <span id="button-text">
               {isLoading ? (
                 <div className="spinner" id="spinner"></div>
+              ) : isPaymentProcessing ? (
+                `Processing Payment...`
               ) : (
                 `Pay £${amount} now`
               )}
