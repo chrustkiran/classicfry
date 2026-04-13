@@ -7,7 +7,7 @@ const dealTypeMapper = (dealType) => {
   const Dealtype = {
     CHICKEN_DEAL: "Chicken",
     BURGER_DEAL: "Burger",
-    MIXED_DEAL: "Mixed",
+    MIXED_DEAL: "Box Meal",
     WRAP_DEAL: "Wrap",
     RIPS_DEAL: "Rips",
     PERI_PERI_DEAL: "Peri Peri",

@@ -12,7 +12,7 @@ const sendItems = (res, branch = "EPSOM") => {
 
 const sendDeals = (res, branch = "EPSOM") => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify(db["deals"].filter(deal => deal.BRANCH === branch)));
+  res.end(JSON.stringify(db["deals"].filter(deal => deal.branch === branch)));
 }
 
 const sendItemById = (res, id) => {

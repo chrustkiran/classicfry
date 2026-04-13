@@ -11722,3 +11722,10 @@ p.order-confirm {
 .p-32 {
   padding: 5rem;
 }
+
+.highlighted-category {
+  background-color: var(--theme2);
+  color: var(--white);
+  padding: 10px;
+  border-radius: 5px;
+}

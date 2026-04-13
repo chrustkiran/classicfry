@@ -392,7 +392,9 @@ const ShopPage = () => {
 
                         return (
                           <div key={index}>
-                            <h3>{category.replaceAll("_", " ")}</h3>
+                            <h3 className={env.HIGHLIGHT_DEAL_CATEGORY.includes(category) ? "highlighted-category" : ""}>
+                              {category.replaceAll("_", " ")}
+                            </h3>
                             <div className="row d-flex">
                               {filteredItems.length > 0 ? (
                                 filteredItems.map((item, index) => (
