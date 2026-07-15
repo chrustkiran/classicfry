@@ -2,7 +2,7 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const HomePopup = ({ }) => {
+const HomePopup = ({  }) => {
   const isShowHomePopup = true; // Change this to false to show delivery hours message
 
   const [showModal, setShowModal] = React.useState(isShowHomePopup);
@@ -44,11 +44,11 @@ const HomePopup = ({ }) => {
       </p>
     </Modal.Body>
     
-    <Modal.Footer>
+    {/* <Modal.Footer>
       <Button variant="secondary" onClick={handleCloseModal}>
         Close
       </Button>
-    </Modal.Footer>
+    </Modal.Footer> */}
   </>
           )
         }

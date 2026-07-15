@@ -13,7 +13,6 @@ import Link from "next/link";
 const page = () => {
   return (
     <FoodKingLayout>
-      <HomePopup />
       <HomeSlider />
       <FoodSlider />
       <section className="food-banner-section section-padding fix section-bg pt-0">

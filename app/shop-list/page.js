@@ -206,6 +206,10 @@ const ShopPage = () => {
   }, []);
 
   useEffect(() => {
+    setDeliveryTimeModalDisplay(true);
+  }, [store]);
+
+  useEffect(() => {
     if (items.length > 0) {
       const reducedItems =
         items
