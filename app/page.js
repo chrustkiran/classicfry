@@ -4,7 +4,6 @@ import FoodItemContainer from "@/components/FoodItemContainer";
 import FoodSlider from "@/components/FoodSlider";
 import HomeSlider from "@/components/HomeSlider";
 import Marque from "@/components/Marque";
-import HomePopup from "@/components/popup/homePopup";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 

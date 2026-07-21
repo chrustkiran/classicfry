@@ -691,7 +691,7 @@ const page = () => {
                         )}
                         <span>£{getFinalTotal().toFixed(2)}</span>
                       </button>
-                      {showRecommendationPopup && <RecommendationPopup onClose={() => setShowRecommendationPopup(false)} />}
+                      {showRecommendationPopup && <RecommendationPopup show={showRecommendationPopup} onClose={() => setShowRecommendationPopup(false)} />}
                       {/* this is just to make the heights the smae */}
                       <br></br>
                     </div>

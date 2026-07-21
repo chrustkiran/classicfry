@@ -285,7 +285,7 @@ const ShopPage = () => {
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Our Menu"} />
-      {isDeliveryTimeModalDisplay && <DeliveryTimeDisplayModal show={isDeliveryTimeModalDisplay} handleClose={() => setDeliveryTimeModalDisplay(false)} />}
+      {isDeliveryTimeModalDisplay && <DeliveryTimeDisplayModal show={isDeliveryTimeModalDisplay} handleClose={() => {console.log("closing"); setDeliveryTimeModalDisplay(false)}} />}
       <section className="food-category-section fix section-padding section-bg">
         <div className="container">
           <div>

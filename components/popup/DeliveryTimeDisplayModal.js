@@ -14,32 +14,31 @@ const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
 
   return (
     <>
-      <Modal
+      {(isShowinngDeliveryNotAvailableMessage && store === "ROMFORD") ? <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
-        {
-         ( isShowinngDeliveryNotAvailableMessage && store === "ROMFORD") ? (
-            <>
-              <Modal.Header closeButton>
-                <Modal.Title className="delivery-modal-title">Delivery Unavailable</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                We’re sorry for the inconvenience. Delivery service is currently unavailable today. Please check back tomorrow.
-                <br></br>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-              </Modal.Footer>
-            </>
 
-          ) : (
-            <HomePopup/>
-            // <>
+        <>
+          <Modal.Header closeButton>
+            <Modal.Title className="delivery-modal-title">Delivery Unavailable</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            We’re sorry for the inconvenience. Delivery service is currently unavailable today. Please check back tomorrow.
+            <br></br>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </>
+
+
+
+        {/* // <>
             //   <Modal.Header closeButton>
             //     <Modal.Title className="delivery-modal-title">
             //       Delivery Hours
@@ -66,13 +65,12 @@ const DeliveryTimeDisplayModal = ({ handleClose, show }) => {
             //       Close
             //     </Button>
             //   </Modal.Footer>
-            // </>
+            // </> */}
 
 
-          )
-        }
+      </Modal> :
 
-      </Modal>
+        (<HomePopup showModal={show} handleCloseModal={handleClose} />)}
     </>
   );
 };
